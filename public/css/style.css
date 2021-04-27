@@ -1,0 +1,26 @@
+.center {
+    text-align: center;
+}
+
+.register-table {
+    width: 100%;
+}
+
+.register-table td {
+    width: 50%;
+    padding: 5px;
+}
+
+.register-table tr td:first-child {
+    text-align: right;
+}
+
+.register-table tr td:last-child {
+    text-align: left;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 12px;
+}
+
