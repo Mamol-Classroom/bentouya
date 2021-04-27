@@ -115,33 +115,24 @@ class TopController extends Controller
         // 将输入的数据存入数据库
     }
 
-    public function userList(Request $request)
-    {
-        //$users = User::all();
-        //$user = User::find(2);
-        //$users = User::where('postcode', '1234567')->get();
-        //$user = User::where('postcode', '1234567')->first();
-
-        // 編集
-        //$user = User::find(4);
-        //$user->postcode = '7654321';
-        //$user->save();
-
-        // 新規
-        /**
-        $user = new User();
-        $user->id = 4;
-        $user->email = 'test8@test.com';
-        $user->password = '1234';
-        $user->name = 'test8';
-        $user->postcode = '1234567';
-        $user->save();
-        */
-
-        // 削除
-        $user = User::find(1);
-        if ($user != null) {
-            $user->delete();
+    public function userList(Request $request){
+        $users = User::all();
+        foreach($users as $u){
+            echo $u->name;
+            echo '<br>';
+            echo $u->id;
+            //find方法查询  $users = find(2);
+            //get方法查询  $users = User ::where('postcode','1234567')->get();
+            //修改: 查询  $users = User::find(4);
+            //     修改  $users->postcode = '1234567';
+            //   保存数据 $user = save();
+            //插入    $user = new User();
+            //       $user->email = 'test6@test.com';
+            //       $user->password = '1234';
+            //       $user->name = 'test6';
+            //       $user->save();
+            //删除    $users = find(4);
+            //       $users->delete();
         }
     }
 }
