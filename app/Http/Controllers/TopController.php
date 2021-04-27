@@ -122,7 +122,8 @@ class TopController extends Controller
             echo '<br>';
             echo $u->id;
             //find方法查询  $users = find(2);
-            //get方法查询  $users = User ::where('postcode','1234567')->get();
+            //get方法查询  $users = User::where('postcode','1234567')->get();
+            //fist方法与get类似  $users = User::where('postcode',''1234567')->first();
             //修改: 查询  $users = User::find(4);
             //     修改  $users->postcode = '1234567';
             //   保存数据 $user = save();
