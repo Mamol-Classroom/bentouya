@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -61,47 +62,47 @@ class TopController extends Controller
             'name' => null,
         ];
         if ($email == "") {
-            $error_message['email']  = '请输入邮箱';
+            $error_message['email'] = '请输入邮箱';
             $has_error = true;
         }
 
         if ($password == "") {
-            $error_message['password']  = '请输入密码';
+            $error_message['password'] = '请输入密码';
             $has_error = true;
         }
 
         if ($password != $password_confirm) {
-            $error_message['password_confirm']  = '两次输入的密码不一致';
+            $error_message['password_confirm'] = '两次输入的密码不一致';
             $has_error = true;
         }
 
         if ($name == "") {
-            $error_message['name']  = '请输入姓名';
+            $error_message['name'] = '请输入姓名';
             $has_error = true;
         }
 
         if ($postcode == "") {
-            $error_message['postcode']  = '请输入邮编';
+            $error_message['postcode'] = '请输入邮编';
             $has_error = true;
         }
 
         if ($prefecture == "") {
-            $error_message['prefecture']  = '都道府県を入力してください';
+            $error_message['prefecture'] = '都道府県を入力してください';
             $has_error = true;
         }
 
         if ($city == "") {
-            $error_message['city']  = '市区町村を入力してください';
+            $error_message['city'] = '市区町村を入力してください';
             $has_error = true;
         }
 
         if ($address == "") {
-            $error_message['address']  = '住所を入力してください';
+            $error_message['address'] = '住所を入力してください';
             $has_error = true;
         }
 
         if ($tel == "") {
-            $error_message['tel']  = '電話番号を入力してください';
+            $error_message['tel'] = '電話番号を入力してください';
             $has_error = true;
         }
 
@@ -113,10 +114,49 @@ class TopController extends Controller
         }
 
         // 将输入的数据存入数据库
+        $user = new User();
+        $user->email = $email;
+        $user->password = $password;
+        $user->name = $name;
+        $user->postcode = $postcode;
+        $user->prefecture = $prefecture;
+        $user->city = $city;
+        $user->address = $address;
+        $user->tel = $tel;
+        $user->save();
+
+       $request->session()->put('register_user',$user);
+
+
+       return redirect('/register_success');
     }
 
-    public function userList(Request $request)
+    public function registerSuccess(Request $request)
     {
+        $user = $request->session()->get('register_user');
+
+      return view('register_success',[
+          'email' => $user->email,
+          'name' => $user->name,
+          'postcode' => $user->postcode,
+          'prefecture' => $user->prefecture,
+          'city' => $user->city,
+          'address' => $user->address,
+          'tel' => $user->tel,
+
+
+
+      ]);
+    }
+
+
+
+
+
+
+
+
+
         //$users = User::all();
         //$user = User::find(2);
         //$users = User::where('postcode', '1234567')->get();
@@ -130,18 +170,24 @@ class TopController extends Controller
         // 新規
         /**
         $user = new User();
-        $user->id = 4;
-        $user->email = 'test8@test.com';
-        $user->password = '1234';
-        $user->name = 'test8';
-        $user->postcode = '1234567';
+        $user->id = 1;
+        $user->email = 'email';
+        $user->password = 'password';
+        $user->name = 'name';
+        $user->postcode = 'postcode';
+        $user->prefecture = 'prefecture';
+        $user->city = 'city';
+        $user->tel = 'tel';
         $user->save();
         */
 
         // 削除
+        /**
         $user = User::find(10);
         if ($user != null) {
             $user->delete();
+
         }
-    }
+         */
+
 }
