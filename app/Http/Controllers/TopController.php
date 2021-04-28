@@ -191,6 +191,7 @@ class TopController extends Controller
         }
 
         $login_failed = $request->session()->get('login_failed');
+        $request->session()->forget('login_failed');
 
         return view('login', [
             'login_failed' => $login_failed
