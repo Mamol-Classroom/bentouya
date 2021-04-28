@@ -113,35 +113,34 @@ class TopController extends Controller
         }
 
         // 将输入的数据存入数据库
+        $user = new User();
+        $user->email = $email;
+        $user->password = $password;
+        $user->name = $name;
+        $user->postcode = $postcode;
+        $user->prefecture = $prefecture;
+        $user->city = $city;
+        $user->address = $address;
+        $user->tel = $tel;
+        $user->save();
+
+        $request->session()->put('registed_user', $user);
+
+        return redirect('/register-success');
     }
 
-    public function userList(Request $request)
+    public function registerSuccess(Request $request)
     {
-        //$users = User::all();
-        //$user = User::find(2);
-        //$users = User::where('postcode', '1234567')->get();
-        //$user = User::where('postcode', '1234567')->first();
+        $user = $request->session()->get('registed_user');
 
-        // 編集
-        //$user = User::find(4);
-        //$user->postcode = '7654321';
-        //$user->save();
-
-        // 新規
-        /**
-        $user = new User();
-        $user->id = 4;
-        $user->email = 'test8@test.com';
-        $user->password = '1234';
-        $user->name = 'test8';
-        $user->postcode = '1234567';
-        $user->save();
-        */
-
-        // 削除
-        $user = User::find(3);
-        if ($user != null) {
-            $user->delete();
-        }
+        return view('register_success', [
+            'email' => $user->email,
+            'name' => $user->name,
+            'postcode' => $user->postcode,
+            'prefecture' => $user->prefecture,
+            'city' => $user->city,
+            'address' => $user->address,
+            'tel' => $user->tel,
+        ]);
     }
 }
