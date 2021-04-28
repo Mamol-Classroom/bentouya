@@ -10,18 +10,41 @@ class TopController extends Controller
 
     public function register(Request $request)
     {
-        $data = [
-            'email' => '',
-            'password' => '',
-            'password_confirm' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-            'name' => '',
-        ];
-        return view('register', ['data' => $data]);
+        $error_message = $request->session()->get('error_message');
+        $data = $request->session()->get('data');
+
+        if ($error_message == null) {
+            $error_message = [
+                'email' => null,
+                'password' => null,
+                'password_confirm' => null,
+                'postcode' => null,
+                'prefecture' => null,
+                'city' => null,
+                'address' => null,
+                'tel' => null,
+                'name' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'email' => '',
+                'password' => '',
+                'password_confirm' => '',
+                'postcode' => '',
+                'prefecture' => '',
+                'city' => '',
+                'address' => '',
+                'tel' => '',
+                'name' => '',
+            ];
+        }
+
+        return view('register', [
+            'error_message' => $error_message,
+            'data' => $data
+        ]);
     }
 
     public function registerUser(Request $request)
@@ -106,10 +129,10 @@ class TopController extends Controller
         }
 
         if ($has_error) {
-            return view('register', [
-                'error_message' => $error_message,
-                'data' => $data
-            ]);
+            $request->session()->put('error_message', $error_message);
+            $request->session()->put('data', $data);
+
+            return redirect('/register');
         }
 
         // 将输入的数据存入数据库

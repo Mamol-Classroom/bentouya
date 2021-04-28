@@ -11,8 +11,8 @@
                 <tr>
                     <td>メールアドレス</td>
                     <td>
-                        <input type="text" name="email" value="@if(isset($data)){{ $data['email'] }}@endif" />
-                        @if(isset($error_message) && $error_message['email'] != null)
+                        <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
+                        @if($error_message != null && $error_message['email'] != null)
                             <span class="error-message">{{ $error_message['email'] }}</span>
                         @endif
                     </td>
