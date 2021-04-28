@@ -149,7 +149,31 @@ class TopController extends Controller
       ]);
     }
 
+    public function login(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $email = $request->post('email');
+            $password = $request->post('password');
 
+            $user = User::where('email', $email)->first();
+            if ($password == $user->password) {
+// ログイン成功
+                return redirect('/');
+            } else {
+// ログイン失敗
+                $request->session()->put('login_failed', true);
+
+                return redirect('/login');
+            }
+        }
+
+        $login_failed = $request->session()->get('login_failed');
+        $request->session()->forget('login_failed');
+
+        return view('login', [
+            'login_failed' => $login_failed
+        ]);
+    }
 
 
 
