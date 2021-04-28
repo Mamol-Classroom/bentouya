@@ -8,6 +8,11 @@ use App\Models\User;
 class TopController extends Controller
 {
 
+    public function top(Request $request)
+    {
+        return view('top');
+    }
+
     public function register(Request $request)
     {
         $error_message = $request->session()->get('error_message');
@@ -164,6 +169,31 @@ class TopController extends Controller
             'city' => $user->city,
             'address' => $user->address,
             'tel' => $user->tel,
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $email = $request->post('email');
+            $password = $request->post('password');
+
+            $user = User::where('email', $email)->first();
+            if ($password == $user->password) {
+                // ログイン成功
+                return redirect('/');
+            } else {
+                // ログイン失敗
+                $request->session()->put('login_failed', true);
+
+                return redirect('/login');
+            }
+        }
+
+        $login_failed = $request->session()->get('login_failed');
+
+        return view('login', [
+            'login_failed' => $login_failed
         ]);
     }
 }
