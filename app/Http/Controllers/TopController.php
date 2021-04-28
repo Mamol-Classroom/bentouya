@@ -139,7 +139,7 @@ class TopController extends Controller
         */
 
         // 削除
-        $user = User::find(6);
+        $user = User::find(1);
         if ($user != null) {
             $user->delete();
         }
