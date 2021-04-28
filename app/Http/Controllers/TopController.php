@@ -113,7 +113,7 @@ class TopController extends Controller
         }
 
         // 将输入的数据存入数据库
-    }
+/**
 
     public function userList(Request $request){
         $users = User::all();
@@ -135,5 +135,36 @@ class TopController extends Controller
             //删除    $users = find(4);
             //       $users->delete();
         }
+*/
+        $user = new User();
+        $user->email = $email;
+        $user->password = $password;
+        $user->name = $name;
+        $user->postcode = $postcode;
+        $user->prefecture = $prefecture;
+        $user->city = $city;
+        $user->address = $address;
+        $user->tel = $tel;
+        $user->save();
+
+        $request->session()->put('registed_user', $user);
+
+        return redirect('/register-success');
+    }
+
+    public function registerSuccess(Request $request)
+    {
+        $user = $request->session()->get('registed_user');
+
+        return view('register_success', [
+            'email' => $user->email,
+            'name' => $user->name,
+            'postcode' => $user->postcode,
+            'prefecture' => $user->prefecture,
+            'city' => $user->city,
+            'address' => $user->address,
+            'tel' => $user->tel,
+        ]);
+
     }
 }
