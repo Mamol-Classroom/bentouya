@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class TopController extends Controller
 {
 
     public function top(Request $request)
     {
-        return view('top');
+        if (Auth::check()) {
+            return view('top');
+        } else {
+            return redirect('/login');
+        }
     }
 
     public function register(Request $request)
@@ -143,7 +149,8 @@ class TopController extends Controller
         // 将输入的数据存入数据库
         $user = new User();
         $user->email = $email;
-        $user->password = $password;
+        $hashed_password = Hash::make($password);
+        $user->password = $hashed_password;
         $user->name = $name;
         $user->postcode = $postcode;
         $user->prefecture = $prefecture;
@@ -178,6 +185,17 @@ class TopController extends Controller
             $email = $request->post('email');
             $password = $request->post('password');
 
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                // ログイン成功
+                return redirect('/');
+            } else {
+                // ログイン失敗
+                $request->session()->put('login_failed', true);
+
+                return redirect('/login');
+            }
+
+            /**
             $user = User::where('email', $email)->first();
             if ($password == $user->password) {
                 // ログイン成功
@@ -188,6 +206,7 @@ class TopController extends Controller
 
                 return redirect('/login');
             }
+             */
         }
 
         $login_failed = $request->session()->get('login_failed');
