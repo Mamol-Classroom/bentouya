@@ -175,7 +175,7 @@ class TopController extends Controller
 
       ]);
     }
-
+//数据库查验密码是否正确
     public function login(Request $request)
     {
         if ($request->method() == 'POST') {
