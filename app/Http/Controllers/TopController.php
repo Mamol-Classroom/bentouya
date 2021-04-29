@@ -13,7 +13,10 @@ class TopController extends Controller
     public function top(Request $request)
     {
         if (Auth::check()) {
-            return view('top');
+            $user = Auth::user();
+            $user_id = Auth::id();
+
+            return view('top', ['name' => $user->name]);
         } else {
             return redirect('/login');
         }
@@ -159,7 +162,7 @@ class TopController extends Controller
         $user->tel = $tel;
         $user->save();
 
-        $request->session()->put('registed_user', $user);
+        $request->session()->flash('registed_user', $user);
 
         return redirect('/register-success');
     }
@@ -167,6 +170,7 @@ class TopController extends Controller
     public function registerSuccess(Request $request)
     {
         $user = $request->session()->get('registed_user');
+        $request->session()->keep('registed_user');
 
         return view('register_success', [
             'email' => $user->email,
@@ -215,5 +219,12 @@ class TopController extends Controller
         return view('login', [
             'login_failed' => $login_failed
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect('/login');
     }
 }
