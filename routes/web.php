@@ -14,7 +14,6 @@ use App\Http\Controllers\TopController;
 |
 */
 Route::get('/', [TopController::class, 'top']);
-
 Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register-success', [TopController::class, 'registerSuccess']);

@@ -36,6 +36,12 @@
                     <td>電話番号</td>
                     <td>{{ $tel }}</td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a href="/login"><button type="button">ログイン</button></a>
+                    </td>
+                </tr>
             </table>
         </div>
     </main>
