@@ -65,9 +65,9 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => [      //供应商
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'eloquent', //ORM的名字
             'model' => App\Models\User::class,
         ],
 

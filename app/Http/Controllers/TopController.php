@@ -183,6 +183,7 @@ class TopController extends Controller
     public function registerSuccess(Request $request)
     {
         $user = $request->session()->get('registed_user');
+        $request->session()->forget('registed_user'); //?
 
         return view('register_success', [
             'email' => $user->email,
@@ -208,14 +209,15 @@ class TopController extends Controller
                 return redirect('/');
             } else {
                 // ログイン失敗
-                $request->session()->put('login_failed', true);
+                $request->session()->put('login_failed', true);//保存以及修改put('名字‘,值)
+                                                                //flash闪存
 
                 return redirect('/login');
             }
         }
 
-        $login_failed = $request->session()->get('login_failed');
-        $request->session()->forget('login_failed');
+        $login_failed = $request->session()->get('login_failed');//取值get
+        $request->session()->forget('login_failed');//删除forget
 
         return view('login', [
             'login_failed' => $login_failed
