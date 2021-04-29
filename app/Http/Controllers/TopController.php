@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Bento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +17,12 @@ class TopController extends Controller
             $user = Auth::user();
             $user_id = Auth::id();
 
-            return view('top', ['name' => $user->name]);
+            $bentos = Bento::all();
+
+            return view('top', [
+                'name' => $user->name,
+                'bentos' => $bentos
+            ]);
         } else {
             return redirect('/login');
         }
