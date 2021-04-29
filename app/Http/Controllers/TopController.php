@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth; //确定auth使用路径
+=======
+use App\Models\Bento;
+use Illuminate\Support\Facades\Auth;
+>>>>>>> main
 use Illuminate\Support\Facades\Hash;
 
 class TopController extends Controller
@@ -12,8 +17,21 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
+<<<<<<< HEAD
         if (Auth::check()) {               //验证是否为登录状态
             return view('top');
+=======
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user_id = Auth::id();
+
+            $bentos = Bento::all();
+
+            return view('top', [
+                'name' => $user->name,
+                'bentos' => $bentos
+            ]);
+>>>>>>> main
         } else {
             return redirect('/login');
         }
@@ -190,7 +208,11 @@ class TopController extends Controller
     public function registerSuccess(Request $request)
     {
         $user = $request->session()->get('registed_user');
+<<<<<<< HEAD
         $request->session()->keep('registed_user');  //或者reflash二次闪存所有信息
+=======
+        $request->session()->keep('registed_user');
+>>>>>>> main
 
         return view('register_success', [
             'email' => $user->email,
@@ -242,5 +264,12 @@ class TopController extends Controller
         return view('login', [
             'login_failed' => $login_failed
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect('/login');
     }
 }
