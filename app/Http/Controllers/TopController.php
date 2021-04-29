@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; //确定auth使用路径
 use Illuminate\Support\Facades\Hash;
 
 class TopController extends Controller
@@ -12,7 +12,7 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-        if (Auth::check()) {
+        if (Auth::check()) {               //验证是否为登录状态
             return view('top');
         } else {
             return redirect('/login');
@@ -172,7 +172,7 @@ class TopController extends Controller
 */
         $user = new User();
         $user->email = $email;
-        $hashed_password = Hash::make($password);
+        $hashed_password = Hash::make($password);  //密码加密
         $user->password = $hashed_password;
         $user->name = $name;
         $user->postcode = $postcode;
@@ -182,7 +182,7 @@ class TopController extends Controller
         $user->tel = $tel;
         $user->save();
 
-        $request->session()->put('registed_user', $user);
+        $request->session()->flash('registed_user', $user);
 
         return redirect('/register-success');
     }
@@ -190,7 +190,7 @@ class TopController extends Controller
     public function registerSuccess(Request $request)
     {
         $user = $request->session()->get('registed_user');
-        $request->session()->forget('registed_user'); //?
+        $request->session()->keep('registed_user');  //或者reflash二次闪存所有信息
 
         return view('register_success', [
             'email' => $user->email,
@@ -211,6 +211,7 @@ class TopController extends Controller
             $password = $request->post('password');
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                //默认是加密后的密码，MD5，在注册逻辑内书写
                 // ログイン成功
                 return redirect('/');
             } else {
