@@ -4,24 +4,67 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Bento;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class TopController extends Controller
 {
 
+    public function top(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user_id = Auth::id();
+
+            $bentos = Bento::all();
+
+            return view('top', [
+                'name' => $user->name,
+                'bentos' => $bentos
+            ]);
+        } else {
+            return redirect('/login');
+        }
+    }
+
     public function register(Request $request)
     {
-        $data = [
-            'email' => '',
-            'password' => '',
-            'password_confirm' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-            'name' => '',
-        ];
-        return view('register', ['data' => $data]);
+        $error_message = $request->session()->get('error_message');
+        $data = $request->session()->get('data');
+
+        if ($error_message == null) {
+            $error_message = [
+                'email' => null,
+                'password' => null,
+                'password_confirm' => null,
+                'postcode' => null,
+                'prefecture' => null,
+                'city' => null,
+                'address' => null,
+                'tel' => null,
+                'name' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'email' => '',
+                'password' => '',
+                'password_confirm' => '',
+                'postcode' => '',
+                'prefecture' => '',
+                'city' => '',
+                'address' => '',
+                'tel' => '',
+                'name' => '',
+            ];
+        }
+
+        return view('register', [
+            'error_message' => $error_message,
+            'data' => $data
+        ]);
     }
 
     public function registerUser(Request $request)
@@ -106,42 +149,88 @@ class TopController extends Controller
         }
 
         if ($has_error) {
-            return view('register', [
-                'error_message' => $error_message,
-                'data' => $data
-            ]);
+            $request->session()->put('error_message', $error_message);
+            $request->session()->put('data', $data);
+
+            return redirect('/register');
         }
 
         // 将输入的数据存入数据库
+        $user = new User();
+        $user->email = $email;
+        $hashed_password = Hash::make($password);
+        $user->password = $hashed_password;
+        $user->name = $name;
+        $user->postcode = $postcode;
+        $user->prefecture = $prefecture;
+        $user->city = $city;
+        $user->address = $address;
+        $user->tel = $tel;
+        $user->save();
+
+        $request->session()->flash('registed_user', $user);
+
+        return redirect('/register-success');
     }
 
-    public function userList(Request $request)
+    public function registerSuccess(Request $request)
     {
-        //$users = User::all();
-        //$user = User::find(2);
-        //$users = User::where('postcode', '1234567')->get();
-        //$user = User::where('postcode', '1234567')->first();
+        $user = $request->session()->get('registed_user');
+        $request->session()->keep('registed_user');
 
-        // 編集
-        //$user = User::find(4);
-        //$user->postcode = '7654321';
-        //$user->save();
+        return view('register_success', [
+            'email' => $user->email,
+            'name' => $user->name,
+            'postcode' => $user->postcode,
+            'prefecture' => $user->prefecture,
+            'city' => $user->city,
+            'address' => $user->address,
+            'tel' => $user->tel,
+        ]);
+    }
 
-        // 新規
-        /**
-        $user = new User();
-        $user->id = 4;
-        $user->email = 'test8@test.com';
-        $user->password = '1234';
-        $user->name = 'test8';
-        $user->postcode = '1234567';
-        $user->save();
-        */
+    public function login(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $email = $request->post('email');
+            $password = $request->post('password');
 
-        // 削除
-        $user = User::find(1);
-        if ($user != null) {
-            $user->delete();
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                // ログイン成功
+                return redirect('/');
+            } else {
+                // ログイン失敗
+                $request->session()->put('login_failed', true);
+
+                return redirect('/login');
+            }
+
+            /**
+            $user = User::where('email', $email)->first();
+            if ($password == $user->password) {
+                // ログイン成功
+                return redirect('/');
+            } else {
+                // ログイン失敗
+                $request->session()->put('login_failed', true);
+
+                return redirect('/login');
+            }
+             */
         }
+
+        $login_failed = $request->session()->get('login_failed');
+        $request->session()->forget('login_failed');
+
+        return view('login', [
+            'login_failed' => $login_failed
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect('/login');
     }
 }

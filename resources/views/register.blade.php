@@ -1,12 +1,8 @@
-<!Doctype html>
-<html lang="ja">
-<head>
-    <title>新規登録</title>
-    <meta charset="utf-8">
+@extends('layout')
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
+@section('title', '新規登録')
+
+@section('content')
 <main class="center">
     <h1>新規登録</h1>
     <div>
@@ -15,8 +11,8 @@
                 <tr>
                     <td>メールアドレス</td>
                     <td>
-                        <input type="text" name="email" value="@if(isset($data)){{ $data['email'] }}@endif" />
-                        @if(isset($error_message) && $error_message['email'] != null)
+                        <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
+                        @if($error_message != null && $error_message['email'] != null)
                             <span class="error-message">{{ $error_message['email'] }}</span>
                         @endif
                     </td>
@@ -103,5 +99,4 @@
         </form>
     </div>
 </main>
-</body>
-</html>
+@endsection

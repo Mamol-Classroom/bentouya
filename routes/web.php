@@ -13,8 +13,11 @@ use App\Http\Controllers\TopController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [TopController::class, 'top']);
 
 Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
-
-Route::get('/user-list', [TopController::class, 'userList']);
+Route::get('/register-success', [TopController::class, 'registerSuccess']);
+Route::get('/login', [TopController::class, 'login']);
+Route::post('/login', [TopController::class, 'login']);
+Route::get('/logout', [TopController::class, 'logout']);
