@@ -38,5 +38,6 @@
                 </tr>
             </table>
         </div>
+        <a href="/login"><button type="submit">登録画面へ</button></a>
     </main>
 @endsection

@@ -3,27 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\Auth; //确定auth使用路径
-=======
+
+use App\Models\User;  //模型路径
 use App\Models\Bento;
-use Illuminate\Support\Facades\Auth;
->>>>>>> main
-use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Auth;  //确定auth使用路径
+use Illuminate\Support\Facades\Hash;  //hash路径
 
 class TopController extends Controller
 {
 
     public function top(Request $request)
     {
-<<<<<<< HEAD
-        if (Auth::check()) {               //验证是否为登录状态
-            return view('top');
-=======
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user_id = Auth::id();
+        if (Auth::check()) {              //验证是否为登录状态,是进入主页，不是进入登录画面
+            $user = Auth::user();         //config文件夹下的auth.php文件进行配置
+            $user_id = Auth::id();        //验证的是加密密码->Hash
 
             $bentos = Bento::all();
 
@@ -31,9 +25,9 @@ class TopController extends Controller
                 'name' => $user->name,
                 'bentos' => $bentos
             ]);
->>>>>>> main
+
         } else {
-            return redirect('/login');
+            return redirect('/login'); //重定向页面(跳转)
         }
     }
 
@@ -158,10 +152,10 @@ class TopController extends Controller
         }
 
         if ($has_error) {
-            $request->session()->put('error_message', $error_message);
+            $request->session()->put('error_message', $error_message);  //存在(服务器)，REDIS里，携带数据
             $request->session()->put('data', $data);
 
-            return redirect('/register');
+            return redirect('/register');  //重定向
         }
 
         // 将输入的数据存入数据库
@@ -190,7 +184,7 @@ class TopController extends Controller
 */
         $user = new User();
         $user->email = $email;
-        $hashed_password = Hash::make($password);  //密码加密
+        $hashed_password = Hash::make($password);  //密码加密->Auth验证的是加密密码
         $user->password = $hashed_password;
         $user->name = $name;
         $user->postcode = $postcode;
@@ -198,21 +192,18 @@ class TopController extends Controller
         $user->city = $city;
         $user->address = $address;
         $user->tel = $tel;
-        $user->save();
+        $user->save();    //保存新实例
 
-        $request->session()->flash('registed_user', $user);
+        $request->session()->flash('registed_user', $user);  //闪存，只存活一个请求
 
-        return redirect('/register-success');
+        return redirect('/register-success');     //重定向
     }
 
     public function registerSuccess(Request $request)
     {
-        $user = $request->session()->get('registed_user');
-<<<<<<< HEAD
+        $user = $request->session()->get('registed_user'); //接收上一个flash
+
         $request->session()->keep('registed_user');  //或者reflash二次闪存所有信息
-=======
-        $request->session()->keep('registed_user');
->>>>>>> main
 
         return view('register_success', [
             'email' => $user->email,
@@ -268,7 +259,7 @@ class TopController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::logout();    //退出登录
 
         return redirect('/login');
     }
