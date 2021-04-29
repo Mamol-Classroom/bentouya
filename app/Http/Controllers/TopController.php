@@ -113,8 +113,21 @@ class TopController extends Controller
         }
 
         // 将输入的数据存入数据库
-    }
+        $user = new User();
+        $user->email = $email;
+        $user->password = $password;
+        $user->name = $name;
+        $user->postcode = $postcode;
+        $user->prefecture = $prefecture;
+        $user->city = $city;
+        $user->address = $address;
+        $user->tel = $tel;
+        $user->save();
 
+
+
+    }
+    /**
     public function userList(Request $request)
     {
         //$users = User::all();
@@ -137,12 +150,10 @@ class TopController extends Controller
         $user->postcode = '1234567';
         $user->save();
         */
-
-        // 削除
         /**
+        // 削除
         $user = User::find(1);
         if ($user != null) {
             $user->delete();
         }*/
-    }
 }
