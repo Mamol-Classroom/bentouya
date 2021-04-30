@@ -21,3 +21,4 @@ Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register_success', [TopController::class, 'registerSuccess']);
 Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
+Route::get('/logout', [TopController::class, 'logout']);
