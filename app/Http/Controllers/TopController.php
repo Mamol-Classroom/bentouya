@@ -68,6 +68,11 @@ class TopController extends Controller
         ]);
     }
 
+
+
+
+
+
     public function registerUser(Request $request)
     {
         $email = $request->post('email');
@@ -283,6 +288,7 @@ class TopController extends Controller
 
     public function bentoRegister(Request $request)
     {
+
         $bento_error_message = $request->session()->get('bento_error_message');
         $bento_data = $request->session()->get('bento_data');
 
