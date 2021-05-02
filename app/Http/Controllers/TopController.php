@@ -168,76 +168,83 @@ class TopController extends Controller
         $user->tel = $tel;
         $user->save();
 
-       $request->session()->put('register_user',$user);
+        $request->session()->put('register_user',$user);
 
 
-       return redirect('/register_success');
+        return redirect('/register_success');
+
     }
+
 
     public function registerSuccess(Request $request)
+
     {
+
         $user = $request->session()->get('register_user');
 
-      return view('register_success',[
-          'email' => $user->email,
-          'name' => $user->name,
-          'postcode' => $user->postcode,
-          'prefecture' => $user->prefecture,
-          'city' => $user->city,
-          'address' => $user->address,
-          'tel' => $user->tel,
+
+        return view('register_success',[
+            'email' => $user->email,
+            'name' => $user->name,
+            'postcode' => $user->postcode,
+            'prefecture' => $user->prefecture,
+            'city' => $user->city,
+            'address' => $user->address,
+            'tel' => $user->tel,
 
 
+            ]);
 
-      ]);
     }
-//数据库查验密码是否正确
+            //数据库查验密码是否正确
     public function login(Request $request)
-    {
-        if ($request->method() == 'POST') {
-            $email = $request->post('email');
-            $password = $request->post('password');
+             {
+                 if ($request->method() == 'POST') {
+                     $email = $request->post('email');
+                     $password = $request->post('password');
 
-            if (Auth::attempt(['email'=>$email,'password'=>$password])){
-                // ログイン成功
-                return redirect('/');
-            } else {
-                // ログイン失敗
-                $request->session()->put('login_failed', true);
 
-                return redirect('/login');
-            }
+                     if (Auth::attempt(['email'=>$email,'password'=>$password])){
+
+                         return redirect('/');
+
+                     } else {
+
+                         $request->session()->put('login_failed', true);
+
+                         return redirect('/login');
+                     }
 
             /**
             $user = User::where('email', $email)->first();
             if ($password == $user->password) {
-// ログイン成功
+               // ログイン成功
                 return redirect('/');
             } else {
-// ログイン失敗
+                 // ログイン失敗
                 $request->session()->put('login_failed', true);
 
                 return redirect('/login');
             }
              */
-        }
+                 }
 
-        $login_failed = $request->session()->get('login_failed');
-        $request->session()->forget('login_failed');
+                 $login_failed = $request->session()->get('login_failed');
+                 $request->session()->forget('login_failed');
 
-        return view('login', [
-            'login_failed' => $login_failed
-        ]);
-    }
+                 return view('login', [
+                     'login_failed' => $login_failed
+                 ]);
+             }
 
-public function logout(Request $request)
-{
-    Auth::logout();
-    return redirect('/login');
+             public function logout(Request $request)
+             {
+                 Auth::logout();
+                 return redirect('/login');
 
 
 
-}
+             }
 
 
 
@@ -273,5 +280,156 @@ public function logout(Request $request)
 
         }
          */
+
+    public function bentoRegister(Request $request)
+    {
+        $bento_error_message = $request->session()->get('bento_error_message');
+        $bento_data = $request->session()->get('bento_data');
+
+        if ($bento_error_message == null) {
+            $bento_error_message = [
+                'bento_name' => null,
+                'price' => null,
+                'bento_code' => null,
+                'description' => null,
+                'guarantee_period' => null,
+                'stock' => null,
+                'user_id' => null,
+
+            ];
+        }
+
+        if ($bento_data == null) {
+            $bento_data = [
+                'bento_name' => '',
+                'price' => '',
+                'bento_code' => '',
+                'description' => '',
+                'guarantee_period' => '',
+                'stock' => '',
+                'user_id' => '',
+
+            ];
+        }
+
+        return view('bento_register', [
+            'bento_error_message' => $bento_error_message,
+            'bento_data' => $bento_data
+        ]);
+    }
+
+    public function bentoRegisterUser(Request $request)
+    {
+        $bento_name = $request->post('bento_name');
+        $price = $request->post('price');
+        $bento_code = $request->post('bento_code');
+        $description = $request->post('description');
+        $guarantee_period = $request->post('guarantee_period');
+        $stock = $request->post('stock');
+        $user_id = $request->post('user_id');
+
+
+        $bento_data = [
+            'bento_name' => $bento_name,
+            'price' => $price,
+            'bento_code' => $bento_code,
+            'description' => $description,
+            'guarantee_period' => $guarantee_period,
+            'stock' => $stock,
+            'user_id' => $user_id,
+
+        ];
+
+        $has_bento_error = false;
+        $bento_error_message = [
+            'bento_name' => null,
+            'price' => null,
+            'bento_code' => null,
+            'guarantee_period' => null,
+            'stock' => null,
+            'user_id' => null,
+
+        ];
+        if ($bento_name == "") {
+            $bento_error_message['bento_name']  = '弁当名を入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($price == "") {
+            $bento_error_message['price']  = '価格を入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($bento_code == "") {
+            $bento_error_message['bento_code']  = '弁当コードを入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($guarantee_period == "") {
+            $bento_error_message['guarantee_period']  = '賞味期限を入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($stock == "") {
+            $bento_error_message['stock']  = '在庫数を入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($user_id == "") {
+            $bento_error_message['user_id']  = 'ユーザーIDを入力してください';
+            $has_bento_error = true;
+        }
+
+        if ($has_bento_error) {
+            $request->session()->put('bento_error_message', $bento_error_message);
+            $request->session()->put('bento_data', $bento_data);
+        }
+
+
+        if ($has_bento_error) {
+            $request->session()->put('error_message', $bento_error_message);
+            $request->session()->put('data', $bento_data);
+
+            return redirect('/bento_register');}
+
+
+        $bento = new Bento();
+        $bento->bento_name = $bento_name;
+        $bento->price = $price;
+        $bento->bento_code = $bento_code;
+        $bento->description = $description;
+        $bento->guarantee_period = $guarantee_period;
+        $bento->stock = $stock;
+        $bento->user_id = $user_id ;
+        $bento->save();
+
+        $request->session()->put('bento-register-user',$bento);
+
+
+        return redirect('/bento_register_success');
+
+    }
+
+
+    public function bentoRegisterSuccess(Request $request)
+
+    {
+
+        $bento = $request->session()->get('bento-register-user');
+
+
+        return view('bento_register_success',[
+            'bento_name' => $bento->bento_name,
+            'price' => $bento->price,
+            'bento_code' => $bento->bento_code,
+            'description' => $bento->description,
+            'guarantee_period' => $bento->guarantee_period,
+            'stock' => $bento->stock,
+            'user_id' => $bento->user_id,
+
+
+        ]);
+
+    }
 
 }

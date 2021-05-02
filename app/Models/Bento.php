@@ -9,5 +9,6 @@ class Bento extends Model
 {
     use HasFactory;
     protected $table = 'bentos';
+    public $timestamps = false;
 
 }
