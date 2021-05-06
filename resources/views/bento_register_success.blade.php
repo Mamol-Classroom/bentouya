@@ -39,4 +39,10 @@
             </table>
         </div>
     </main>
+
+
+
+    <a href="/bento_register">前ページに戻る</a>
+    <br>
+    <a href="/">トップページに戻る</a>
 @endsection

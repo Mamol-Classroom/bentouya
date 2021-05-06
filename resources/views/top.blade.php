@@ -25,5 +25,5 @@
         </div>
     </main>
 
-
+    <a href="/bento_register">弁当登録</a>
 @endsection
