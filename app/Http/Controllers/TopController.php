@@ -235,7 +235,12 @@ public function login(Request $request){
 //
 //            else{
 
-                DB::table('users')->where('id',$id)->update(['email'=>$new_email]);
+                //DB::table('users')->where('id',$id)->update(['email'=>$new_email]);
+
+            $user = User::find($id);
+            $user->email = $new_email;
+            $user->save();
+
                 $error_msg='＊メールアドレスの変更が成功しました！';
                 return view('update.email_update',['error_msg'=>$error_msg]);
 //            }
@@ -499,7 +504,8 @@ public function usersDelete(Request $request){
 
 public function usersDeleteAction(Request $request){
         $user_id=$request->post('id');
-        $user=DB::table('users')->where('id',$user_id)->first();
+        //$user=DB::table('users')->where('id',$user_id)->first();
+        $user = User::find($user_id);
         if($user->postcode==null){
             $postcode='無';
         }else{
@@ -546,6 +552,7 @@ public function usersDeleteAction(Request $request){
 }
 
 public function usersDeleteSuccess(Request $request){
+        /**
         $user_ids=DB::table('bentos')->pluck('user_id');
         foreach($user_ids as $user_id){
             if($user_id==$request->post('id')){
@@ -553,7 +560,19 @@ public function usersDeleteSuccess(Request $request){
 
             }
         }
+         */
 
+        /**
+        $bento = Bento::where('user_id', $request->post('id'))->first();
+        if ($bento != null) {
+            return view('users_delete_fail');
+        }
+         */
+    $bento = Bento::where('user_id', $request->post('id'))->get();
+    $bento = $bento->toArray();
+    if (count($bento) > 0) {
+        return view('users_delete_fail');
+    }
 
         DB::table('users')->where('id',$request->post('id'))->delete();
         return view('users_delete_success');
