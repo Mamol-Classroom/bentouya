@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers;  //命名区域
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;  //request路径
 
 use App\Models\User;  //模型路径
 use App\Models\Bento;
+use App\Models\BentoImage;
 
 use Illuminate\Support\Facades\Auth;  //确定auth使用路径
 use Illuminate\Support\Facades\Hash;  //hash路径
@@ -20,6 +21,7 @@ class TopController extends Controller
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
             $bentos = Bento::all();
+            $bentos_images = BentoImage::all();  //是否需要添加？
 
             return view('top', [
                 'name' => $user->name,
@@ -224,7 +226,7 @@ class TopController extends Controller
             $password = $request->post('password');
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                //默认是加密后的密码，MD5，在注册逻辑内书写
+                //默认是加密后的密码，MD5，在注册逻辑内编写
                 // ログイン成功
                 return redirect('/');
             } else {
