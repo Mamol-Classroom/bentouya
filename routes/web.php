@@ -18,3 +18,4 @@ Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 
 Route::get('/user-list', [TopController::class, 'userList']);
+Route::get('/register-success',[TopController::class,'register_success']);

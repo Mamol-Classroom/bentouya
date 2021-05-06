@@ -14,7 +14,7 @@
         <p>住所:{{$address}}</p>
         <p>電話番号:{{$tel}}</p>
     </table>
-    <button type="button" onclick."location.href =''"><</button>
+    <button type="button" onclick."location.href ='/'"><</button>
 </main>
 
 
