@@ -37,7 +37,7 @@
             <table>
                 <tr>
                     <td style="width:100px">
-                        <form action="/bento-update">
+                        <form action="/bento-update" method="post">
                             <input type="hidden" name=id value="{{$bento->id}}">
                             <input type="hidden" name=bento_name value="{{$bento->bento_name}}">
                             <input type="hidden" name=price value="{{$bento->price}}">

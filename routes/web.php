@@ -50,13 +50,14 @@ Route::any('/address-update',[TopController::class,'addressUpdate']);
 Route::get('/bento-manage',[TopController::class,'bentoManage']);
 Route::get('/bento-add',[TopController::class,'bentoAdd']);
 Route::post('/bento-add-success',[TopController::class,'bentoAddSuccess']);
-Route::any('/bento-update',[TopController::class,'bentoUpdate']);
+Route::post('/bento-update',[TopController::class,'bentoUpdate']);
 Route::post('/bento-update-success',[TopController::class,'bentoUpdateSuccess']);
 Route::post('/bento-delete',[TopController::class,'bentoDelete']);
 
 Route::get('/users-delete',[TopController::class,'usersDelete']);
 Route::post('/users-delete-action',[TopController::class,'usersDeleteAction']);
 Route::post('/users-delete-success',[TopController::class,'usersDeleteSuccess']);
+Route::get('/users-delete-complete',[TopController::class,'bentoDeleteComplete']);
 
 
 Route::get('bento-buy-top',[TopController::class,'bentoBuyTop']);

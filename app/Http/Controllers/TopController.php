@@ -528,7 +528,12 @@ public function bentoUpdateSuccess(Request $request){
 public function bentoDelete(Request $request){
         $bento_id=$request->post('id');
         DB::table('bentos')->where('id',$bento_id)->delete();
-        return view('bento.bento_delete');
+        return redirect('/users-delete-complete');
+}
+
+public function bentoDeleteComplete(Request $request)
+{
+    return view('bento.bento_delete');
 }
 
 public function usersDelete(Request $request){
@@ -619,7 +624,10 @@ public function usersDeleteSuccess(Request $request){
 
 public function bentoBuyTop(Request $request){
         $user_id=Auth::id();
-        $bentos=DB::table('bentos')->whereNotIn('user_id',[$user_id])->get();
+        $bentos=DB::table('bentos')
+            //->whereNotIn('user_id',[$user_id])
+            ->where('user_id', '!=', $user_id)
+            ->get();
 
         return view ('bento_buy.bento_buy_top',[
             'bentos'=>$bentos

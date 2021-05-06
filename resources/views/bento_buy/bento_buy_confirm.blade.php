@@ -31,7 +31,7 @@
         </tr>
         </tr>
     </table>
-    <p>請求額：{{$quantity*$bento->price}}円</p>
+    <p>請求額：{{number_format($quantity*$bento->price)}}円</p>
     <form action="/bento-buy-success" method="post" >
         <input type="hidden" name="stock" value="{{$bento->stock}}">
         <input type="hidden" name="bento_id" value="{{$bento->id}}">
