@@ -14,7 +14,7 @@
                         <!--插入正确数据-->
                         <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
                         <!--报错-->
-                        @if($error_message != null && $error_message['email'] != null)
+                        @if(isset($error_message) && $error_message['email'] != null)
                             <span class="error-message">{{ $error_message['email'] }}</span>
                         @endif
                     </td>

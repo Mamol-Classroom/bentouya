@@ -85,7 +85,7 @@ class TopController extends Controller
         $tel = $request->post('tel');
         $name = $request->post('name');
 
-        $data = [
+        $data = [                               //保留未出错信息
             'email' => $email,
             'password' => $password,
             'password_confirm' => $password_confirm,
