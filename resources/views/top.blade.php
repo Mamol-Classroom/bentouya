@@ -18,7 +18,7 @@
             @foreach($bentos as $bento)
                 <div class="bento">
                     <p>{{ $bento->bento_name }}</p>
-                    <p>￥ {{ number_format($bento->price) }}</p>
+                    <p>￥ {{ number_format($bento->price) }}</p> <!--给数字添加隔离符号，-->
                 </div>
             @endforeach
         </div>

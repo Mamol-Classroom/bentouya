@@ -1,4 +1,5 @@
 <?php
+//避免在post方法中渲染模板，而是在get方法中使用！运用redirect重定向来完成
 
 namespace App\Http\Controllers;  //命名区域
 
