@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
+use App\Http\Controllers\BentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,7 @@ use App\Http\Controllers\TopController;
 |
 */
 Route::get('/', [TopController::class, 'top']);
-
+// ユーザー
 Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register-success', [TopController::class, 'registerSuccess']);
@@ -22,5 +23,14 @@ Route::get('/register-success', [TopController::class, 'registerSuccess']);
 Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
 Route::get('/logout', [TopController::class, 'logout']);
+<<<<<<< HEAD
 
+=======
+// 弁当
+Route::get('/bento/add', [BentoController::class, 'add']);
+Route::post('/bento/add', [BentoController::class, 'add']);
+Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
+Route::get('/bento/delete', [BentoController::class, 'delete']);
+// 支払い
+>>>>>>> main
 
