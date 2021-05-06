@@ -16,14 +16,16 @@
                 <td><input type="number" name="price"></td>
                 <td><p style="color:red">@error('price'){{$message}}@enderror()</p></td>
             </tr>
+            {{--
             <tr>
                 <td>商品コード：</td>
                 <td><input type="text" name="bento_code"></td>
                 <td><p style="color:red">@error('bento_code'){{$message}}@enderror()</p></td>
             </tr>
+            --}}
             <tr>
                 <td>賞味期限：</td>
-                <td><input type="datetime-local" name="guarantee_period"></td>
+                <td><input type="date" name="guarantee_period"></td>
                 <td><p style="color:red">@error('guarantee_period'){{$message}}@enderror()</p></td>
             </tr>
             <tr>
@@ -31,6 +33,7 @@
                 <td><input type="number" name="stock"></td>
                 <td><p style="color:red">@error('stock'){{$message}}@enderror()</p></td>
             </tr>
+            {{--
             <tr>
                 <td>登録者：</td>
                 <td>
@@ -42,6 +45,7 @@
                 </td>
                 <td><p style="color:red">@error('user_id'){{$message}}@enderror()</p></td>
             </tr>
+            --}}
             <tr>
                 <td>商品説明：</td>
                 <td><input type="text" name="description"></td>

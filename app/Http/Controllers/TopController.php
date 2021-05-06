@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Bento;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -392,19 +393,57 @@ public function bentoAdd(Request $request){
 }
 
 public function bentoAddSuccess(Request $request){
-    $request->validate(['bento_name'=>'required','price'=>'required',
-        'bento_code'=>'required|unique:bentos,bento_code','guarantee_period'=>
-            'required','stock'=>'required','user_id'=>'required']);
+//    $request->validate(['bento_name'=>'required','price'=>'required',
+//        //'bento_code'=>'required|unique:bentos,bento_code',
+//        'guarantee_period'=>
+//            'required','stock'=>'required','user_id'=>'required']);
     $bento_name=$request->post('bento_name');
     $price=$request->post('price');
-    $bento_code=$request->post('bento_code');
+    //$bento_code=$request->post('bento_code');
+
     $description=$request->post('description');
     $guarantee_period=$request->post('guarantee_period');
+
+    // get random num
+    /**
+    $random_num = rand(0, 9999999999);
+    $random_num_length = strlen((string)$random_num);
+    $zero_count = 10 - $random_num_length;
+    $zero_string = '';
+    for ($i = 0; $i < $zero_count; $i++) {
+        $zero_string = $zero_string.'0';
+    }
+    $random_num = $zero_string.$random_num;
+    // get random num end
+    $bento_code = 'B'.$random_num.'-'.Carbon::now()->format('Ymd').'-'.str_replace('-', '', $guarantee_period);
+
+    $exist_bento = Bento::where('bento_code', $bento_code)->first();
+     */
+    $bento_code_data = $this->generateBentoCode($guarantee_period);
+    $bento_code = $bento_code_data['bento_code'];
+    $exist_bento = $bento_code_data['exist_bento'];
+
+    while ($exist_bento != null) {
+        $bento_code_data = $this->generateBentoCode($guarantee_period);
+        $bento_code = $bento_code_data['bento_code'];
+        $exist_bento = $bento_code_data['exist_bento'];
+    }
+
     $stock=$request->post('stock');
-    $user_id=$request->post('user_id');
+    $user_id=Auth::id();
     //dd($guarantee_period);
-    DB::table('bentos')->insert(['bento_name'=>$bento_name,'price'=>$price,'bento_code'=>$bento_code,
-        'description'=>$description,'guarantee_period'=>$guarantee_period,'stock'=>$stock,'user_id'=>$user_id,]);
+//    DB::table('bentos')->insert(['bento_name'=>$bento_name,'price'=>$price,'bento_code'=>$bento_code,
+//        'description'=>$description,'guarantee_period'=>$guarantee_period,'stock'=>$stock,'user_id'=>$user_id,]);
+    $bento = new Bento();
+    $bento->bento_name = $bento_name;
+    $bento->price = $price;
+    $bento->bento_code = $bento_code;
+    $bento->description = $description;
+    $bento->guarantee_period = $guarantee_period;
+    $bento->stock = $stock;
+    $bento->user_id = $user_id;
+    $bento->save();
+
 
     return view('bento.bento_add_success',
         ['bento_name'=>$bento_name,
@@ -605,7 +644,26 @@ public function bentoBuySuccess(Request $request){
         return view('bento_buy.bento_buy_success');
 }
 
+protected function generateBentoCode($guarantee_period)
+{
+    $random_num = rand(0, 9999999999);
+    $random_num_length = strlen((string)$random_num);
+    $zero_count = 10 - $random_num_length;
+    $zero_string = '';
+    for ($i = 0; $i < $zero_count; $i++) {
+        $zero_string = $zero_string.'0';
+    }
+    $random_num = $zero_string.$random_num;
+    // get random num end
+    $bento_code = 'B'.$random_num.'-'.Carbon::now()->format('Ymd').'-'.str_replace('-', '', $guarantee_period);
 
+    $exist_bento = Bento::where('bento_code', $bento_code)->first();
+
+    return [
+        'bento_code' => $bento_code,
+        'exist_bento' => $exist_bento
+    ];
+}
 
 
 }
