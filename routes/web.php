@@ -26,3 +26,5 @@ Route::get('/logout', [TopController::class, 'logout']);
 Route::get('/bento_register', [TopController::class, 'bentoRegister']);
 Route::post('/bento-register-user', [TopController::class, 'bentoRegisterUser']);
 Route::get('/bento_register_success', [TopController::class, 'bentoRegisterSuccess']);
+
+

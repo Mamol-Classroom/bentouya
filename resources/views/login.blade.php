@@ -46,5 +46,9 @@
             </div>
         </div>
     </main>
+    <div class="center">
+        <a href="/bento_register">アカウントをお持ちでない方へ</a>
+
+    </div>
 @endsection
 

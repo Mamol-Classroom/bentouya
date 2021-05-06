@@ -7,7 +7,7 @@
        <div class="logo"><img src="/img/logo.jpg"width="100px"height="auto"></div>
         <div class="profile">
         <p>ようこそ。{{$name}}　様</p>
-        <a href="/logout">ログアウト</a>
+            <a href="/logout">ログアウト</a>
         </div>
     </header>
 
@@ -25,5 +25,6 @@
         </div>
     </main>
 
-    <a href="/bento_register">弁当登録</a>
+    <a href="bento_register">弁当登録</a>
+
 @endsection
