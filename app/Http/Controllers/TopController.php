@@ -21,11 +21,21 @@ class TopController extends Controller
             $user = Auth::user();         //config文件夹下的auth.php文件进行配置
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
+<<<<<<< HEAD
             $bentos = Bento::all();
             $bentos_images = BentoImage::all();  //是否需要添加？
+=======
+            $word = $request->query('word');
+            if ($word == null) {
+                $bentos = Bento::all();
+            } else {
+                $bentos = Bento::where('bento_name', 'like', '%'.$word.'%')->get();
+            }
+>>>>>>> main
 
             return view('top', [
-                'bentos' => $bentos
+                'bentos' => $bentos,
+                'word' => $word
             ]);
 
         } else {

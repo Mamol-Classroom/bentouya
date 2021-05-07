@@ -153,7 +153,16 @@ class BentoController extends Controller
 
     public function delete(Request $request)   //取值的方法取决于传值的形式
     {
+        $bento_id = $request->post('bento_id');
+        $bento = Bento::find($bento_id);
 
+        if ($bento == null || $bento->user_id != Auth::id()) {
+            throw new NotFoundHttpException();
+        }
+
+        $bento->delete();
+
+        return redirect('/bentos');
     }
 
     protected function generateBentoCode($guarantee_period)  //自动生成便当code
@@ -182,22 +191,37 @@ class BentoController extends Controller
         $bento_id = $request->query('bento_id');
         $bento = Bento::find($bento_id);
 
-        $data = [
-            'bento_name' => $bento->bento_name,
-            'price' => $bento->price,
-            'description' => $bento->description,
-            'stock' => $bento->stock,
-            'guarantee_period' => $bento->guarantee_period,
-        ];
+        if ($bento == null || $bento->user_id != Auth::id()) {
+            throw new NotFoundHttpException();
+        }
+
+        $error_message = $request->session()->get('bento.update.error_message');
+        $data = $request->session()->get('bento.update.data');
+
+        $request->session()->forget('bento.update.error_message');
+        $request->session()->forget('bento.update.data');
+
+        if ($error_message == null) {
+            $error_message = [
+                'bento_name' => null,
+                'price' => null,
+                'description' => null,
+                'guarantee_period' => null,
+                'stock' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'bento_name' => $bento->bento_name,
+                'price' => $bento->price,
+                'description' => $bento->description,
+                'stock' => $bento->stock,
+                'guarantee_period' => $bento->guarantee_period,
+            ];
+        }
 
         $has_error = false;
-        $error_message = [
-            'bento_name' => null,
-            'price' => null,
-            'description' => null,
-            'stock' => null,
-            'guarantee_period' => null,
-        ];
 
         if ($request->method() === 'POST') {
             $bento_name = $request->post('bento_name');
@@ -223,12 +247,26 @@ class BentoController extends Controller
             ];
 
             foreach ($data as $key => $value) {
+<<<<<<< HEAD
                 if($key === 'description'){
+=======
+                if ($key === 'description') {
+>>>>>>> main
                     continue;
                 }
                 if ($value == '') {
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
+                }
+                if ($key === 'price') {
+                    if ($value < 100) {
+                        $error_message[$key] = '价格不能低于100';
+                        $has_error = true;
+                    }
+                    if ($value > 2000) {
+                        $error_message[$key] = '价格不能高于2000';
+                        $has_error = true;
+                    }
                 }
             }
 
