@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Bento;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Illuminate\Support\Carbon;  //laravel自带日期生成
+
+use Illuminate\Support\Facades\Auth;  //认证
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;  //跳转到404不存在页面
 
 class BentoController extends Controller
 {
@@ -45,7 +48,7 @@ class BentoController extends Controller
                 'guarantee_period' => '賞味期限',
             ];
 
-            foreach ($data as $key => $value) {
+            foreach ($data as $key => $value) {   //判断用户输入信息是否正确
                 if ($value == '') {
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
@@ -144,7 +147,7 @@ class BentoController extends Controller
 
     }
 
-    protected function generateBentoCode($guarantee_period)
+    protected function generateBentoCode($guarantee_period)  //自动生成便当code
     {
         $random_num = rand(0, 9999999999);
         $random_num_length = strlen((string)$random_num);
@@ -156,12 +159,12 @@ class BentoController extends Controller
         $random_num = $zero_string.$random_num;
         // get random num end
         $bento_code = 'B'.$random_num.'-'.Carbon::now()->format('Ymd').'-'.str_replace('-', '', $guarantee_period);
-
+                                        //laravel自带class，生成时间                更改格式：'去除部分'，'更换部分'，'更换对象'
         $exist_bento = Bento::where('bento_code', $bento_code)->first();
 
         return [
-            'bento_code' => $bento_code,
-            'exist_bento' => $exist_bento
+            'bento_code' => $bento_code,   //自动生成的便当code
+            'exist_bento' => $exist_bento  //确定是否已存在该便当code
         ];
     }
 }

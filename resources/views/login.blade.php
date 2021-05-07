@@ -44,10 +44,9 @@
                         <div class="a-section">
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                                 <span class="a-button-inner">
-                                    <input id="continue" tabindex="5" class="a-button-input" type="submit" aria-labelledby="continue-announce">
-                                    <span id="continue-announce" class="a-button-text" aria-hidden="true" method="/register">
+                                    <a href="/register"><span id="continue-announce" class="a-button-text" aria-hidden="true">
                                     新規登録へ
-                                    </span>
+                                        </span></a>
                                 </span>
                             </span>
                         </div>

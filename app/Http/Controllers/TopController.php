@@ -1,6 +1,6 @@
 <?php
 //避免在post方法中渲染模板，而是在get方法中使用！运用redirect重定向来完成
-
+//post传值使用{{}},get则使用session
 namespace App\Http\Controllers;  //命名区域
 
 use Illuminate\Http\Request;  //request路径
@@ -17,7 +17,7 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-        if (Auth::check()) {              //验证是否为登录状态,是进入主页，不是进入登录画面
+        if (Auth::check()) {              //进入session验证是否有登录信息,是进入主页，不是进入登录画面
             $user = Auth::user();         //config文件夹下的auth.php文件进行配置
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
@@ -230,7 +230,8 @@ class TopController extends Controller
                 //默认是加密后的密码，MD5，在注册逻辑内编写
                 // ログイン成功
                 return redirect('/');
-            } else {
+            }
+            else{
                 // ログイン失敗
                 $request->session()->put('login_failed', true);
 
