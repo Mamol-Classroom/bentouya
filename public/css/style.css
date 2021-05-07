@@ -190,6 +190,7 @@ label, legend {
     height: 29px;
     box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset;
     border-radius: 2px;
+    text-decoration: none;
 }
 
 element.style {

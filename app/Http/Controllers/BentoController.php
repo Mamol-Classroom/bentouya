@@ -151,7 +151,7 @@ class BentoController extends Controller
         ]);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request)   //取值的方法取决于传值的形式
     {
 
     }
@@ -223,6 +223,9 @@ class BentoController extends Controller
             ];
 
             foreach ($data as $key => $value) {
+                if($key === 'description'){
+                    continue;
+                }
                 if ($value == '') {
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;

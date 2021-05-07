@@ -44,7 +44,7 @@
                         <div class="a-section">
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                                 <span class="a-button-inner">
-                                    <a href="/register"><span id="continue-announce" class="a-button-text" aria-hidden="true">
+                                    <a class="a-button-inner" href="/register"><span id="continue-announce" class="a-button-text" aria-hidden="true">
                                     新規登録へ
                                         </span></a>
                                 </span>
