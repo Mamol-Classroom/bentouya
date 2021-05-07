@@ -25,7 +25,6 @@ class TopController extends Controller
             $bentos_images = BentoImage::all();  //是否需要添加？
 
             return view('top', [
-                'name' => $user->name,
                 'bentos' => $bentos
             ]);
 

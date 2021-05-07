@@ -66,6 +66,33 @@ header {
     width: 40%;
 }
 
+.bento a {
+    text-decoration: none;
+}
+
+nav {
+    text-align: center;
+}
+
+nav ul {
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style-type: none;
+    width: 20%;
+    background: #1c791c;
+}
+
+nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+}
+
 /** amazon */
 .a-section {
     margin-bottom: 22px;

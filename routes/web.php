@@ -26,10 +26,16 @@ Route::post('/login', [TopController::class, 'login']);
 Route::get('/logout', [TopController::class, 'logout']);
 
 // 弁当
+Route::get('/bentos', [BentoController::class, 'index']);
 Route::get('/bento/add', [BentoController::class, 'add']);
 Route::post('/bento/add', [BentoController::class, 'add']);
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
 Route::get('/bento/delete', [BentoController::class, 'delete']);
+<<<<<<< HEAD
 
+=======
+Route::get('/bento/update', [BentoController::class, 'update']);
+Route::post('/bento/update', [BentoController::class, 'update']);
+>>>>>>> main
 // 支払い
 
