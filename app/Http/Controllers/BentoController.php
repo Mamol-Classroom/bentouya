@@ -150,7 +150,16 @@ class BentoController extends Controller
 
     public function delete(Request $request)
     {
+        $bento_id = $request->post('bento_id');
+        $bento = Bento::find($bento_id);
 
+        if ($bento == null || $bento->user_id != Auth::id()) {
+            throw new NotFoundHttpException();
+        }
+
+        $bento->delete();
+
+        return redirect('/bentos');
     }
 
     protected function generateBentoCode($guarantee_period)
