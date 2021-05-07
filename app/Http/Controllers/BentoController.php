@@ -11,6 +11,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BentoController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = Auth::id();
+        $bentos = Bento::where('user_id', $user_id)->get();
+
+        return view('bento.index', ['bentos' => $bentos]);
+    }
+
     public function add(Request $request)
     {
         if ($request->method() === 'POST') {

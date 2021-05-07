@@ -20,7 +20,6 @@ class TopController extends Controller
             $bentos = Bento::all();
 
             return view('top', [
-                'name' => $user->name,
                 'bentos' => $bentos
             ]);
         } else {

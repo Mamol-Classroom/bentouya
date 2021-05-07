@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'トップページ')
+@section('title', '弁当管理')
 
 @section('content')
     <main>
-        <h1 class="center">商品一覧</h1>
+        <h1 class="center">弁当管理</h1>
         <div class="bento-container">
             @foreach($bentos as $bento)
                 <div class="bento">
