@@ -173,4 +173,81 @@ class BentoController extends Controller
             'exist_bento' => $exist_bento
         ];
     }
+
+    public function update(Request $request)
+    {
+        $bento_id = $request->query('bento_id');
+        $bento = Bento::find($bento_id);
+
+        $data = [
+            'bento_name' => $bento->bento_name,
+            'price' => $bento->price,
+            'description' => $bento->description,
+            'stock' => $bento->stock,
+            'guarantee_period' => $bento->guarantee_period,
+        ];
+
+        $has_error = false;
+        $error_message = [
+            'bento_name' => null,
+            'price' => null,
+            'description' => null,
+            'stock' => null,
+            'guarantee_period' => null,
+        ];
+
+        if ($request->method() === 'POST') {
+            $bento_name = $request->post('bento_name');
+            $price = $request->post('price');
+            $description = $request->post('description');
+            $stock = $request->post('stock');
+            $guarantee_period = $request->post('guarantee_period');
+
+            $data = [
+                'bento_name' => $bento_name,
+                'price' => $price,
+                'description' => $description,
+                'stock' => $stock,
+                'guarantee_period' => $guarantee_period,
+            ];
+
+            $label_name = [
+                'bento_name' => '弁当名',
+                'price' => '価格',
+                'description' => '説明',
+                'stock' => '在庫数',
+                'guarantee_period' => '賞味期限',
+            ];
+
+            foreach ($data as $key => $value) {
+                if ($value == '') {
+                    $error_message[$key] = '请输入'.$label_name[$key];
+                    $has_error = true;
+                }
+            }
+
+            if ($has_error) {
+                $request->session()->put('bento.update.error_message', $error_message);
+                $request->session()->put('bento.update.data', $data);
+
+                return redirect('/bento/update?bento_id='.$bento_id);
+            }
+
+            // 将输入的数据修改数据库
+            $bento->bento_name = $bento_name;
+            $bento->price = $price;
+            $bento->description = $description;
+            $bento->guarantee_period = $guarantee_period;
+            $bento->stock = $stock;
+            $bento->save();
+
+            return redirect('/bento/update?bento_id='.$bento_id);
+        }
+
+        return view('bento.update', [
+            'bento_id' => $bento_id,
+            'data' => $data,
+            'error_message' => $error_message
+        ]);
+    }
 }

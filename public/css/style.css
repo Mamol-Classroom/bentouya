@@ -66,6 +66,10 @@ header {
     width: 40%;
 }
 
+.bento a {
+    text-decoration: none;
+}
+
 nav {
     text-align: center;
 }

@@ -28,5 +28,7 @@ Route::get('/bento/add', [BentoController::class, 'add']);
 Route::post('/bento/add', [BentoController::class, 'add']);
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
 Route::get('/bento/delete', [BentoController::class, 'delete']);
+Route::get('/bento/update', [BentoController::class, 'update']);
+Route::post('/bento/update', [BentoController::class, 'update']);
 // 支払い
 

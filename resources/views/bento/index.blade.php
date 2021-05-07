@@ -8,8 +8,10 @@
         <div class="bento-container">
             @foreach($bentos as $bento)
                 <div class="bento">
-                    <p>{{ $bento->bento_name }}</p>
-                    <p>￥ {{ number_format($bento->price) }}</p>
+                    <a href="/bento/update?bento_id={{ $bento->id }}">
+                        <p>{{ $bento->bento_name }}</p>
+                        <p>￥ {{ number_format($bento->price) }}</p>
+                    </a>
                 </div>
             @endforeach
         </div>
