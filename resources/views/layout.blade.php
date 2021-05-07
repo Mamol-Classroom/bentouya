@@ -21,7 +21,7 @@
 <nav>
     <ul>
         <li><a href="/">トップ</a></li>
-        <li><a href="">マイページ</a></li>
+        <li><a href="/mypage">マイページ</a></li>
         <li><a href="/bentos">商品管理</a></li>
     </ul>
 </nav>

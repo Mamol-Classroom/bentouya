@@ -93,6 +93,23 @@ nav ul li a {
     text-decoration: none;
 }
 
+#mypage {
+    display: flex;
+}
+
+#mypage-nav {
+    border-right: #111111 solid 1px;
+}
+
+#mypage-nav li {
+    list-style-type: none;
+}
+
+.mypage-subview {
+    width: 100%;
+    text-align: center;
+}
+
 /** amazon */
 .a-section {
     margin-bottom: 22px;
