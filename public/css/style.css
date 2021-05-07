@@ -93,6 +93,15 @@ nav ul li a {
     text-decoration: none;
 }
 
+#search-block {
+    text-align: center;
+}
+
+#search-block input {
+    display: inline-block;
+    width: 50%;
+}
+
 #mypage {
     display: flex;
 }
