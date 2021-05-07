@@ -242,6 +242,16 @@ class BentoController extends Controller
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
                 }
+                if ($key === 'price') {
+                    if ($value < 100) {
+                        $error_message[$key] = '价格不能低于100';
+                        $has_error = true;
+                    }
+                    if ($value > 2000) {
+                        $error_message[$key] = '价格不能高于2000';
+                        $has_error = true;
+                    }
+                }
             }
 
             if ($has_error) {
