@@ -166,9 +166,21 @@ class BentoController extends Controller
 
     public function delete(Request $request)
     {
+        $bento_id = $request->post('bento_id');
+        $bento = Bento::find($bento_id);
 
+        if($bento ==null ||$bento->user_id != Auth::id())
+        {
+            throw new NotFoundHttpException();
+        }
+
+        $bento->delete();
+
+        return redirect('/bentos');
 
     }
+
+
 
     protected function generateBentoCode($guarantee_period)
     {
@@ -194,11 +206,6 @@ class BentoController extends Controller
             'exist_bento' => $exist_bento
         ];
     }
-
-
-
-
-
 
 
 
@@ -272,6 +279,17 @@ class BentoController extends Controller
                 if($value ==''){
                     $error_message[$key] =$label_name[$key].'を入力してください';
                     $has_error = true;
+                }
+                if($key === 'price'){
+                    if($value < 100){
+                        $error_message[$key] = '入力する金額の最小限は100円となります。';
+                        $has_error = true;
+                    }
+                    if($value > 3000){
+                        $error_message[$key] = '入力する金額の最大限は3000円となります。';
+                        $has_error = true;
+
+                    }
                 }
             }
 

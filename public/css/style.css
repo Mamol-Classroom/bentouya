@@ -96,7 +96,6 @@ nav ul li{
     display: inline-block;
     list-style-type: none;
     width: 20%;
-    height: 50px;
     background: green;
 }
 
@@ -107,6 +106,33 @@ nav ul li a {
     color: #ffffff;
     text-decoration: none;
 }
+
+#search-block {
+    text-align: center;
+}
+
+#search-block input {
+    display: inline-block;
+    width: 50%;
+}
+
+#mypage {
+    display: flex;
+}
+
+#mypage-nav {
+    border-right: #111111 solid 1px;
+}
+
+#mypage-nav li {
+    list-style-type: none;
+}
+
+.mypage-subview {
+    width: 100%;
+    text-align: center;
+}
+
 
 
 

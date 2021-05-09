@@ -18,12 +18,20 @@ class TopController extends Controller
             $user = Auth::user();
             $user_id =Auth::id();
 
-            $bentos = Bento::all();
+            $word =$request->query('word');
+            if($word == null){
+                $bentos = Bento::all();
+            }else{
+                $bentos =Bento::where('bento_name','like','%'.$word.'%')->get();
+            }
+
+
 
 
             return view('top',[
                 //'name' => $user->name,
-                'bentos' =>$bentos
+                'bentos' =>$bentos,
+                'word' => $word,
             ]);
         }else{
             return redirect('login');
