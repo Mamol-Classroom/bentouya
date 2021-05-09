@@ -14,13 +14,17 @@
 
         </div>
         <div class="bento-containter">
-
+            @if(count($bentos) == 0)
+                <p>弁当なし</p>
+            @else
             @foreach($bentos as $bento)
                 <div class="bento">
                     <p>{{$bento->bento_name}}</p>
                     <p>¥{{number_format($bento->price)}}</p>
                 </div>
             @endforeach
+
+            @endif
         </div>
     </main>
 
