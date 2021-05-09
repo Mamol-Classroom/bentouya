@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
-
+use App\Http\Controllers\BentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +13,10 @@ use App\Http\Controllers\TopController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', [TopController::class, 'top']);
 
+//ユーザー
 Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 
@@ -23,8 +25,16 @@ Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
 Route::get('/logout', [TopController::class, 'logout']);
 
-Route::get('/bento_register', [TopController::class, 'bentoRegister']);
-Route::post('/bento-register-user', [TopController::class, 'bentoRegisterUser']);
-Route::get('/bento_register_success', [TopController::class, 'bentoRegisterSuccess']);
 
+//弁当
+
+Route::get('/bentos',[BentoController::class,'index']);
+Route::get('/bento/add', [BentoController::class, 'add']);
+Route::post('/bento/add', [BentoController::class, 'add']);
+Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
+
+Route::get('/bento/delete',[BentoController::class, 'delete']);
+Route::get('/bento/update',[BentoController::class, 'update']);
+Route::post('/bento/update',[BentoController::class, 'update']);
+//支払い
 
