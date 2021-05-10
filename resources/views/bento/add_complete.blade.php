@@ -47,7 +47,9 @@
                     <tr>
                         <td></td>
                         <td>
+                            <form method="post" action="/bento/add">
                             <button type="submit">確認</button>
+                            </form>
                         </td>
                     </tr>
                 </table>

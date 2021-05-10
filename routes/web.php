@@ -40,6 +40,8 @@ Route::post('/bento/update',[BentoController::class, 'update']);
 
 //マイページ
 Route::get('/mypage',[MypageController::class,'index']);
+Route::post('/mypage',[MypageController::class,'index']);
+
 
 
 

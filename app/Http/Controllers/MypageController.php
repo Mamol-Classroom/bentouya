@@ -1,40 +1,124 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MypageController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         //プロフィール
-        $error_message = [
-            'email' => null,
-            'postcode' => null,
-            'prefecture' => null,
-            'city' => null,
-            'address' => null,
-            'tel' => null,
-            'name' => null,
-        ];
+        $user = Auth::user();
+        $user_id = Auth::id();
 
-        $data = [
-            'email' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-            'name' => '',
-        ];
+        $error_message = $request->session()->get('error_message');
+        $data = $request->session()->get('data');
+
+        $request->session()->forget('error_message');
+        $request->session()->forget('data');
+
+        if ($error_message == null) {
+            $error_message = [
+                'email' => null,
+                'name' => null,
+                'postcode' => null,
+                'prefecture' => null,
+                'city' => null,
+                'address' => null,
+                'tel' => null,
+
+            ];
+        }
+
+
+            if ($data == null) {
+                $data = [
+                    'email' => $user -> email,
+                    'name' =>$user -> name,
+                    'postcode' => $user -> postcode,
+                    'prefecture' => $user -> prefecture,
+                    'city' => $user -> city,
+                    'address' => $user -> address,
+                    'tel' => $user -> tel,
+
+                ];
+            }
+
+
+
+
+        $has_error = false;
+
+        if ($request->method() === 'POST') {
+            $email = $request->post('email');
+            $name = $request->post('name');
+            $postcode = $request->post('postcode');
+            $prefecture = $request->post('prefecture');
+            $city = $request->post('city');
+            $address = $request->post('address');
+            $tel = $request->post('tel');
+
+
+            $data = [
+                'email' => $email,
+                'name' => $name,
+                'postcode' => $postcode,
+                'prefecture' => $prefecture,
+                'city' => $city,
+                'address' => $address,
+                'tel' => $tel,
+
+            ];
+
+
+            $label_name = [
+                'email' => "メールアドレス",
+                'name' => "名前",
+                'postcode' => "郵便番号",
+                'prefecture' => "都道府県",
+                'city' => "市区町村",
+                'address' => "住所",
+                'tel' => "電話番号",
+
+            ];
+
+            foreach ($data as $key => $value) {
+                if ($value == '') {
+                    $error_message[$key] = $label_name[$key] . 'を入力してください';
+                    $has_error = true;
+                }
+            }
+
+
+            if ($has_error) {
+                $request->session()->put('error_message', $error_message);
+                $request->session()->put('data', $data);
+
+                return redirect('/mypage');
+            }
+// 将输入的数据存入数据库
+            $user->email = $email;
+            $user->name = $name;
+            $user->postcode = $postcode;
+            $user->prefecture = $prefecture;
+            $user->city = $city;
+            $user->address = $address;
+            $user->tel = $tel;
+            $user->save();
+
+
+
+            return redirect('/mypage');
+
+        }
 
         return view('mypage.index',[
-            'data'=> $data,
-            'error_message'=>$error_message,
-
-
+            'data' => $data,
+            'error_message' => $error_message,
         ]);
-
-
     }
+
+
 }

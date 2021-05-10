@@ -21,13 +21,17 @@
                     </form>
                 </div>
             @endforeach
+
         </div>
     </main>
 
 
 
 
-
+    <br>
+    <div class="center">
+        <a href="/bento/add">新規弁当登録</a>
+    </div>
 
 
 
