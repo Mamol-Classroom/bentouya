@@ -31,18 +31,13 @@ Route::get('/bentos', [BentoController::class, 'index']);
 Route::get('/bento/add', [BentoController::class, 'add']);
 Route::post('/bento/add', [BentoController::class, 'add']);
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
-<<<<<<< HEAD
-Route::get('/bento/delete', [BentoController::class, 'delete']);
 
-Route::get('/bento/update', [BentoController::class, 'update']);
-Route::post('/bento/update', [BentoController::class, 'update']);
-
-=======
 Route::post('/bento/delete', [BentoController::class, 'delete']);
 Route::get('/bento/update', [BentoController::class, 'update']);
 Route::post('/bento/update', [BentoController::class, 'update']);
+
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index']);
->>>>>>> main
+
 // 支払い
 

@@ -247,11 +247,9 @@ class BentoController extends Controller
             ];
 
             foreach ($data as $key => $value) {
-<<<<<<< HEAD
+
                 if($key === 'description'){
-=======
-                if ($key === 'description') {
->>>>>>> main
+
                     continue;
                 }
                 if ($value == '') {
