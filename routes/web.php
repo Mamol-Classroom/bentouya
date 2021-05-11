@@ -22,16 +22,17 @@ Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register-success', [TopController::class, 'registerSuccess']);
 Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
-Route::get('/logout', [TopController::class, 'logout']);
+Route::get('/logout', [TopController::class, 'logout'])->middleware('auth');
 // 弁当
-Route::get('/bentos', [BentoController::class, 'index']);
-Route::get('/bento/add', [BentoController::class, 'add']);
-Route::post('/bento/add', [BentoController::class, 'add']);
-Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
-Route::post('/bento/delete', [BentoController::class, 'delete']);
-Route::get('/bento/update', [BentoController::class, 'update']);
-Route::post('/bento/update', [BentoController::class, 'update']);
+Route::get('/bentos', [BentoController::class, 'index'])->middleware('auth');
+Route::get('/bento/add', [BentoController::class, 'add'])->middleware('auth');
+Route::post('/bento/add', [BentoController::class, 'add'])->middleware('auth');
+Route::get('/bento/add/complete', [BentoController::class, 'addComplete'])->middleware('auth');
+Route::post('/bento/delete', [BentoController::class, 'delete'])->middleware('auth');
+Route::get('/bento/update', [BentoController::class, 'update'])->middleware('auth');
+
+Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
 // マイページ
-Route::get('/mypage', [MypageController::class, 'index']);
+Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 // 支払い
 

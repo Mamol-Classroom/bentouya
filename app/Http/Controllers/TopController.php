@@ -13,24 +13,17 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user_id = Auth::id();
-
-            $word = $request->query('word');
-            if ($word == null) {
-                $bentos = Bento::all();
-            } else {
-                $bentos = Bento::where('bento_name', 'like', '%'.$word.'%')->get();
-            }
-
-            return view('top', [
-                'bentos' => $bentos,
-                'word' => $word
-            ]);
+        $word = $request->query('word');
+        if ($word == null) {
+            $bentos = Bento::all();
         } else {
-            return redirect('/login');
+            $bentos = Bento::where('bento_name', 'like', '%'.$word.'%')->get();
         }
+
+        return view('top', [
+            'bentos' => $bentos,
+            'word' => $word
+        ]);
     }
 
     public function register(Request $request)
