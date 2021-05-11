@@ -14,28 +14,30 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-        if(Auth::check()){
-            $user = Auth::user();
-            $user_id =Auth::id();
+        /*
+         if(Auth::check()){
 
-            $word =$request->query('word');
-            if($word == null){
-                $bentos = Bento::all();
-            }else{
-                $bentos =Bento::where('bento_name','like','%'.$word.'%')->get();
-            }
-
-
-
-
-            return view('top',[
-                //'name' => $user->name,
-                'bentos' =>$bentos,
-                'word' => $word,
-            ]);
         }else{
             return redirect('login');
         }
+
+        $user = Auth::user();
+        $user_id =Auth::id();
+        */
+
+        $word =$request->query('word');
+        if($word == null){
+            $bentos = Bento::all();
+        }else{
+            $bentos =Bento::where('bento_name','like','%'.$word.'%')->get();
+        }
+
+
+        return view('top',[
+            //'name' => $user->name,
+            'bentos' =>$bentos,
+            'word' => $word,
+        ]);
     }
 
     public function register(Request $request)

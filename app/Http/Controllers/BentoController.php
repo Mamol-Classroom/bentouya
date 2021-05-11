@@ -12,6 +12,15 @@ class BentoController extends Controller
 {
     public function index(Request $request)
     {
+        //通过laravel中的中间件->middleware('auth')来挡住未登录时的页面跳转
+        //if(!Auth::check()){
+         //   return redirect('login');
+         //}
+
+        //找回软删除信息用withoutTrashed()
+        //$bento = Bento::withoutTrashed()->find(bento_id);
+        //$bento->restore();
+
         $user = Auth::user();
         $user_id = Auth::id();
         $bentos = Bento::where('user_id', $user_id)->get();

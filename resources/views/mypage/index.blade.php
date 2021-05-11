@@ -4,8 +4,8 @@
 
 @section('content')
 
-<main id="mypage">
-    <ul id="mypage-nav">
+<main id="main">
+    <ul id="main-nav">
         <li><a href="">プロフィール</a></li>
         <li><a href="" >パスワード変更</a></li>
         <li><a href="">注文履歴</a></li>
@@ -13,7 +13,7 @@
         <li><a href="">ポイント残高</a></li>
     </ul>
 
-<div class="mypage-subview">
+<div class="subview">
     <h1>プロフィール</h1>
     <div>
         <form method="post" action="/mypage">

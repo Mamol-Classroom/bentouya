@@ -116,19 +116,22 @@ nav ul li a {
     width: 50%;
 }
 
-#mypage {
+#main{
     display: flex;
 }
 
-#mypage-nav {
+
+
+
+#main-nav {
     border-right: #111111 solid 1px;
 }
 
-#mypage-nav li {
+#main-nav li {
     list-style-type: none;
 }
 
-.mypage-subview {
+.subview {
     width: 100%;
     text-align: center;
 }

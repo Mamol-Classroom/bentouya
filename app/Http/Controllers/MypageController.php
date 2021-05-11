@@ -9,6 +9,11 @@ class MypageController extends Controller
 {
     public function index(Request $request)
     {
+        //通过laravel中的中间件->middleware('auth')来挡住未登录时的页面跳转
+        //if(!Auth::check()){
+        //   return redirect('login');
+        //}
+
         //プロフィール
         $user = Auth::user();
         $user_id = Auth::id();

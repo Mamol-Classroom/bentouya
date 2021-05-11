@@ -4,29 +4,37 @@
 
 @section('content')
     <script type="text/javascript" src="/js/confirm.js"></script>
-    <main>
-        <h1 class="center">弁当管理</h1>
+    <main id="main">
+        <ul id="main-nav">
+            <li><a href="/bento/add">商品追加</a></li>
 
-        <div class="bento-containter">
+        </ul>
+        <div class="subview">
+            <h1 class="center">弁当管理</h1>
 
-            @foreach($bentos as $bento)
-                <div class="bento">
-                    <a href="/bento/update?bento_id={{$bento->id}}">
-                        <p>{{$bento->bento_name}}</p>
-                        <p>¥{{number_format($bento->price)}}</p>
-                    </a>
+            <div class="bento-containter">
 
-
-                    <form onsubmit="return del()" method="post" action="/bento/delete">
-                        <input type="hidden" name="bento_id" value="{{$bento->id}}">
-                        <button  type="submit">販売終了</button>
-                    </form>
-
+                @foreach($bentos as $bento)
+                    <div class="bento">
+                        <a href="/bento/update?bento_id={{$bento->id}}">
+                            <p>{{$bento->bento_name}}</p>
+                            <p>¥{{number_format($bento->price)}}</p>
+                        </a>
 
 
+                        <form onsubmit="return del()" method="post" action="/bento/delete">
+                            <input type="hidden" name="bento_id" value="{{$bento->id}}">
+                            <button  type="submit">販売終了</button>
+                        </form>
 
-                </div>
-            @endforeach
+
+
+
+                    </div>
+                @endforeach
+            </div>
+
+
         </div>
 
 
@@ -39,9 +47,7 @@
 
 
     <br>
-    <div class="center">
-        <a href="/bento/add">新規弁当登録</a>
-    </div>
+
 
 
 
