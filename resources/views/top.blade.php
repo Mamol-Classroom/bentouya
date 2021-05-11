@@ -18,14 +18,7 @@
             </form>
         </div>
         <div class="bento-container">
-<<<<<<< HEAD
-            @foreach($bentos as $bento)
-                <div class="bento">
-                    <p>{{ $bento->bento_name }}</p>
-                    <p>￥ {{ number_format($bento->price) }}</p> <!--给数字添加隔离符号，-->
-                </div>
-            @endforeach
-=======
+
             @if(count($bentos) == 0)
                 <p>弁当なし</p>
             @else
@@ -38,7 +31,7 @@
                     </div>
                 @endforeach
             @endif
->>>>>>> main
+
         </div>
         <div class="paginate">
             <ul>

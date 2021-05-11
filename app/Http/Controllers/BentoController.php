@@ -20,7 +20,7 @@ class BentoController extends Controller
         $user_id = Auth::id();
         $bentos = Bento::where('user_id', $user_id)->get();
 
-        return view('bento.index', ['bentos' => $bentos]);
+        return view('bento.index', ['bentos' => $bentos]); //跳转到的页面名而不是route
     }
 
     public function detail(Request $request, $bento_id)
@@ -103,7 +103,7 @@ class BentoController extends Controller
                 $exist_bento = $bento_code_data['exist_bento'];
             }
             $bento->bento_code = $bento_code;
-            $bento->deleted_flag = 0;
+            //$bento->deleted_flag = 0;
 
             $bento->user_id = Auth::id();
 
@@ -176,10 +176,11 @@ class BentoController extends Controller
         }
 
         $bento->delete();  // hard delete
+        //这里使用了laravel自带的SoftDeletes->Bento的Models
 
         // soft delete
-//        $bento->deleted_flag = 1;
-//        $bento->save();
+        // $bento->deleted_flag = 1;
+        // $bento->save();
 
         return redirect('/bentos');
     }

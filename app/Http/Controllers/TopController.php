@@ -17,34 +17,32 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-<<<<<<< HEAD
-        if (Auth::check()) {              //进入session验证是否有登录信息,是进入主页，不是进入登录画面
+
+       /** if (Auth::check()) {           //进入session验证是否有登录信息,是进入主页，不是进入登录画面
             $user = Auth::user();         //config文件夹下的auth.php文件进行配置
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
 
-            $bentos = Bento::all();
-=======
-        $word = $request->query('word');
+            $bentos = Bento::all();       //已经在routes里添加了中间件检查是否登录：middleware */
+
+        $word = $request->query('word');        //首页检索栏显示内容接收
         $price_l = $request->query('price_l');
         $price_h = $request->query('price_h');
->>>>>>> main
+
 
         $bento_query = Bento::query();
 
-<<<<<<< HEAD
-
-            return view('top', [
+        /**    return view('top', [
                 'bentos' => $bentos,
                 'word' => $word
             ]);
 
         } else {
-            return redirect('/login'); //重定向页面(跳转)
-=======
+            return redirect('/login'); //重定向页面(跳转)  */
+
         if ($word != null) {
             $bento_query->where('bento_name', 'like', '%'.$word.'%');
->>>>>>> main
+
         }
 
         if ($price_l != null) {
@@ -55,7 +53,7 @@ class TopController extends Controller
             $bento_query->where('price', '<=', $price_h);
         }
 
-        $bentos = $bento_query->paginate(4);
+        $bentos = $bento_query->paginate(4);   //laravel分页，每页4项
         //$bentos = $bento_query->get();
 
         return view('top', [
@@ -161,7 +159,7 @@ class TopController extends Controller
             $has_error = true;
         }
 
-        if ($postcode == "") {
+        if ($postcode == "" || strlen($postcode) != 8) {
             $error_message['postcode']  = '请输入邮编';
             $has_error = true;
         }
@@ -181,8 +179,10 @@ class TopController extends Controller
             $has_error = true;
         }
 
-        if ($tel == "") {
-            $error_message['tel']  = '電話番号を入力してください';
+        if ($tel == "" || strlen($tel) != 11) {
+
+
+            $error_message['tel']  = '正しい電話番号を入力してください';
             $has_error = true;
         }
 

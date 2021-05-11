@@ -24,24 +24,10 @@ Route::get('/register-success', [TopController::class, 'registerSuccess']);
 
 Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
-<<<<<<< HEAD
-Route::get('/logout', [TopController::class, 'logout']);
 
-// 弁当
-Route::get('/bentos', [BentoController::class, 'index']);
-Route::get('/bento/add', [BentoController::class, 'add']);
-Route::post('/bento/add', [BentoController::class, 'add']);
-Route::get('/bento/add/complete', [BentoController::class, 'addComplete']);
-
-Route::post('/bento/delete', [BentoController::class, 'delete']);
-Route::get('/bento/update', [BentoController::class, 'update']);
-Route::post('/bento/update', [BentoController::class, 'update']);
-
-// マイページ
-Route::get('/mypage', [MypageController::class, 'index']);
-
-=======
 Route::get('/logout', [TopController::class, 'logout'])->middleware('auth');
+//确认是否登录，通过中间件auth进行跳转，默认跳转到login，可设置
+
 // 弁当
 Route::get('/bentos', [BentoController::class, 'index'])->middleware('auth');
 Route::get('/bento/add', [BentoController::class, 'add'])->middleware('auth');
@@ -49,11 +35,11 @@ Route::post('/bento/add', [BentoController::class, 'add'])->middleware('auth');
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete'])->middleware('auth');
 Route::post('/bento/delete', [BentoController::class, 'delete'])->middleware('auth');
 Route::get('/bento/update', [BentoController::class, 'update'])->middleware('auth');
-Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);
+Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);   //route传值：便当id
 
 Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
->>>>>>> main
+
 // 支払い
 

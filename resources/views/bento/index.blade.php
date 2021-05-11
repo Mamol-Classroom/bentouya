@@ -3,6 +3,7 @@
 @section('title', '弁当管理')
 
 @section('content')
+    <script type="text/javascript" src="/js/bentoDeleteConfirm.js"></script>
     <main id="main">
         <ul id="main-nav">
             <li><a href="/bento/add">商品追加</a></li>

@@ -40,7 +40,7 @@
                             </div>
                             --}}
                         </div>
-                        <!--如何实现跳转页面到register？-->
+                        <!--如何实现跳转页面到register-->
                         <div class="a-section">
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                                 <span class="a-button-inner">

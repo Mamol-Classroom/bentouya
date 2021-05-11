@@ -3,6 +3,7 @@
 @section('title', 'マイページ')
 
 @section('content')
+    <script type="text/javascript" src="/js/bentoDeleteConfirm.js"></script>
     <main id="main">
         <ul id="main-nav">
             <li><a href="">プロフィール</a></li>
