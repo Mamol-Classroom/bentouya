@@ -35,11 +35,12 @@
         </div>
         <div class="paginate">
             <ul>
-                <li><a href="{{ $bentos->previousPageUrl() }}"><</a></li>
+                <li><a href="{{ $bentos->previousPageUrl() }}"><</a></li> <!--向前跳转页面-->
                 @for($p = 1; $p <= ceil($bentos->total() / $bentos->perpage()); $p++)
                     <li><a href="{{ $bentos->url($p) }}">{{ $p }}</a></li>
+                    <!--页面展示->TopConcoller的paginate:总便当数除以每页展示数-->
                 @endfor
-                <li><a href="{{ $bentos->nextPageUrl() }}">></a></li>
+                <li><a href="{{ $bentos->nextPageUrl() }}">></a></li>     <!--向后跳转页面-->
             </ul>
         </div>
     </main>

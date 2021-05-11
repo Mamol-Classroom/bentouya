@@ -26,7 +26,7 @@ class TopController extends Controller
             $bentos = Bento::all();       //已经在routes里添加了中间件检查是否登录：middleware */
 
         $word = $request->query('word');        //首页检索栏显示内容接收
-        $price_l = $request->query('price_l');
+        $price_l = $request->query('price_l');  //使用get方法，因为需要在这个函数内渲染模板
         $price_h = $request->query('price_h');
 
 
