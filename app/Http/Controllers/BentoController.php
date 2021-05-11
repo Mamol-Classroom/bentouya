@@ -20,6 +20,20 @@ class BentoController extends Controller
         return view('bento.index', ['bentos' => $bentos]);
     }
 
+    public function detail(Request $request, $bento_id)
+    {
+        //$bento_id = $request->query('id');
+        $bento = Bento::find($bento_id);
+
+        return view('bento.detail', [
+            'bento_name' => $bento->bento_name,
+            'price' => $bento->price,
+            'bento_code' => $bento->bento_code,
+            'guarantee_period' => $bento->guarantee_period,
+            'description' => $bento->description,
+        ]);
+    }
+
     public function add(Request $request)
     {
         if ($request->method() === 'POST') {
