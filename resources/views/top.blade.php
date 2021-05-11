@@ -9,6 +9,15 @@
         <div id="search-block">
             <form method="get" action="/">
                 <input type="text" name="word" value="{{$word}}" placeholder="商品名"/>
+                <label>
+
+                    価格範囲
+                    <input class="inline-input" type="number" name="price_l" value="{{ $price_l }}" min="0"/>
+                    ~
+                    <input class="inline-input" type="number" name="price_h" value="{{ $price_h }}" min="0"/>
+
+                </label>
+
                 <button type="submit">検索</button>
             </form>
 

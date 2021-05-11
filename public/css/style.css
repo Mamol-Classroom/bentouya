@@ -137,6 +137,10 @@ nav ul li a {
 }
 
 
+.inline-input {
+    width: 276px !important;
+    margin: 10px 0;
+}
 
 
 /** amazon */
