@@ -47,7 +47,8 @@ class TopController extends Controller
         }
 
 
-        $bentos = $bento_query->get();
+        $bentos = $bento_query->paginate(6);
+        //$bentos = $bento_query->get();
 
 
 
@@ -168,27 +169,27 @@ class TopController extends Controller
             'name' => null,
         ];
         if ($email == "") {
-            $error_message['email']  = '请输入邮箱';
+            $error_message['email']  = 'メールアドレスを入力してください';
             $has_error = true;
         }
 
         if ($password == "") {
-            $error_message['password']  = '请输入密码';
+            $error_message['password']  = 'パスワードを入力してください';
             $has_error = true;
         }
 
         if ($password != $password_confirm) {
-            $error_message['password_confirm']  = '两次输入的密码不一致';
+            $error_message['password_confirm']  = 'パスワードと一致ではありません';
             $has_error = true;
         }
 
         if ($name == "") {
-            $error_message['name']  = '请输入姓名';
+            $error_message['name']  = '名前を入力してください';
             $has_error = true;
         }
 
         if ($postcode == "") {
-            $error_message['postcode']  = '请输入邮编';
+            $error_message['postcode']  = '郵便番号を入力してください';
             $has_error = true;
         }
 

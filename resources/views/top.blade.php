@@ -28,12 +28,25 @@
             @else
             @foreach($bentos as $bento)
                 <div class="bento">
-                    <p>{{$bento->bento_name}}</p>
-                    <p>¥{{number_format($bento->price)}}</p>
+                   <!--问号换斜杠 直接通过路由传参数 <a href="/bento/detail?id={/{//$bento->id}}">-->
+                       <a href="/bento/detail/{{$bento->id}}">
+                        <p>{{$bento->bento_name}}</p>
+                        <p>¥{{number_format($bento->price)}}</p>
+                    </a>
                 </div>
             @endforeach
 
             @endif
+        </div>
+
+        <div class="paginate">
+            <ul>
+                <li><a href="{{ $bentos->previousPageUrl() }}"><</a></li>
+                @for($p = 1; $p <= ceil($bentos->total() / $bentos->perpage()); $p++)
+                    <li><a href="{{ $bentos->url($p) }}">{{ $p }}</a></li>
+                @endfor
+                <li><a href="{{ $bentos->nextPageUrl() }}">></a></li>
+            </ul>
         </div>
     </main>
 

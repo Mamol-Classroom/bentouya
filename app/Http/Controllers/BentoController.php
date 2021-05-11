@@ -30,6 +30,23 @@ class BentoController extends Controller
 
     }
 
+    public function detail(Request $request,$bento_id)
+    {
+       //直接通过路由传参数
+       // $bento_id = $request->query('id');
+        $bento = Bento::find($bento_id);
+
+        return view('bento.detail',[
+        'bento_name' => $bento->bento_name,
+        'price' => $bento->price,
+        'bento_code' => $bento->bento_code,
+        'guarantee_period' => $bento->guarantee_period,
+        'description' => $bento->description,
+            ]);
+    }
+//return redirect('/bento/detail?bento_id='.$bento_id);
+
+
 
 
 
