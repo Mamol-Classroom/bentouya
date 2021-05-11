@@ -119,6 +119,11 @@ nav ul li a {
     text-align: center;
 }
 
+.inline-input {
+    width: 276px !important;
+    margin: 10px 0;
+}
+
 /** amazon */
 .a-section {
     margin-bottom: 22px;
