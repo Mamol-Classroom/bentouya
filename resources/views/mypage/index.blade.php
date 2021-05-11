@@ -16,7 +16,7 @@
 <div class="mypage-subview">
     <h1>プロフィール</h1>
     <div>
-        <form method="post" action="">
+        <form method="post" action="/mypage">
             <table class="register-table">
                 <tr>
                     <td>メールアドレス</td>
