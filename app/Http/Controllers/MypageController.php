@@ -164,7 +164,7 @@ class MypageController extends Controller
             ];
 
             if ($password == "") {
-                $error_message['password'] = 'パスワードを入力してください';
+                $error_message['password'] = '新しいパスワードを入力してください';
                 $has_error = true;
             }
 
