@@ -31,7 +31,8 @@ class TopController extends Controller
             $bento_query->where('price', '<=', $price_h);
         }
 
-        $bentos = $bento_query->get();
+        $bentos = $bento_query->paginate(4);
+        //$bentos = $bento_query->get();
 
         return view('top', [
             'bentos' => $bentos,
