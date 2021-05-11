@@ -8,7 +8,7 @@ class MypageController extends Controller
 {
 
     public function index(Request $request)
-    {
+     {
         // プロフィール
         $error_message = [
             'email' => null,
