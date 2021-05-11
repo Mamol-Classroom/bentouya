@@ -23,6 +23,20 @@ class BentoController extends Controller
         return view('bento.index', ['bentos' => $bentos]);
     }
 
+    public function detail(Request $request, $bento_id)
+    {
+        //$bento_id = $request->query('id');
+        $bento = Bento::find($bento_id);
+
+        return view('bento.detail', [
+            'bento_name' => $bento->bento_name,
+            'price' => $bento->price,
+            'bento_code' => $bento->bento_code,
+            'guarantee_period' => $bento->guarantee_period,
+            'description' => $bento->description,
+        ]);
+    }
+
     public function add(Request $request)
     {
         if ($request->method() === 'POST') {
@@ -89,6 +103,7 @@ class BentoController extends Controller
                 $exist_bento = $bento_code_data['exist_bento'];
             }
             $bento->bento_code = $bento_code;
+            $bento->deleted_flag = 0;
 
             $bento->user_id = Auth::id();
 
@@ -160,7 +175,11 @@ class BentoController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $bento->delete();
+        $bento->delete();  // hard delete
+
+        // soft delete
+//        $bento->deleted_flag = 1;
+//        $bento->save();
 
         return redirect('/bentos');
     }

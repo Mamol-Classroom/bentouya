@@ -17,20 +17,22 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
+<<<<<<< HEAD
         if (Auth::check()) {              //进入session验证是否有登录信息,是进入主页，不是进入登录画面
             $user = Auth::user();         //config文件夹下的auth.php文件进行配置
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
 
             $bentos = Bento::all();
+=======
+        $word = $request->query('word');
+        $price_l = $request->query('price_l');
+        $price_h = $request->query('price_h');
+>>>>>>> main
 
-            $word = $request->query('word');
-            if ($word == null) {
-                $bentos = Bento::all();
-            } else {
-                $bentos = Bento::where('bento_name', 'like', '%'.$word.'%')->get();
-            }
+        $bento_query = Bento::query();
 
+<<<<<<< HEAD
 
             return view('top', [
                 'bentos' => $bentos,
@@ -39,7 +41,29 @@ class TopController extends Controller
 
         } else {
             return redirect('/login'); //重定向页面(跳转)
+=======
+        if ($word != null) {
+            $bento_query->where('bento_name', 'like', '%'.$word.'%');
+>>>>>>> main
         }
+
+        if ($price_l != null) {
+            $bento_query->where('price', '>=', $price_l);
+        }
+
+        if ($price_h != null) {
+            $bento_query->where('price', '<=', $price_h);
+        }
+
+        $bentos = $bento_query->paginate(4);
+        //$bentos = $bento_query->get();
+
+        return view('top', [
+            'bentos' => $bentos,
+            'word' => $word,
+            'price_l' => $price_l,
+            'price_h' => $price_h,
+        ]);
     }
 
     public function register(Request $request)

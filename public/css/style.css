@@ -102,21 +102,45 @@ nav ul li a {
     width: 50%;
 }
 
-#mypage {
+#main {
     display: flex;
 }
 
-#mypage-nav {
+#main-nav {
     border-right: #111111 solid 1px;
 }
 
-#mypage-nav li {
+#main-nav li {
     list-style-type: none;
 }
 
-.mypage-subview {
+.subview {
     width: 100%;
     text-align: center;
+}
+
+.inline-input {
+    width: 276px !important;
+    margin: 10px 0;
+}
+
+.paginate {
+    text-align: center;
+}
+
+.paginate ul li {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    list-style-type: none;
+    border: #111 solid 1px;
+}
+
+.paginate a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
 }
 
 /** amazon */
