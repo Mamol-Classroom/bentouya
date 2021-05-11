@@ -43,8 +43,8 @@ Route::get('/bento/detail/{bento_id}',[BentoController::class,'detail']);
 //マイページ
 Route::get('/mypage',[MypageController::class,'index'])->middleware('auth');
 Route::post('/mypage',[MypageController::class,'index'])->middleware('auth');
-
-
+Route::get('/mypage/password-update',[MypageController::class,'passwordUpdate'])->middleware('auth');
+Route::post('/mypage/password-update',[MypageController::class,'passwordUpdate'])->middleware('auth');
 
 
 

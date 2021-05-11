@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MypageController extends Controller
 {
@@ -125,5 +126,71 @@ class MypageController extends Controller
         ]);
     }
 
+
+    public function passwordUpdate(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = Auth::id();
+
+        $error_message = $request->session()->get('password_error_message');
+        $data = $request->session()->get('password_data');
+
+        $request->session()->forget('password_error_message');
+        $request->session()->forget('password_data');
+
+
+        if ($error_message == null) {
+            $error_message = [
+                'password' => null,
+                'password_confirm' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'password' => '',
+                'password_confirm' => '',
+            ];
+        }
+
+        $has_error = false;
+        if ($request->method() === 'POST') {
+            $password = $request->post('password');
+            $password_confirm = $request->post('password_confirm');
+
+            $data = [
+                'password' => $password,
+                'password_confirm' => $password_confirm,
+            ];
+
+            if ($password == "") {
+                $error_message['password'] = 'パスワードを入力してください';
+                $has_error = true;
+            }
+
+            if ($password != $password_confirm) {
+                $error_message['password_confirm'] = 'パスワードと一致ではありません';
+                $has_error = true;
+            }
+
+            if ($has_error) {
+                $request->session()->put('password_error_message', $error_message);
+                $request->session()->put('password_data', $data);
+
+                return redirect('/mypage/password-update');
+            }
+
+            //存值
+            $hashed_password =Hash::make($password);
+            $user->password = $hashed_password;
+            $user->save();
+            return redirect('/mypage/password-update');
+        }
+            return view('mypage.password_update', [
+                'data' => $data,
+                'error_message' => $error_message,
+            ]);
+
+    }
 
 }
