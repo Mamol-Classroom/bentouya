@@ -69,7 +69,10 @@ class TopController extends Controller
             $error_message['password']  = '请输入密码';
             $has_error = true;
         }
-
+        if ($password_confirm == "") {
+            $error_message['password_confirm']  = '请输入两次密码';
+            $has_error = true;
+        }
         if ($password != $password_confirm) {
             $error_message['password_confirm']  = '两次输入的密码不一致';
             $has_error = true;
