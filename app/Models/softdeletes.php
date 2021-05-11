@@ -5,7 +5,7 @@ namespace App\Models;
 
 use illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\softDeletes;
-class post extends Model
+class softdeletes extends Model
 {
     use softdeletes;
     public $table = 'bento';
