@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Bento;
 use Illuminate\Http\Request;
 
-use Favourite;
+use App\Models\Favourite;
+use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Support\Carbon;  //laravel自带日期生成
 
 use Illuminate\Support\Facades\Auth;  //认证
