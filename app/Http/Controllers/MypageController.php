@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +26,8 @@ class MypageController extends Controller
 
         $user = Auth::user();
         $user_id = Auth::id();
+
+        $user = User::find($user_id);
 
         $data = $request->session()->get('data');
 
@@ -66,12 +68,12 @@ class MypageController extends Controller
 
             //更改数据存入数据库
             $user->email = $data['email'];
-            $user->name = $data->name;
-            $user->postcode = $data->postcode;
-            $user->prefecture = $data->prefecture;
-            $user->city = $data->city;
-            $user->address = $data->address;
-            $user->tel = $data->tel;
+            $user->name = $data['name'];
+            $user->postcode = $data['postcode'];
+            $user->prefecture = $data['prefecture'];
+            $user->city = $data['city'];
+            $user->address = $data['address'];
+            $user->tel = $data['tel'];
             $user->save();
 
             return redirect('/mypage');
