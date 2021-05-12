@@ -35,16 +35,14 @@ class TopController extends Controller
         $word = $request->query('word');
         if ($word == null) {
             $bentos = Bento::all();
-        } else {
+        }else{
             $bentos = Bento::where('bento_name', 'like', '%' . $word . '%')->get();
         }
         return view('top', [
-            'bentos' => $bentos,
-            'word' => $word
-        ]);
+        'bentos' => $bentos,
+        'word' => $word ]);
+
     }
-
-
 
     public function register(Request $request)
     {
