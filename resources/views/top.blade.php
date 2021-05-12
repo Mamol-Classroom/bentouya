@@ -6,7 +6,7 @@
     <header>
         <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div>
         <div class="profile">
-            <p>ようこそ、{{ $name }} 様</p>
+            <p>ようこそ、{{ $name='' }} 様</p>
 
             <a href="/logout">ログアウト</a>
         </div>
