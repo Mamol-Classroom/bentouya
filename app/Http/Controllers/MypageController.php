@@ -128,10 +128,11 @@ class MypageController extends Controller
         $user = User::find(user_id);
 
 
+        $user = User::find($user_id);
+
         $data = $request->session()->get('data');
 
         $request->session()->forget('data');
-
 
         if ($data == '') {
             $data = [
@@ -144,8 +145,12 @@ class MypageController extends Controller
                 'tel' => $user->tel
             ];
 
+<<<<<<< HEAD
          $request->session()->put('data',$data);
 
+=======
+            $request->session()->put('data', $data);
+>>>>>>> 6e871362d05ba13b922cfd9c82a2173d8f12f3d2
         }
 
         if ($request->method() == 'POST') {
@@ -179,6 +184,10 @@ class MypageController extends Controller
 
             return redirect('/mypage');
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e871362d05ba13b922cfd9c82a2173d8f12f3d2
         return view('mypage.index', [
             'data' => $data,
         ]);*/

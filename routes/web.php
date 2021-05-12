@@ -42,9 +42,12 @@ Route::post('/bento/update', [BentoController::class, 'update'])->middleware('au
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
+<<<<<<< HEAD
 
 Route::get('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
 Route::post('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
+=======
+>>>>>>> 6e871362d05ba13b922cfd9c82a2173d8f12f3d2
 
 // 支払い
 
