@@ -19,7 +19,7 @@
                         </a>
                         <form method="post" action="/bento/delete">
                             <input type="hidden" name="bento_id" value="{{ $bento->id }}">
-                            <button type="submit">販売終了</button>
+                            <button type="submit"  onclick="return del();">販売終了</button>
                         </form>
                     </div>
                 @endforeach

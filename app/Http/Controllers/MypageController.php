@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,6 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // プロフィール
-
         $data = [
             'email' => '',
             'postcode' => '',
@@ -24,8 +23,11 @@ class MypageController extends Controller
             'name' => '',
         ];
 
-        $user = Auth::user();
-        $user_id = Auth::id();
+        //$user = Auth::user(); 在session中取得旧文件，而不是直接从数据库中提取新数据
+        //$user_id = Auth::id();
+
+        $user = User::find($user_id);
+
 
         $data = $request->session()->get('data');
 
@@ -42,7 +44,9 @@ class MypageController extends Controller
                 'address' => $user->address,
                 'tel' => $user->tel
             ];
-            return redirect('/mypage');
+
+         $request->session()->put('data',$data);
+
         }
 
         if ($request->method() == 'POST') {
@@ -63,18 +67,19 @@ class MypageController extends Controller
                 'address' => $address,
                 'tel' => $tel
             ];
+
+            //更改数据存入数据库
+            $user->email = $data['email'];
+            $user->name = $data['name'];
+            $user->postcode = $data['postcode'];
+            $user->prefecture = $data['prefecture'];
+            $user->city = $data['city'];
+            $user->address = $data['address'];
+            $user->tel = $data['tel'];
+            $user->save();
+
             return redirect('/mypage');
         }
-        //更改数据存入数据库
-        $user->email = $data->email;
-        $user->name = $data->name;
-        $user->postcode = $data->postcode;
-        $user->prefecture = $data->prefecture;
-        $user->city = $data->city;
-        $user->address = $data->address;
-        $user->tel = $data->tel;
-        $user->save();
-
         return view('mypage.index', [
             'data' => $data,
         ]);

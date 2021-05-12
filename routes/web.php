@@ -39,7 +39,9 @@ Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);   //
 
 Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
 // マイページ
+
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
+Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 
 // 支払い
 
