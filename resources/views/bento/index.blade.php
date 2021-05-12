@@ -3,7 +3,11 @@
 @section('title', '弁当管理')
 
 @section('content')
-    <main>
+    <main id="main">
+        <ul id="main-nav">
+            <li><a href="/bento/add">商品追加</a></li>
+        </ul>
+        <div class="subview">
         <script type="text/javascript" src="/js/confirm.js"></script>
         <h1 class="center">弁当管理</h1>
         <div class="bento-container">
