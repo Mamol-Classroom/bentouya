@@ -34,7 +34,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <button type="submit">確認</button>
+                        <a href="/bentos">商品管理へ</a>
                     </td>
                 </tr>
             </table>
