@@ -386,4 +386,33 @@ class BentoController extends Controller
             return response()->json(['result' => 'delete']);
         }
     }
+
+    public function favourite(Request $request,$bento_id,$user_id){
+
+            //直接通过路由传参数
+            // $bento_id = $request->query('id');
+            $bento_id = Favourite::find($bento_id);
+            $user_id = Favourite::find($user_id);
+
+            return view('maypage.favourite',[
+                'bento_name' => $bento->bento_name,
+                'price' => $bento->price,
+
+            ]);
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 }
