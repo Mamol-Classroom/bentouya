@@ -23,7 +23,7 @@
             @else
                 @foreach($bentos as $bento)
                     <div class="bento">
-                        <a href="/bento/detail?id={{ $bento->id }}">
+                        <a href="/bento/{{ $bento->id }}/detail">
                             <p>{{ $bento->bento_name }}</p>
                             <p>￥ {{ number_format($bento->price) }}</p>
                         </a>

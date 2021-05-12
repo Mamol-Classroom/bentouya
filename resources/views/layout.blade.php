@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-    <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div>
+    <div class="logo"><a href="/"><img src="/img/logo.jpg" width="100px" height="auto"></a></div>
     <div class="profile">
         @if(auth()->check())
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
