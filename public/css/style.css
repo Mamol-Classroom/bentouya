@@ -58,12 +58,118 @@ header {
     flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    margin-top: 50px;
 }
 
 .bento {
+    position: relative;
     border: #9c9c9c solid 1px;
-    margin: 5px;
+    margin: 10px 20px;
     width: 40%;
+}
+
+.bento a {
+    text-decoration: none;
+}
+
+nav {
+    text-align: center;
+}
+
+nav ul {
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style-type: none;
+    width: 20%;
+    background: #1c791c;
+}
+
+nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#search-block {
+    text-align: center;
+}
+
+#search-block input {
+    display: inline-block;
+    width: 50%;
+}
+
+#main {
+    display: flex;
+}
+
+#main-nav {
+    border-right: #111111 solid 1px;
+}
+
+#main-nav li {
+    list-style-type: none;
+}
+
+.subview {
+    width: 100%;
+    text-align: center;
+}
+
+.inline-input {
+    width: 276px !important;
+    margin: 10px 0;
+}
+
+.paginate {
+    text-align: center;
+}
+
+.paginate ul li {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    list-style-type: none;
+    border: #111 solid 1px;
+}
+
+.paginate a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+.favor {
+    display: flex;
+    position: absolute;
+    top: -19px;
+    right: -19px;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border: #9c9c9c solid 1px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.favor i {
+    color: #9c9c9c;
+}
+
+.favor.active {
+    border-color: #ff0000;
+}
+
+.favor.active i {
+    color: #ff0000;
 }
 
 /** amazon */

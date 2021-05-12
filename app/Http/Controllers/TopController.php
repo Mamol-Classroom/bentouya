@@ -13,19 +13,33 @@ class TopController extends Controller
 
     public function top(Request $request)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $user_id = Auth::id();
+        $word = $request->query('word');
+        $price_l = $request->query('price_l');
+        $price_h = $request->query('price_h');
 
-            $bentos = Bento::all();
+        $bento_query = Bento::query();
 
-            return view('top', [
-                'name' => $user->name,
-                'bentos' => $bentos
-            ]);
-        } else {
-            return redirect('/login');
+        if ($word != null) {
+            $bento_query->where('bento_name', 'like', '%'.$word.'%');
         }
+
+        if ($price_l != null) {
+            $bento_query->where('price', '>=', $price_l);
+        }
+
+        if ($price_h != null) {
+            $bento_query->where('price', '<=', $price_h);
+        }
+
+        $bentos = $bento_query->paginate(4);
+        //$bentos = $bento_query->get();
+
+        return view('top', [
+            'bentos' => $bentos,
+            'word' => $word,
+            'price_l' => $price_l,
+            'price_h' => $price_h,
+        ]);
     }
 
     public function register(Request $request)
