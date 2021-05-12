@@ -37,6 +37,8 @@ Route::get('/bento/add/complete', [BentoController::class, 'addComplete'])->midd
 Route::post('/bento/delete',[BentoController::class, 'delete'])->middleware('auth');
 Route::get('/bento/update',[BentoController::class, 'update'])->middleware('auth');
 Route::post('/bento/update',[BentoController::class, 'update'])->middleware('auth');
+
+Route::post('/bento/favourite/add',[BentoController::class, 'addFavourite'])->middleware('auth');
 //商品详细
 //直接通过路由传参数Route::get('/bento/detail',[BentoController::class,'detail']);
 Route::get('/bento/detail/{bento_id}',[BentoController::class,'detail']);

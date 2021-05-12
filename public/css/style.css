@@ -65,6 +65,7 @@ header{
      flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    margin-top: 50px;
 }
 
 
@@ -72,8 +73,9 @@ header{
 .bento{
 
     border: #9c9c9c solid 1px;
-    margin: 5px;
+    margin: 10px 20px;
     width: 40%;
+    position: relative;
 }
 
 .bento a{
@@ -162,6 +164,33 @@ nav ul li a {
     text-decoration: none;
 }
 
+
+.favor{
+    display: flex;
+    position: absolute;
+    top: -19px;
+    right: -19px;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border: #9c9c9c solid 1px;
+    border-radius:50% ;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.favor i{
+    color: #9c9c9c;
+}
+
+.favor.active{
+    border-color: #ff0000;
+}
+
+.favor.active i{
+    color: #ff0000;
+}
 /** amazon */
 .a-section {
     margin-bottom: 22px;

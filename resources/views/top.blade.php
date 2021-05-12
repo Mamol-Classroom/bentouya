@@ -28,6 +28,7 @@
             @else
             @foreach($bentos as $bento)
                 <div class="bento">
+                    <div class="favor" onclick="addFavourite({{$bento->id}},this)"><i class="fas fa-heart"></i></div>
                    <!--问号换斜杠 直接通过路由传参数 <a href="/bento/detail?id={/{//$bento->id}}">-->
                        <a href="/bento/detail/{{$bento->id}}">
                         <p>{{$bento->bento_name}}</p>
