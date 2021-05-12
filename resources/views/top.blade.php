@@ -24,10 +24,8 @@
             @else
                 @foreach($bentos as $bento)
                     <div class="bento">
-<<<<<<< HEAD
-=======
+                        <!--在显示便当循环中套用jquery，触发onclick事件，插入图标i，this指当前user-->
                         <div class="favor" onclick="addFavourite({{ $bento->id }}, this)"><i class="fas fa-heart"></i></div>
->>>>>>> main
                         <a href="/bento/{{ $bento->id }}/detail">
                             <p>{{ $bento->bento_name }}</p>
                             <p>￥ {{ number_format($bento->price) }}</p>

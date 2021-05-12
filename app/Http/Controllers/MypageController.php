@@ -14,7 +14,7 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // プロフィール
-        $user = User::user();  //使用User会报错？
+        $user = User::find();  //使用User会报错？
         // $user_id = Auth::id(); 在session中取得旧文件，而不是直接从数据库中提取新数据
 
         $error_message = $request->session()->get('error_message');

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bento;
-use App\Models\Favourite;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use App\Models\Favourite;
@@ -326,8 +325,9 @@ class BentoController extends Controller
         // 該当弁当が存在するかどうかを確認する
         $bento_exist = Bento::find($bento_id);
         if ($bento_exist == null) {
-            // 报错
-            return response()->json(['result' => 'fail']);
+            // 报错，使用ajax的函数response
+            //另外两种返回值：view渲染模板(post)以及redirect重定向(pet)
+            return response()->json(['result' => 'fail']);  //datatype是json？result指哪个？
         }
 
         $favourite = Favourite::where('user_id', $user_id)
@@ -344,7 +344,7 @@ class BentoController extends Controller
             // 通过Ajax请求的路由，返回response()->json(PHP数组)
             return response()->json(['result' => 'add']);
         } else {
-            $favourite->delete();
+            $favourite->delete();    //硬删除
 
             // 给前台反馈
             // 通过Ajax请求的路由，返回response()->json(PHP数组)

@@ -3,7 +3,6 @@
 @section('title','パスワード変更')
 
 @section('content')
-    <script type="text/javascript" src="/js/bentoDeleteConfirm.js"></script>
     <main name="main">
         <ul id="main-nav">
             <li><a href="">プロフィール</a></li>
