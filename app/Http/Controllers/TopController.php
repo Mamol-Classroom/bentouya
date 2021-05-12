@@ -130,7 +130,10 @@ class TopController extends Controller
             $error_message['password']  = '请输入密码';
             $has_error = true;
         }
-
+        if ($password_confirm == "") {
+            $error_message['password_confirm']  = '请输入两次密码';
+            $has_error = true;
+        }
         if ($password != $password_confirm) {
             $error_message['password_confirm']  = '两次输入的密码不一致';
             $has_error = true;
@@ -186,15 +189,15 @@ class TopController extends Controller
         $user->tel = $tel;
         $user->save();
 
-        $request->session()->flash('registed_user', $user);
+        $request->session()->flash('register_user', $user);
 
         return redirect('/register-success');
     }
 
     public function registerSuccess(Request $request)
     {
-        $user = $request->session()->get('registed_user');
-        $request->session()->keep('registed_user');
+        $user = $request->session()->get('register_user');
+        $request->session()->keep('register_user');
 
         return view('register_success', [
             'email' => $user->email,
