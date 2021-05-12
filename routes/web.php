@@ -38,10 +38,13 @@ Route::get('/bento/update', [BentoController::class, 'update'])->middleware('aut
 Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);   //route传值：便当id
 
 Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
-// マイページ
 
+// マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
+
+Route::get('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
+Route::post('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
 
 // 支払い
 
