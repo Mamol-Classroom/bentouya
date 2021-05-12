@@ -35,10 +35,16 @@ Route::post('/bento/add', [BentoController::class, 'add'])->middleware('auth');
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete'])->middleware('auth');
 Route::post('/bento/delete', [BentoController::class, 'delete'])->middleware('auth');
 Route::get('/bento/update', [BentoController::class, 'update'])->middleware('auth');
+<<<<<<< HEAD
 Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);   //route传值：便当id
 
 Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
 
+=======
+Route::get('/bento/{bento_id}/detail', [BentoController::class, 'detail']);
+Route::post('/bento/update', [BentoController::class, 'update'])->middleware('auth');
+Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->middleware('auth');
+>>>>>>> main
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
