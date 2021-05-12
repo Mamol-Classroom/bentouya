@@ -31,7 +31,6 @@ class MypageController extends Controller
 
         $request->session()->forget('data');
 
-
         if ($data == '') {
             $data = [
                 'email' => $user->email,
@@ -42,7 +41,8 @@ class MypageController extends Controller
                 'address' => $user->address,
                 'tel' => $user->tel
             ];
-            return redirect('/mypage');
+
+            $request->session()->put('data', $data);
         }
 
         if ($request->method() == 'POST') {
@@ -63,17 +63,19 @@ class MypageController extends Controller
                 'address' => $address,
                 'tel' => $tel
             ];
+
+            //更改数据存入数据库
+            $user->email = $data['email'];
+            $user->name = $data->name;
+            $user->postcode = $data->postcode;
+            $user->prefecture = $data->prefecture;
+            $user->city = $data->city;
+            $user->address = $data->address;
+            $user->tel = $data->tel;
+            $user->save();
+
             return redirect('/mypage');
         }
-        //更改数据存入数据库
-        $user->email = $data->email;
-        $user->name = $data->name;
-        $user->postcode = $data->postcode;
-        $user->prefecture = $data->prefecture;
-        $user->city = $data->city;
-        $user->address = $data->address;
-        $user->tel = $data->tel;
-        $user->save();
 
         return view('mypage.index', [
             'data' => $data,
