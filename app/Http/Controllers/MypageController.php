@@ -14,7 +14,7 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // プロフィール
-        $user = User::find();  //使用User会报错？
+        $user = Auth::user();  //使用User会报错？
         // $user_id = Auth::id(); 在session中取得旧文件，而不是直接从数据库中提取新数据
 
         $error_message = $request->session()->get('error_message');
@@ -23,7 +23,7 @@ class MypageController extends Controller
         $error_message = $request->session()->forget('error_message');
         $data = $request->session()->forget('data');
 
-        if($error_message = ''){
+        if($error_message == ''){
             $error_message = [
                 'email'=>'',
                 'password'=>'',
@@ -36,7 +36,7 @@ class MypageController extends Controller
             ];
         }
 
-        if($data = ''){
+        if($data == ''){
             $data =[
                'email'=>$user->email,
                'name'=>$user->name,
@@ -82,7 +82,7 @@ class MypageController extends Controller
             foreach($data as $key=>$value){
                 if($value = ''){
                     $error_message[$key] = $label_name[$key].'を入力してください';
-                    $has_error = ture;
+                    $has_error = true;
                 }
             }
 
@@ -187,8 +187,8 @@ class MypageController extends Controller
     }
     public function passwordChange(Request $request)
     {
-        $user = User::user();
-        $user->password = User::password();
+        $user = Auth::user();
+        $user_password = $user->password;
 
         $error_message = $request->session()->get('ps_error_message');
         $data = $request->session()->get('ps_data');
@@ -198,6 +198,7 @@ class MypageController extends Controller
 
         if ($error_message == '') {
             $error_message = [
+                'password' => '',
                 'password_change' => '',
                 'password_change_confirm' => '',
             ];
@@ -213,7 +214,7 @@ class MypageController extends Controller
         $has_error = false;
 
         if ($request->method() == 'POST') {
-            $user->password = $request->post('password');
+            $old_password = $request->post('password');
             $password_change = $request->post('password_change');
             $password_change_confirm = $request->post('password_change_confirm');
 
@@ -222,13 +223,19 @@ class MypageController extends Controller
                 'password_change_confirm' => $password_change_confirm,
             ];
 
+            $email = $user->email;
+            if (!Auth::attempt(['email' => $email, 'password' => $old_password])) {
+                $error_message['password'] = 'パスワードが間違いました';
+                $has_error = true;
+            }
+
             if ($password_change == '') {
                 $error_message['password_change'] = '新しいパスワードを入力してください';
                 $has_error = true;
             }
 
-            if ($password_change_confirm == '') {
-                $error_change_confirm['password_change_confirm'] = '変更したパスワードと一致ではありません';
+            if ($password_change_confirm != $password_change) {
+                $error_message['password_change_confirm'] = '変更したパスワードと一致ではありません';
                 $has_error = true;
             }
 
@@ -245,7 +252,8 @@ class MypageController extends Controller
 
         }
 
-        return view('password-change',[
+        return view('mypage.password-change',[
+            'user' => $user,
             'data'=>$data,
             'error_message'=>$error_message,
         ]);

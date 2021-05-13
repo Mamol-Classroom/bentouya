@@ -19,19 +19,22 @@
                         <tr>
                             <td>元パスワード</td>
                             <td>
-                                <input type="password" name="password" value="@if($user->password != null){{$user->password}}@endif"/>
+                                <input type="password" name="password" value=""/>
+                                @if(isset($error_message)&&$error_message['password'] != null)
+                                    <span class="error_message">{{$error_message['password']}}</span>
+                                @endif
                             </td>
                             <td>パスワード変更</td>
                             <td>
-                                <input type="password" name="passwordChange" value="@if($data != null){{$data['password_change']}}@endif"/>
+                                <input type="password" name="password_change" value="@if($data != null){{$data['password_change']}}@endif"/>
                                 @if(isset($error_message)&&$error_message['password_change'] != null)
                                     <span class="error_message">{{$error_message['password_change']}}</span>
                                 @endif
                             </td>
                             <td>パスワード確認</td>
                             <td>
-                                <input type="password"　name="passwordChange" value="@if($data != null){{$data['password_change_confirm']}}@endif" />
-                                @if(isset($error_message)&&error_message['password_change_confirm' != null]))
+                                <input type="password" name="password_change_confirm" value="@if($data != null){{$data['password_change_confirm']}}@endif" />
+                                @if(isset($error_message)&&$error_message['password_change_confirm'] != null)
                                 <span class="error_message">{{$error_message['password_change_confirm']}}</span>
                                 @endif
                             </td>
