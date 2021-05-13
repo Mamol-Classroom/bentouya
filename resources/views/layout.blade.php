@@ -14,7 +14,8 @@
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
         @else
-            <a href="/login">ログイン</a>
+            <a href="/login">ログイン</a>　
+            <a href="/register">新規登録</a>
         @endif
     </div>
 </header>

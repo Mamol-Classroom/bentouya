@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class MypageController extends Controller
 {
@@ -111,5 +112,58 @@ class MypageController extends Controller
             'data' => $data,
             'error_message' => $error_message
         ]);
+    }
+
+    public function password_reset(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = Auth::id();
+
+        $error_message = $request->session()->get('error_message');
+        $password_info = $request->session()->get('password_reset');
+
+        $request->session()->forget('error_message');
+        $request->session()->forget('password_reset');
+
+        if ($error_message == null){
+            $error_message = ['password_reset' => null];
+        }
+
+
+        if ($password_info == null){
+            $password_info = ['password_reset' => ''];
+        }
+
+        $has_error = false;
+
+        if ($request -> method() === 'POST'){
+            $password_reset = $request -> post('password_reset');
+
+            $password_info = [
+                'password_reset' => $password_reset
+            ];
+
+            if ($password_reset == ""){
+                $error_message['password_reset'] = '新しいパスワードをご入力';
+                $has_error = true;
+            }
+
+            if($has_error){
+                $request -> session() ->put('error_message',$error_message);
+                $request -> session() ->put('password_reset',$password_reset);
+
+                return redirect('/mypage/password_reset');
+            }
+
+            $new_password =Hash::make($password_reset);
+            $user -> password = $new_password;
+            $user -> save();
+            return redirect('/mypage/password_reset');
+        }
+        return view('/mypage/password_reset',[
+            'password_reset' => $password_info,
+            'error_message' => $error_message,
+        ]);
+
     }
 }
