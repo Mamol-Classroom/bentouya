@@ -36,4 +36,5 @@ Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->m
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 // 支払い
+Route::get('/expection',[MypageController::class, 'expection']);
 
