@@ -32,6 +32,7 @@
                                 <span id="continue-announce" class="a-button-text" aria-hidden="true">
                                     ログイン
                                 </span>
+                                <input type="button" onclick="location.href='/register';" value="新規登録" />
                             </span>
                         </span>
                             {{--
