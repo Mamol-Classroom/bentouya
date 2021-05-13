@@ -13,4 +13,16 @@ class Bento extends Model
     use SoftDeletes;
 
     protected $table = 'bentos';
+
+    //关于model的处理可以直接写在对应的model里；
+    //这里是要关联top页面以及mypage中的注目リスト，使收藏内容同步，并可以在注目リスト中取消收藏
+    public function is_favourite($user_id)  //在top.blade中添加一个ajax来完成同步
+    {
+        $bento_id = $this->id;
+        $favourite = Favourite::where('user_id',$user_id)
+            ->where('bento_id',$bento_id)
+            ->first();
+
+        return $favourite != '';  //?不可以为空?
+    }
 }

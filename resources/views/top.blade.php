@@ -27,6 +27,9 @@
                         <!--在显示便当循环中套用jquery，触发onclick事件，插入图标i，this指当前user-->
                         <div class="favor" onclick="addFavourite({{ $bento->id }}, this)"><i class="fas fa-heart"></i></div>
                         <!--this不在php脚本内，是js语言，指代的是onclick事件触发时的自己，即div->script.js的icon-->
+                        <div class="favor @if($bento->is_favourite(auth()->id())) active @endif" onclick="addFavourite({{$bento->id}},this)"><i class="fas fa-heart"></i></div>
+                        <!--跟top.blade的收藏便当更改图标进行同步，更改Bento数据库-->
+                        <!--删除css class：style.css中的active->图标变灰-->
                         <a href="/bento/{{ $bento->id }}/detail">  <!--跳转到便当详情detail页面-->
                             <p>{{ $bento->bento_name }}</p>
                             <p>￥ {{ number_format($bento->price) }}</p>
