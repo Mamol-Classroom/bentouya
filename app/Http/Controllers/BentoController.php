@@ -102,7 +102,7 @@ class BentoController extends Controller
                 $exist_bento = $bento_code_data['exist_bento'];
             }
             $bento->bento_code = $bento_code;
-            $bento->deleted_flag = 0;
+            //$bento->deleted_flag = 0;
 
             $bento->user_id = Auth::id();
 
