@@ -14,7 +14,9 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // プロフィール
+
         $user = Auth::user();  //使用User会报错
+
         // $user_id = Auth::id(); 在session中取得旧文件，而不是直接从数据库中提取新数据
 
         $error_message = $request->session()->get('error_message');
@@ -188,7 +190,7 @@ class MypageController extends Controller
     public function passwordChange(Request $request)
     {
         $user = Auth::user();
-        $user_password = $user->password ;
+        $user_password = $user->password;
 
         $error_message = $request->session()->get('ps_error_message');
         $data = $request->session()->get('ps_data');
@@ -198,6 +200,7 @@ class MypageController extends Controller
 
         if ($error_message == '') {
             $error_message = [
+                'password' => '',
                 'password_change' => '',
                 'password_change_confirm' => '',
             ];
@@ -222,7 +225,10 @@ class MypageController extends Controller
                 'password_change_confirm' => $password_change_confirm,
             ];
 
-            if($old_password != $user_password){
+
+            $email = $user->email;
+            if (!Auth::attempt(['email' => $email, 'password' => $old_password])) {
+
                 $error_message['password'] = 'パスワードが間違いました';
                 $has_error = true;
             }
@@ -232,8 +238,8 @@ class MypageController extends Controller
                 $has_error = true;
             }
 
-            if ($password_change_confirm == '') {
-                $error_change_confirm['password_change_confirm'] = '変更したパスワードと一致ではありません';
+            if ($password_change_confirm != $password_change) {
+                $error_message['password_change_confirm'] = '変更したパスワードと一致ではありません';
                 $has_error = true;
             }
 
@@ -250,7 +256,8 @@ class MypageController extends Controller
 
         }
 
-        return view('password-change',[
+        return view('mypage.password-change',[
+            'user' => $user,
             'data'=>$data,
             'error_message'=>$error_message,
         ]);
