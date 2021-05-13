@@ -113,80 +113,9 @@ class MypageController extends Controller
         'error_message'=>$error_message,
     ]);
 
-        // プロフィール
-       /** $data = [
-            'email' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-            'name' => '',
-        ];
-
-        //$user = Auth::user(); 在session中取得旧文件，而不是直接从数据库中提取新数据
-        //$user_id = Auth::id();
-
-        $user = User::find(user_id);
-
-
-        $user = User::find($user_id);
-
-        $data = $request->session()->get('data');
-
-        $request->session()->forget('data');
-
-        if ($data == '') {
-            $data = [
-                'email' => $user->email,
-                'name' => $user->name,
-                'postcode' => $user->postcode,
-                'prefecture' => $user->prefecture,
-                'city' => $user->city,
-                'address' => $user->address,
-                'tel' => $user->tel
-            ];
-
-         $request->session()->put('data',$data);
-
-        }
-
-        if ($request->method() == 'POST') {
-            $email = $request->post('email');
-            $name = $request->post('name');
-            $postcode = $request->post('postcode');
-            $prefecture = $request->post('prefecture');
-            $city = $request->post('city');
-            $address = $request->post('address');
-            $tel = $request->post('tel');
-
-            $data = [
-                'email' => $email,
-                'name' => $name,
-                'postcode' => $postcode,
-                'prefecture' => $prefecture,
-                'city' => $city,
-                'address' => $address,
-                'tel' => $tel
-            ];
-
-            //更改数据存入数据库
-            $user->email = $data['email'];
-            $user->name = $data['name'];
-            $user->postcode = $data['postcode'];
-            $user->prefecture = $data['prefecture'];
-            $user->city = $data['city'];
-            $user->address = $data['address'];
-            $user->tel = $data['tel'];
-            $user->save();
-
-            return redirect('/mypage');
-        }
-
-        return view('mypage.index', [
-            'data' => $data,
-        ]);*/
     }
+
+
     public function passwordChange(Request $request)
     {
         $user = Auth::user();
@@ -216,8 +145,8 @@ class MypageController extends Controller
         $has_error = false;
 
         if ($request->method() == 'POST') {
-            $old_password = $request->post('password');
-            $password_change = $request->post('password_change');
+            $old_password = $request->post('password');  //post进来原密码
+            $password_change = $request->post('password_change'); //指的是html中tag的name
             $password_change_confirm = $request->post('password_change_confirm');
 
             $data = [
@@ -226,9 +155,9 @@ class MypageController extends Controller
             ];
 
 
-            $email = $user->email;
+            $email = $user->email;   //不定义下边的判定登录用户旧密码将会报错，因为没有被引用
             if (!Auth::attempt(['email' => $email, 'password' => $old_password])) {
-
+                //确定当前用户输入的旧密码是否正确
                 $error_message['password'] = 'パスワードが間違いました';
                 $has_error = true;
             }

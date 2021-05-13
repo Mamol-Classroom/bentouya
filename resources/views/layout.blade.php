@@ -34,6 +34,6 @@
 @yield('content')
 
 <script src="/js/script.js"></script>
-<script src="/js/bentoDelete.js"></script>
+<script src="/js/bentoDeleteConfirm.js"></script>
 </body>
 </html>

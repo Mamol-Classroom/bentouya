@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TopController;
+use App\Http\Controllers\TopController;      //需要添加所有关联的控制器
 use App\Http\Controllers\BentoController;
 use App\Http\Controllers\MypageController;
 
@@ -48,8 +48,6 @@ Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 
 Route::get('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
 Route::post('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
-
-
 
 // 支払い
 

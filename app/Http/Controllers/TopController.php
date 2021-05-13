@@ -9,21 +9,21 @@ use App\Models\User;  //模型路径
 use App\Models\Bento;
 use App\Models\BentoImage;
 
-use Illuminate\Support\Facades\Auth;  //确定auth使用路径
-use Illuminate\Support\Facades\Hash;  //hash路径
+use Illuminate\Support\Facades\Auth;  //确定auth使用路径，认证登录
+use Illuminate\Support\Facades\Hash;  //hash路径，密码加密
 
 class TopController extends Controller
 {
 
-    public function top(Request $request)
+    public function top(Request $request)     //页面展示
     {
 
        /** if (Auth::check()) {           //进入session验证是否有登录信息,是进入主页，不是进入登录画面
             $user = Auth::user();         //config文件夹下的auth.php文件进行配置
             $user_id = Auth::id();        //验证的是加密密码->Hash
 
-
-            $bentos = Bento::all();       //已经在routes里添加了中间件检查是否登录：middleware */
+            $bentos = Bento::all();       //已经在routes里添加了中间件检查是否登录：middleware
+        */
 
         $word = $request->query('word');        //首页检索栏显示内容接收
         $price_l = $request->query('price_l');  //使用get方法，因为需要在这个函数内渲染模板
@@ -53,7 +53,7 @@ class TopController extends Controller
             $bento_query->where('price', '<=', $price_h);
         }
 
-        $bentos = $bento_query->paginate(4);   //laravel分页，每页4项
+        $bentos = $bento_query->paginate(4);   //laravel分页，每页4项->top.blade进行详细处理
         //$bentos = $bento_query->get();
 
         return view('top', [
@@ -64,7 +64,7 @@ class TopController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function register(Request $request)    //注册页面
     {
         $error_message = $request->session()->get('error_message');
         $data = $request->session()->get('data');
@@ -115,7 +115,7 @@ class TopController extends Controller
         $tel = $request->post('tel');
         $name = $request->post('name');
 
-        $data = [                               //保留未出错信息
+        $data = [                          //保留未出错信息
             'email' => $email,
             'password' => $password,
             'password_confirm' => $password_confirm,
@@ -128,6 +128,7 @@ class TopController extends Controller
         ];
 
         $has_error = false;
+
         $error_message = [
             'email' => null,
             'password' => null,
@@ -139,6 +140,7 @@ class TopController extends Controller
             'tel' => null,
             'name' => null,
         ];
+
         if ($email == "") {
             $error_message['email']  = '请输入邮箱';
             $has_error = true;
@@ -193,10 +195,8 @@ class TopController extends Controller
             return redirect('/register');  //重定向
         }
 
-        // 将输入的数据存入数据库
 /**
-
-    public function userList(Request $request){
+ public function userList(Request $request){
         $users = User::all();
         foreach($users as $u){
             echo $u->name;
@@ -217,6 +217,7 @@ class TopController extends Controller
             //       $users->delete();
         }
 */
+        // 将输入的数据存入数据库
         $user = new User();
         $user->email = $email;
         $hashed_password = Hash::make($password);  //密码加密->Auth验证的是加密密码
@@ -259,7 +260,7 @@ class TopController extends Controller
             $password = $request->post('password');
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                //默认是加密后的密码，MD5，在注册逻辑内编写
+                //默认是hash加密后的密码，MD5，在register注册逻辑内编写
                 // ログイン成功
                 return redirect('/');
             }
@@ -279,7 +280,6 @@ class TopController extends Controller
                 // ログイン失敗
                 $request->session()->put('login_failed', true);//保存以及修改put('名字‘,值)
                                                                 //flash闪存
-
                 return redirect('/login');
             }
              */
