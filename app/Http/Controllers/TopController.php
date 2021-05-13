@@ -51,8 +51,7 @@ class TopController extends Controller
             $error_message = [
                 'email' => null,
                 'password' => null,
-                'password_confirm' => null,
-                'postcode' => null,
+                'password_confirm' => null,'postcode' => null,
                 'prefecture' => null,
                 'city' => null,
                 'address' => null,
