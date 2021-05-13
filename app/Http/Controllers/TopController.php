@@ -201,6 +201,8 @@ class TopController extends Controller
             'address' => $user->address,
             'tel' => $user->tel,
         ]);
+
+
     }
 
     public function login(Request $request)
