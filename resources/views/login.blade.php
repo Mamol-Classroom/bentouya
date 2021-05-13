@@ -42,6 +42,8 @@
                                 </span>
                             </span>
                         </span>
+
+
                             {{--
                             <div id="legalTextRow" class="a-row a-spacing-top-medium a-size-small">
                                 By continuing, you agree to Amazon's <a href="/gp/help/customer/display.html/ref=ap_signin_notification_condition_of_use?ie=UTF8&amp;nodeId=643006">Conditions of Use</a> and <a href="/gp/help/customer/display.html/ref=ap_signin_notification_privacy_notice?ie=UTF8&amp;nodeId=643000">Privacy Notice</a>.

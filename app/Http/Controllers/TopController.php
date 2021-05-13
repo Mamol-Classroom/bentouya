@@ -207,15 +207,15 @@ class TopController extends Controller
         $user->tel = $tel;
         $user->save();
 
-        $request->session()->flash('register_user', $user);
+        $request->session()->flash('registerd_user', $user);
 
         return redirect('/register-success');
     }
 
     public function registerSuccess(Request $request)
     {
-        $user = $request->session()->get('register_user');
-        $request->session()->keep('register_user');
+        $user = $request->session()->get('registerd_user');
+        $request->session()->keep('registerd_user');
 
         return view('register_success', [
             'email' => $user->email,
