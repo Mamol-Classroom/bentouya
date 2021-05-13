@@ -17,3 +17,8 @@ function addFavourite(bento_id, icon) {
     });
 }
 
+function removeFavourite(bento_id, icon) {
+    addFavourite(bento_id, icon);
+    $(icon).closest('.bento').remove();
+}
+
