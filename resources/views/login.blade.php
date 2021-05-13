@@ -32,7 +32,14 @@
                                 <span id="continue-announce" class="a-button-text" aria-hidden="true">
                                     ログイン
                                 </span>
-                                <input type="button" onclick="location.href='/register';" value="新規登録" />
+                            </span>
+                        </span>
+                            <span id="continue" class="a-button a-button-span12 a-button-primary">
+                            <span class="a-button-inner">
+                                <input id="continue" tabindex="5" class="a-button-input" type="button" onclick="location.href='/register'" aria-labelledby="continue-announce">
+                                <span id="continue-announce" class="a-button-text" aria-hidden="true">
+                                    新規登録
+                                </span>
                             </span>
                         </span>
                             {{--

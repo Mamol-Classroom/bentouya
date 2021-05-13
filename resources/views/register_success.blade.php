@@ -38,6 +38,7 @@
                     <td>{{ $tel }}</td>
                 </tr>
             </table>
+            <input type="button" onclick="location.href='/'" value="ホームページ" />
         </div>
     </main>
 @endsection
