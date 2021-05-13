@@ -320,14 +320,14 @@ class BentoController extends Controller
     public function addFavourite(Request $request)
     {
         $bento_id = $request->post('bento_id');
-        $user_id = Auth::id();
+        $user_id = Auth::id();  //没有通过js的ajax，而是session，所以不用传值
 
         // 該当弁当が存在するかどうかを確認する
         $bento_exist = Bento::find($bento_id);
         if ($bento_exist == null) {
             // 报错，使用ajax的函数response
             //另外两种返回值：view渲染模板(post)以及redirect重定向(pet)
-            return response()->json(['result' => 'fail']);  //datatype是json？result指哪个？
+            return response()->json(['result' => 'fail']);  //datatype是json;result指script.js里的函数形参
         }
 
         $favourite = Favourite::where('user_id', $user_id)

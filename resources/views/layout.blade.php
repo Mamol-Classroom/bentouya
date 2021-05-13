@@ -17,6 +17,7 @@
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
         @else
+            <p>ようこそ、ゲスト 様</p>
             <a href="/login">ログイン</a>
         @endif
     </div>
@@ -33,5 +34,6 @@
 @yield('content')
 
 <script src="/js/script.js"></script>
+<script src="/js/bentoDelete.js"></script>
 </body>
 </html>
