@@ -44,9 +44,9 @@ class BentoController extends Controller
             $guarantee_period = $request->post('guarantee_period');
 
             $data = [
-                'bento_name' => $bento_name,
-                'price' => $price,
                 'description' => $description,
+                'price' => $price,
+                'bento_name' => $bento_name,
                 'stock' => $stock,
                 'guarantee_period' => $guarantee_period,
             ];
@@ -100,7 +100,7 @@ class BentoController extends Controller
                 $exist_bento = $bento_code_data['exist_bento'];
             }
             $bento->bento_code = $bento_code;
-            $bento->deleted_flag = 0;
+            //$bento->deleted_flag = 0;
 
             $bento->user_id = Auth::id();
 
@@ -267,7 +267,7 @@ class BentoController extends Controller
                     continue;
                 }
                 if ($value == '') {
-                    $error_message[$key] = '请输入'.$label_name[$key];
+                    $error_message[$key] = '请输入' . $label_name[$key];
                     $has_error = true;
                 }
                 if ($key === 'price') {
@@ -286,7 +286,7 @@ class BentoController extends Controller
                 $request->session()->put('bento.update.error_message', $error_message);
                 $request->session()->put('bento.update.data', $data);
 
-                return redirect('/bento/update?bento_id='.$bento_id);
+                return redirect('/bento/update?bento_id=' . $bento_id);
             }
 
             // 将输入的数据修改数据库
@@ -297,7 +297,7 @@ class BentoController extends Controller
             $bento->stock = $stock;
             $bento->save();
 
-            return redirect('/bento/update?bento_id='.$bento_id);
+            return redirect('/bento/update?bento_id=' . $bento_id);
         }
 
         return view('bento.update', [
@@ -306,4 +306,25 @@ class BentoController extends Controller
             'error_message' => $error_message
         ]);
     }
+
+        //注目リストハートマーク追加
+        public function addFavourite(Request $request)
+    {
+        $bento_id = $request ->post('bento_id');
+        $user_id = Auth::id();
+
+        //Database中でデータ確認
+        $bento_exist = Bento::find($bento_id);
+        if ($bento_exist == null) {
+            //エラー
+        }
+
+        $favourite = new Favourite();
+        $favourite -> bento_id = $bento_id;
+        $favourite -> user_id = $user_id;
+        $favourite -> save();
+
+        //ユーザーページーに反応
+    }
+
 }

@@ -11,5 +11,6 @@ class Bento extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'bentos';
+    protected $table = 'bento';
+    //public $timestamps =false;
 }
