@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use App\Models\Bento;
+use App\Models\Favourite;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -191,6 +194,30 @@ class MypageController extends Controller
             'error_message'=>$error_message,
         ]);
 
+    }
+
+    public function favourite(Request $request)
+    {
+        //ログインしているユーザーIDの取得
+        $user_id = Auth::id();
+        //favouritesテーブルから注目している弁当のIDリストの取得
+        $bento_id_list = [];
+        //ログインしているユーザーIDが注目したデーターの取得(Array)
+        $favourites = Favourite::where('user_id',$user_id)->get();
+        //$favouritesから弁当IDの取得して、$bento_id_listに追加
+        foreach ($favourites as $favourite){
+            //該当弁当IDの取得
+            $bento_id = $favourite->bento_id;
+            //該当弁当IDを$bento_id_listの末に追加
+            $bento_id_list[] = $bento_id;
+        }
+
+        //Bentosテーブルから、弁当のIDリストに基づいて弁当情報の取得
+        $bentos = Bento::whereIn('id',$bento_id_list)->get();  //whereIn定点查询
+
+        return view('mypage.favourite',[
+            'bentos'=>$bentos
+        ]);
     }
 
 

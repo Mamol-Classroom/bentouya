@@ -49,5 +49,7 @@ Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::get('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
 Route::post('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
 
+Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
+
 // 支払い
 
