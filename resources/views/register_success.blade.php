@@ -38,5 +38,7 @@
                 </tr>
             </table>
         </div>
+
+        <div style="align:center"><button type="submit"><a href="/mypage">Myページ</a></button></div>
     </main>
 @endsection
