@@ -3,7 +3,9 @@
 @section('title','マイページ')
 
 @section('content')
-
+    @if(count($bentos) == 0)
+        <p>弁当なし</p>
+    @else
     <main id="main">
         <ul id="main-nav">
             <li><a href="/mypage">プロフィール</a></li>
@@ -21,16 +23,14 @@
                     @foreach($bentos as $bento)
 
                             <div class="bento">
-                                <div class="favor"><i class="fas fa-heart"></i></div>
-                                <a href="/bento/detail/{{$bento->id}}">
+                                <div class="favor active" onclick="removeFavourite({{$bento->id}},this)"><i class="fas fa-heart"></i></div>
+                                <a>
                                     <p>{{$bento->bento_name}}</p>
                                     <p>¥{{number_format($bento->price)}}</p>
                                 </a>
                             </div>
 
-
-
-
-
                     @endforeach
                 </div>
+    @endif
+@endsection

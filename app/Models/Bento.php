@@ -14,6 +14,17 @@ class Bento extends Model
     use SoftDeletes;
 
     protected $table = 'bentos';
-    public $timestamps = false;
+
+    //数据库里有created at就可以不要
+    //public $timestamps = false;
+
+    public function is_favourite($user_id){
+        $bento_id =$this -> id;
+        $favourite =Favourite::where('user_id',$user_id)
+            ->where('bento_id',$bento_id)
+            ->first();
+
+        return $favourite != null;
+    }
 
 }

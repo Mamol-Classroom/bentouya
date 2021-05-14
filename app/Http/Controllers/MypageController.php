@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Bento;
+use App\Models\Favourite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -190,6 +192,49 @@ class MypageController extends Controller
                 'data' => $data,
                 'error_message' => $error_message,
             ]);
+
+    }
+
+
+    public function favourite(Request $request){
+
+        //取得当前登陆人的id
+        $user_id = Auth::id();
+
+        //取得 favourite表中，user_id等于登陆人的便当id
+        $bento_id_list=[];
+// ログインしているユーザーIDが注目したデーターの取得(Array)
+        $favourites =Favourite::where('user_id', $user_id)->get();
+// $favouritesから弁当IDの取得して、$bento_id_listに追加
+        foreach ($favourites as $favourite){
+            // 該当弁当IDの取得
+            $bento_id = $favourite->bento_id;
+            // 該当弁当IDを$bento_id_listの末に追加
+            $bento_id_list[] = $bento_id;
+        }
+
+        //  $bento_query = Bento::query();
+        // foreach ($bento_id_list as $bento_id) {
+        //      $bento_query->orWhere('id', $bento_id);
+        //  }
+        //$bentos = $bento_query->get();
+
+
+// Bentosテーブルから、弁当のIDリストに基づいて弁当情報の取得
+        $bentos = Bento::whereIn('id', $bento_id_list)->get();
+
+        return view('mypage.favourite', ['bentos' => $bentos]);
+
+
+
+
+        //通过便当id取得便当数据
+
+
+        //将所得的便当数据传入模版
+        //循环现实所有便当数据
+
+
 
     }
 
