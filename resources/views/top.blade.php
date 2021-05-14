@@ -31,11 +31,11 @@
         </div>
         <div class="paginate">
             <ul>
-                <li><a href="{{ $bentos->previousPageUrl() }}"><</a></li>
+                <li><a href="{{ $bentos->withQueryString()->previousPageUrl() }}"><</a></li>
                 @for($p = 1; $p <= ceil($bentos->total() / $bentos->perpage()); $p++)
-                    <li><a href="{{ $bentos->url($p) }}">{{ $p }}</a></li>
+                    <li><a href="{{ $bentos->withQueryString()->url($p) }}">{{ $p }}</a></li>
                 @endfor
-                <li><a href="{{ $bentos->nextPageUrl() }}">></a></li>
+                <li><a href="{{ $bentos->withQueryString()->nextPageUrl() }}">></a></li>
             </ul>
         </div>
     </main>
