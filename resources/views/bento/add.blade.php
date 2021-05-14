@@ -6,7 +6,12 @@
     <main class="center">
         <h1>弁当登録</h1>
         <div>
-            <form method="post" action="/bento/add">
+            {{--
+            設定enctype為multipart/form-data值後，不對字元編碼，則資料通過二進位制的形式傳送到伺服器端，
+            這時如果用request是無法直接獲取到相應表單的值的，而應該通過stream流物件，將傳到伺服器端的二進位制資料解碼，從而讀取資料。
+            如果要上傳檔案的話，是一定要將encotype設定為multipart/form-data的。
+            --}}
+            <form method="post" action="/bento/add" enctype="multipart/form-data">
                 <table class="register-table">
                     <tr>
                         <td>弁当名</td>
@@ -33,6 +38,12 @@
                             @if(isset($error_message) && $error_message['description'] != null)
                                 <span class="error-message">{{ $error_message['description'] }}</span>
                             @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>画像</td>
+                        <td>
+                            <input type="file" name="bento_img" />
                         </td>
                     </tr>
                     <tr>
