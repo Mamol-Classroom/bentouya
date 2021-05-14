@@ -288,4 +288,9 @@ class BentoController extends Controller
             'error_message' => $error_message
         ]);
     }
+    public function addfavourite(request $request)
+    {
+        $bento_id = $request->post('bento_id');
+        $user_id = Auth::id();
+    }
 }
