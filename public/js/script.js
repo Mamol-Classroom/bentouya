@@ -20,7 +20,7 @@ function addFavourite(bento_id, icon) { //top.blade页面中js传值的this，�
 function removeFavourite(bento_id,icon){
     //调用上边的函数，并将值bento_id,icon传入，因为执行操作一致，无需重复书写
     addFavourite(bento_id,icon);
-    //closest向上追述到name是bento的div，class是bento；remove删除
+    //closest向上追溯(多层追溯)到name是bento的div，class是bento；remove删除
     $(icon).closest('.bento').remove();
 }
 
