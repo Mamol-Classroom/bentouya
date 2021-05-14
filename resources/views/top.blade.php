@@ -41,13 +41,14 @@
         </div>
         <div class="paginate"> <!--页面翻转-->
             <ul>         <!--TopConcoller的paginate-->
-                <li><a href="{{ $bentos->previousPageUrl() }}"><</a></li> <!--laravel向前跳转页面-->
+                <li><a href="{{ $bentos->withQueryString()->previousPageUrl() }}"><</a></li> <!--laravel向前跳转页面-->
                 @for($p = 1; $p <= ceil($bentos->total() / $bentos->perpage()); $p++)
                     <!--ceil向上取整&total便当总数除以perpage每页展示数-->
-                    <li><a href="{{ $bentos->url($p) }}">{{ $p }}</a></li>
+                    <li><a href="{{ $bentos->withQueryString()->url($p) }}">{{ $p }}</a></li>
                     <!--url链接-->
                 @endfor
-                <li><a href="{{ $bentos->nextPageUrl() }}">></a></li>     <!--laravel向后跳转页面-->
+                <li><a href="{{ $bentos->withQueryString()->nextPageUrl() }}">></a></li>     <!--laravel向后跳转页面-->
+                    <!--withQueryString:将筛选之后的bento数据返还给url，携带数据跳转,避免换页后丢失筛选数据无法翻页-->
             </ul>
         </div>
     </main>

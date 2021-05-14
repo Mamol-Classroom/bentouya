@@ -29,7 +29,7 @@
                     <tr>
                         <td>説明</td>
                         <td>
-                            <textarea name="description" style="width: 500px; height: 200px;">{{ $data['description'] }}</textarea>
+                            <textarea name="description" stylewidth: 500px; height: 200px;">{{ $data['description'] }}</textarea>
                             @if(isset($error_message) && $error_message['description'] != null)
                                 <span class="error-message">{{ $error_message['description'] }}</span>
                             @endif

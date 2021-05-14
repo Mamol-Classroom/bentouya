@@ -23,6 +23,6 @@ class Bento extends Model
             ->where('bento_id',$bento_id)
             ->first();
 
-        return $favourite != '';  //?不可以为空?
+        return $favourite != '';  //不为空表示已经被收藏
     }
 }
