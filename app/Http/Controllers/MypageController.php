@@ -124,6 +124,14 @@ class MypageController extends Controller
                'password_confirm' => $password_confirm,
            ];
 
+           $error_message = [
+               'password' => null,
+               'newpassword' => null,
+               'password_confirm' => null,
+           ];
+
+           $has_error = false;
+
            $email = $user->email;   //不定义下边的判定登录用户旧密码将会报错，因为没有被引用
            if (!Auth::attempt(['email' => $email, 'password' => $oldpassword])) {
                //确定当前用户输入的旧密码是否正确
@@ -141,6 +149,16 @@ class MypageController extends Controller
                $has_error = true;
            }
 
+           if ($has_error) {
+               $request->session()->put('password.error_message', $error_message);
+               $request->session()->put('password.data', $data);
+
+               return redirect('/mypage/passwordupdate');
+           }
+           //变更密码存入数据库
+           $changed_password = Hash::make($passwordupdate);
+           $user->password = $changed_password;
+           $user->save();
        }
        $error_message = $request->session()->get('password.error_message');
        $data = $request->session()->get('password.data');
@@ -163,17 +181,7 @@ class MypageController extends Controller
                'password_confirm' => null,
            ];
        }
-       $has_error = false;
-       if ($has_error) {
-                $request->session()->put('password.error_message', $error_message);
-                $request->session()->put('password.data', $data);
 
-                return redirect('/mypage/passwordupdate');
-            }
-        //变更密码存入数据库
-           $changed_password = Hash::make($passwordupdate);
-           $user->password = $changed_password;
-           $user->save();
 
     return view('mypage.passwordupdate',[
            'user' => $user,
