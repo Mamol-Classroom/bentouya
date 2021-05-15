@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bento;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use App\Models\Bento;
+use App\Models\BentoImage;
 use App\Models\Favourite;
+
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Carbon;  //laravel自带日期生成
@@ -77,8 +79,21 @@ class BentoController extends Controller
 
             foreach ($data as $key => $value) {   //判断用户输入信息是否正确
                 if ($value == '') {
+
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
+
+                }
+
+                if ($key === 'price') {            //设定便当价格区间
+                    if ($value < 100) {
+                        $error_message[$key] = '价格不能低于100';
+                        $has_error = true;
+                    }
+                    if ($value > 2000) {
+                        $error_message[$key] = '价格不能高于2000';
+                        $has_error = true;
+                    }
                 }
             }
 
@@ -97,23 +112,23 @@ class BentoController extends Controller
             $bento->guarantee_period = $guarantee_period;
             $bento->stock = $stock;
 
-            $bento_code_data = $this->generateBentoCode($guarantee_period);
-            $bento_code = $bento_code_data['bento_code'];
-            $exist_bento = $bento_code_data['exist_bento'];
+            $bento_code_data = $this->generateBentoCode($guarantee_period);   //在自动生成便当code函数内提取
+            $bento_code = $bento_code_data['bento_code'];                     //自动生成的便当code
+            $exist_bento = $bento_code_data['exist_bento'];                   //确认是否存在（为了不重复）该便当code
 
-            while ($exist_bento != null) {
+            while ($exist_bento != null) {                                    //如果已经存在该便当code，则重新生成
                 $bento_code_data = $this->generateBentoCode($guarantee_period);
                 $bento_code = $bento_code_data['bento_code'];
                 $exist_bento = $bento_code_data['exist_bento'];
             }
             $bento->bento_code = $bento_code;
-            //$bento->deleted_flag = 0;
+            //$bento->deleted_flag = 0;    这部分改用为：deleted_at字段来判断/使用laravel自带的SoftDeletes->Bento的Models
 
-            $bento->user_id = Auth::id();
+            $bento->user_id = Auth::id();         //先找到登录者id再保存
 
             $bento->save();
 
-            $request->session()->flash('bento.add', $bento);
+            $request->session()->flash('bento.add', $bento);    //闪存，只保存一次请求
 
             return redirect('/bento/add/complete');
         }
@@ -152,8 +167,8 @@ class BentoController extends Controller
 
     public function addComplete(Request $request)
     {
-        $request->session()->keep('bento.add');
-        $bento = $request->session()->get('bento.add');
+        $bento = $request->session()->get('bento.add');    //接收上一个flash
+        $request->session()->keep('bento.add');           //或者reflash二次闪存所有信息
 
         if ($bento == null) {
             // 跳转到404 Not Found
@@ -182,7 +197,7 @@ class BentoController extends Controller
         $bento->delete();  // hard delete
         //这里使用了laravel自带的SoftDeletes->Bento的Models
 
-        // soft delete
+        // soft delete   ->手动
         // $bento->deleted_flag = 1;
         // $bento->save();
 
@@ -191,17 +206,17 @@ class BentoController extends Controller
 
     protected function generateBentoCode($guarantee_period)  //自动生成便当code
     {
-        $random_num = rand(0, 9999999999);
-        $random_num_length = strlen((string)$random_num);
-        $zero_count = 10 - $random_num_length;
+        $random_num = rand(0, 9999999999);                 //rand：生成十位随机数
+        $random_num_length = strlen((string)$random_num);  //(string):强制转化为文字；strlen:取得字符串长度
+        $zero_count = 10 - $random_num_length;             //用0补足十位数空缺
         $zero_string = '';
-        for ($i = 0; $i < $zero_count; $i++) {
+        for ($i = 0; $i < $zero_count; $i++) {             //将补位0依次插入
             $zero_string = $zero_string.'0';
         }
         $random_num = $zero_string.$random_num;
         // get random num end
         $bento_code = 'B'.$random_num.'-'.Carbon::now()->format('Ymd').'-'.str_replace('-', '', $guarantee_period);
-                                        //laravel自带class，生成时间                更改格式：'去除部分'，'更换部分'，'更换对象'
+                                    //laravel自带class，生成时间->格式format为：Ymd年月日  /  更改格式：'去除部分'，'更换部分'，'更换对象'
         $exist_bento = Bento::where('bento_code', $bento_code)->first();
 
         return [
@@ -272,7 +287,7 @@ class BentoController extends Controller
 
             foreach ($data as $key => $value) {
 
-                if($key === 'description'){
+                if($key === 'description'){     //商品说明可以为空，避免报错
 
                     continue;
                 }
@@ -280,7 +295,7 @@ class BentoController extends Controller
                     $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
                 }
-                if ($key === 'price') {
+                if ($key === 'price') {            //设定便当价格区间
                     if ($value < 100) {
                         $error_message[$key] = '价格不能低于100';
                         $has_error = true;
@@ -327,7 +342,7 @@ class BentoController extends Controller
         if ($bento_exist == null) {
             // 报错，使用ajax的函数response
             //另外两种返回值：view渲染模板(post)以及redirect重定向(pet)
-            return response()->json(['result' => 'fail']);  //datatype是json;result指script.js里的函数形参
+            return response()->json(['result' => 'fail']);  //datatype是json;result指script.js里的函数形参下的result
         }
 
         $favourite = Favourite::where('user_id', $user_id)

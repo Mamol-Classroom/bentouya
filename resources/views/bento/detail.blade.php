@@ -11,7 +11,7 @@
             <p>商品コード：{{ $bento_code }}</p>
             <p>賞味期限：{{ $guarantee_period }}</p>
             <div>
-                {!! nl2br($description) !!} <!--将用户输入的回车转换为php语言-->
+                {!! nl2br($description) !!} <!--将用户输入的回车转换为php语言，并保持类型一致-->
             </div>
         </div>
     </main>

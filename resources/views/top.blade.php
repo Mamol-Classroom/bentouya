@@ -31,6 +31,7 @@
                         <!--跟top.blade的收藏便当更改图标进行同步，更改Bento数据库-->
                         <!--删除css class：style.css中的active->图标变灰-->
                         <a href="/bento/{{ $bento->id }}/detail">  <!--跳转到便当详情detail页面-->
+                            <!--将bento的id反馈在url上为了区分便当的id；另一种写法在bento.index和bento.update中-->
                             <p>{{ $bento->bento_name }}</p>
                             <p>￥ {{ number_format($bento->price) }}</p>
                         </a>

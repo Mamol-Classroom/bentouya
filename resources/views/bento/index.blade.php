@@ -14,6 +14,7 @@
                 @foreach($bentos as $bento)
                     <div class="bento">
                         <a href="/bento/update?bento_id={{ $bento->id }}">
+                            <!--将bento的id反馈在url上为了区分便当的id；也可以写成bento/updete/?bento_id=-->
                             <p>{{ $bento->bento_name }}</p>
                             <p>￥ {{ number_format($bento->price) }}</p>
                         </a>

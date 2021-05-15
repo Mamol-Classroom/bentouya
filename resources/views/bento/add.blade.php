@@ -12,7 +12,7 @@
                         <td>弁当名</td>
                         <td>
                             <input type="text" name="bento_name" value="{{ $data['bento_name'] }}" />
-                            @if($error_message != null && $error_message['bento_name'] != null)
+                            @if(isset($error_message) && $error_message['bento_name'] != null)
                                 <span class="error-message">{{ $error_message['bento_name'] }}</span>
                             @endif
                         </td>

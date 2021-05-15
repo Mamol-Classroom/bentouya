@@ -30,9 +30,12 @@ Route::get('/logout', [TopController::class, 'logout'])->middleware('auth');
 
 // 弁当
 Route::get('/bentos', [BentoController::class, 'index'])->middleware('auth');
+
 Route::get('/bento/add', [BentoController::class, 'add'])->middleware('auth');
 Route::post('/bento/add', [BentoController::class, 'add'])->middleware('auth');
+
 Route::get('/bento/add/complete', [BentoController::class, 'addComplete'])->middleware('auth');
+
 Route::post('/bento/delete', [BentoController::class, 'delete'])->middleware('auth');
 Route::get('/bento/update', [BentoController::class, 'update'])->middleware('auth');
 
