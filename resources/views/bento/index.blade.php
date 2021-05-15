@@ -16,10 +16,14 @@
 
                 @foreach($bentos as $bento)
                     <div class="bento">
-                        <a href="/bento/update?bento_id={{$bento->id}}">
+
+                        @include('subview.bento',['bento'=>$bento])
+
+                        <!--<a href="/bento/update?bento_id={{$bento->id}}">
+                            <img src="{{ $bento->get_bento_image_url() }}" style="width: 180px; height:135px "/>
                             <p>{{$bento->bento_name}}</p>
                             <p>¥{{number_format($bento->price)}}</p>
-                        </a>
+                        </a>-->
 
 
                         <form onsubmit="return del()" method="post" action="/bento/delete">

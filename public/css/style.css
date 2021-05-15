@@ -74,7 +74,7 @@ header{
 
     border: #9c9c9c solid 1px;
     margin: 10px 20px;
-    width: 40%;
+    width: 15%;
     position: relative;
 }
 
@@ -131,6 +131,7 @@ nav ul li a {
 
 #main-nav li {
     list-style-type: none;
+    width: 160px;
 }
 
 .subview {

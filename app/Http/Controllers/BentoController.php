@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bento;
+use App\Models\BentosImage;
 use App\Models\Favourite;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -26,6 +27,11 @@ class BentoController extends Controller
         $user = Auth::user();
         $user_id = Auth::id();
         $bentos = Bento::where('user_id', $user_id)->get();
+
+        //测试数据 index中的src路径
+       // $bento_id = $bentos[6]->id;
+        //dump($bentos[6]->get_bento_image_url());exit;
+
 
 
         return view('bento.index',['bentos' => $bentos]);
@@ -61,6 +67,11 @@ class BentoController extends Controller
             $description = $request->post('description');
             $guarantee_period = $request->post('guarantee_period');
             $stock = $request->post('stock');
+            $bento_img = $request->file('bento_img');
+            //dump($bento_img->extension()).exit;
+
+
+
 
             //出现错误信息保留正确信息用
 
@@ -129,8 +140,34 @@ class BentoController extends Controller
 
             $bento->save();
 
-            $request->session()->flash('bento.add',$bento);
+            //文件上传:◉将上传的图片存储至服务器
 
+            //取得上传文件的文件（原来的名字）
+            // $bento_img->getClientOriginalName()
+
+            //取得原来文件的扩展名
+            //$bento_img->extension()
+
+
+            //以原文件名上传
+            //$bento_img->storeAs('bento_img',$bento_img->getClientOriginalName());
+            //图片命名：自动生成新的便当名上传
+            $bento_img_name = $bento->bento_name.'.'.$bento_img->extension();
+            //建文件夹过程
+            $bento_img->storeAs('public/bento_imgs/'.$bento->id, $bento_img_name);
+
+
+            //◉将图片的数据存入数据库bento_images
+
+
+
+            $bento_image = new BentosImage();
+            $bento_image->bento_id = $bento->id;
+            //存入数据库过程
+            $bento_image->image_url = 'bento_imgs/'.$bento->id.'/'.$bento_img_name;
+            $bento_image->save();
+
+            $request->session()->flash('bento.add',$bento);
 
             return redirect('/bento/add/complete');
 

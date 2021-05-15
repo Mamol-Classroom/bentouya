@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 //软删除
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Bento extends Model
 {
@@ -27,4 +28,17 @@ class Bento extends Model
         return $favourite != null;
     }
 
+
+    public function get_bento_image_url(){
+        $bento_id = $this->id;
+        $bento_image = BentosImage::where('bento_id',$bento_id)->first();
+
+        if ($bento_image == null ){
+
+            return '/img/default-bento.jpeg';
+        }
+
+        //url方法会在前面自动加/storage
+        return Storage::url($bento_image->image_url);
+    }
 }

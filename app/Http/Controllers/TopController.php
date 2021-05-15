@@ -47,7 +47,7 @@ class TopController extends Controller
         }
 
 
-        $bentos = $bento_query->paginate(6);
+        $bentos = $bento_query->paginate(10);
         //$bentos = $bento_query->get();
 
 
