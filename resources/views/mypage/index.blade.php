@@ -71,12 +71,6 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <button type="submit">確認</button>
-                            </td>
-                        </tr>
                     </table>
                 </form>
             </div>
