@@ -1,17 +1,8 @@
-@extends('layout')
+@extends('mypage.layout')
 
 @section('title', '注目リスト')
 
-@section('content')
-<main id="main">
-    <ul id="main-nav">
-        <li><a href="/mypage/update">個人情報変更</a></li>
-        <li><a href="/mypage/password_change">パスワード変更</a></li>
-        <li><a href="">注文履歴</a></li>
-        <li><a href="/myapge/favourite">注目リスト</a></li>
-        <li><a href="">ポイント残高</a></li>
-    </ul>
-
+@section('mypage-content')
     <div class="subview">
         <h1>注目リスト</h1>
         @if(count($bentos) == 0)
@@ -28,5 +19,4 @@
         @endforeach
         @endif
     </div>
-</main>
 @endsection

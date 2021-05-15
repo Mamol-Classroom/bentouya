@@ -62,7 +62,7 @@ class MypageController extends Controller
             'bentos' => $bentos
         ]);
     }
-    public function upadte(Request $request)
+    public function update(Request $request)
     {
         // ログインしているユーザーIDの取得
         $user_id = Auth::id();
@@ -85,7 +85,7 @@ class MypageController extends Controller
             'bentos' => $bentos
         ]);
     }
-    public function password_chang(Request $request)
+    public function password_change(Request $request)
     {
         // ログインしているユーザーIDの取得
         $user_id = Auth::id();
