@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bento;
 use App\Models\Favourite;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,4 +62,5 @@ class MypageController extends Controller
             'bentos' => $bentos
         ]);
     }
+
 }
