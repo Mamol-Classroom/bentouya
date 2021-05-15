@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Bento;
@@ -24,7 +25,6 @@ class TopController extends Controller
         $user = Auth::user();
         $user_id =Auth::id();
         */
-
 
 
         $word =$request->query('word');
@@ -143,6 +143,9 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
+        $avatar_img = $request->file('avatar_img');
+
+
 
         $data = [
             'email' => $email,
@@ -154,6 +157,7 @@ class TopController extends Controller
             'address' => $address,
             'tel' => $tel,
             'name' => $name,
+
         ];
 
         $has_error = false;
@@ -231,6 +235,20 @@ class TopController extends Controller
         $user->address = $address;
         $user->tel = $tel;
         $user->save();
+//头像上传
+
+      //  $avatar_img_name = $user->name.'.'.$avatar_img->extension();
+   //     $avatar_img->storeAs('public/avatar_img/'.$user->id, $avatar_img_name);
+
+//        $avatar_img->getClientOriginalName();
+//      $avatar_img->extension();
+       $avatar_img->storeAs('public/avatar_img',$avatar_img->getClientOriginalName());
+   //     $user->avatar = 'avatar_img/'.$user->id.'/'.$avatar_img_name;
+        $user->avatar = 'avatar_img/'.$avatar_img->getClientOriginalName();
+        $user->save();
+
+
+
 
         $request->session()->put('register_user',$user);
 

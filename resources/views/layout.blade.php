@@ -12,6 +12,10 @@
 <body>
 <header>
     <div class="logo"><img src="/img/logo.jpg"width="100px"height="auto"></div>
+    @if(auth()->check())
+    <div class="avatar"><img src="storage/{{ auth()->user()->avatar }}" width="60px"height="60px"></div>
+    @endif
+
     <div class="profile">
 
         @if(auth()->check())

@@ -7,7 +7,7 @@
 <main class="center">
     <h1>新規登録</h1>
     <div>
-        <form method="post" action="/register-user">
+        <form method="post" action="/register-user" enctype="multipart/form-data">
             <table class="register-table">
                 <tr>
                     <td>メールアドレス</td>
@@ -45,6 +45,14 @@
                         @endif
                     </td>
                 </tr>
+
+                <tr>
+                    <td>アバター</td>
+                    <td>
+                        <input type="file" name="avatar_img"/>
+                    </td>
+                </tr>
+
                 <tr>
                     <td>郵便番号</td>
                     <td>
