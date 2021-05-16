@@ -34,7 +34,6 @@ Route::post('/bento/update', [BentoController::class, 'update'])->middleware('au
 Route::post('/bento/favourite/add',[BentoController::class,'addfavourite'])->middleware('auth');
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
-Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::get('/mypage/update',[MypageController::class,'update'])->middleware('auth');
 Route::post('/mypage/update',[MypageController::class,'update'])->middleware('auth');
 Route::get('/mypage/password_change',[MypageController::class,'password_change'])->middleware('auth');

@@ -4,7 +4,7 @@
 
 @section('mypage-content')
         <div class="subview">
-            <h1>プロフィール</h1>
+            <h1>個人情報変更</h1>
             <div>
                 <form method="post" action="">
                     <table class="register-table">

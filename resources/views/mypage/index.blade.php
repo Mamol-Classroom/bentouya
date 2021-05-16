@@ -11,43 +11,43 @@
                         <tr>
                             <td>メールアドレス</td>
                             <td>
-                                <input type="text" name="email" value="{{ $data['email'] }}" />
+                                <input type="text" name="email" value="{{ $data['email'] }}" disabled="disabled" />
                             </td>
                         </tr>
                         <tr>
                             <td>名前</td>
                             <td>
-                                <input type="text" name="name" value="{{ $data['name'] }}" />
+                                <input type="text" name="name" value="{{ $data['name'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
                             <td>郵便番号</td>
                             <td>
-                                <input type="text" name="postcode" value="{{ $data['postcode'] }}" />
+                                <input type="text" name="postcode" value="{{ $data['postcode'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
                             <td>都道府県</td>
                             <td>
-                                <input type="text" name="prefecture" value="{{ $data['prefecture'] }}" />
+                                <input type="text" name="prefecture" value="{{ $data['prefecture'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
                             <td>市区町村</td>
                             <td>
-                                <input type="text" name="city" value="{{ $data['city'] }}" />
+                                <input type="text" name="city" value="{{ $data['city'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
                             <td>住所</td>
                             <td>
-                                <input type="text" name="address" value="{{ $data['address'] }}" />
+                                <input type="text" name="address" value="{{ $data['address'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
                             <td>電話番号</td>
                             <td>
-                                <input type="text" name="tel" value="{{ $data['tel'] }}" />
+                                <input type="text" name="tel" value="{{ $data['tel'] }}" disabled="disabled"/>
                             </td>
                         </tr>
                     </table>

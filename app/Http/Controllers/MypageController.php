@@ -25,9 +25,10 @@ class MypageController extends Controller
                 'address'=>$user->address,
                 'tel'=>$user->tel,
             ];
-        return view('mypage.index', ['data' => $data]);
         }
+        return view('mypage.index', ['data' => $data]);
     }
+
 
     public function favourite(Request $request)
     {
@@ -54,7 +55,22 @@ class MypageController extends Controller
     }
     public function update(Request $request)
     {
-        // プロフィール
+        $user = Auth::user();
+        $data = $request->session()->get('data');
+
+        if($data == ''){
+            $data =[
+                'email'=>$user->email,
+                'name'=>$user->name,
+                'postcode'=>$user->postcode,
+                'prefecture'=>$user->prefecture,
+                'city'=>$user->city,
+                'address'=>$user->address,
+                'tel'=>$user->tel,
+            ];
+            return view('mypage.update', ['data' => $data]);
+        }
+
         $error_message = [
             'email' => null,
             'postcode' => null,
