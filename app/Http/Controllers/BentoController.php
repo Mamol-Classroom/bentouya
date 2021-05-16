@@ -1,15 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Bento;
 use App\Models\Favourite;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 class BentoController extends Controller
 {
 
@@ -343,10 +340,23 @@ class BentoController extends Controller
         }
     }
 
-    public function favourite_list(Request $request)
+    public function favourite_list()
     {
-        //$bentos = Bento::where(Auth::id())->get();
-        $likes = Favourite::where('user_id',Auth::id())->get();
-        return view('/bento/favourite_list',compact('likes'));
+        //ログインしているユーザーIDの取得
+        $user_id = Auth::id();
+        $bento_id_list[]= '';
+        //ログインしているユーザーIDが注目したデーターの取得(Array)
+        $favourites = Favourite::where('user_id',$user_id)->get();
+        //Favouriteから弁当IDを取得して、$bento_id_listに追加
+        foreach ($favourites as $favourite){
+            //該当弁当IDの取得
+            $bento_id = $favourite->bento_id;
+            $bento_id_list[] = $bento_id;
+        }
+
+        //Bentosテーブルから、弁当IDリストに基づいて弁当情報の取得
+        $bentos = Bento::whereIn('id',$bento_id_list)->get();
+        return view('bento.favourite_list',compact('bentos'));
     }
+
 }

@@ -39,4 +39,4 @@ Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 // 支払い
 
 //favourite_list
-Route::get('/favourite_list',[BentoController::class,'favourite_list']);
+Route::get('/favourite_list',[BentoController::class, 'favourite_list'])->middleware('auth');

@@ -12,4 +12,13 @@ class Bento extends Model
     use SoftDeletes;
 
     protected $table = 'bentos';
+
+    public function is_favourite($user_id)
+    {
+        $bento_id = $this->id;
+        $favourite = Favourite::where('user_id',$user_id)
+            ->where('bento_id', $bento_id)
+            ->first();
+        return $favourite != null;
+    }
 }
