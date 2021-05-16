@@ -11,10 +11,11 @@
             @foreach($bentos as $bento)
                 <div class="bento">
                     <div class="favor active" onclick="removeFavourite({{$bento->id}},this)"><i class="fas fa-heart"></i></div>
-                    <a href="/bento/{{$bento->id}}/detail">
+                    {{--<a href="/bento/{{$bento->id}}/detail">
                         <p>{{$bento->bento_name}}</p>
                         <p>￥ {{number_format($bento->price)}}</p>
-                    </a>
+                    </a>--}}
+                    @include('bento/bento_inf_include',['bento'=>$bento])
                 </div>
             @endforeach
         @endif

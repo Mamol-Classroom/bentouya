@@ -6,7 +6,8 @@
     <main class="center">
         <h1>弁当登録</h1>
         <div>
-            <form method="post" action="/bento/add">
+            <form method="post" action="/bento/add" enctype="multipart/form-data">
+                <!--enctype副本：ファイルアップロードをする場合input要素は<input type="file" />を使い、その親のform要素には以下のようにenctype="multipart/form-data"と書く必要があります-->
                 <table class="register-table">
                     <tr>
                         <td>弁当名</td>
@@ -33,6 +34,13 @@
                             @if(isset($error_message) && $error_message['description'] != null)
                                 <span class="error-message">{{ $error_message['description'] }}</span>
                             @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>弁当画像</td>
+                        <td>
+                            <input type="file" name="bento_img" />
+                            <!--input的type="file"：ファイルアップロードをする場合input要素は<input type="file" />を使い、その親のform要素には以下のようにenctype="multipart/form-data"と書く必要があります-->
                         </td>
                     </tr>
                     <tr>

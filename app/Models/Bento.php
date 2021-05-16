@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;  //laravel软删除->BentoControlle/需要在对应数据库中添加deleted_at字段
                                                //对数据库添加功能时需要在对应的model中添加路径！
+use Illuminate\Support\Facades\Storage;        //图片存储路径
 
 class Bento extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes;  //软删除
 
     protected $table = 'bentos';
 
@@ -25,4 +26,17 @@ class Bento extends Model
 
         return $favourite != '';  //不为空表示已经被收藏
     }
+
+    public function get_bento_image_url()  //在BentoController里做测试看是否能接收到
+    {
+        $bento_id = $this->id;  //当前用户上传的bento信息this
+        $bento_image = BentoImage::where('bento_id',$bento_id)->first();
+
+        if($bento_image == ''){
+            return '/img/default-bento.jpg';  //访问public/img文件夹下的bento默认图片(绝对路径)，避免top.blade报错
+        }
+
+        return Storage::url($bento_image->image_url);  //访问用户上传图片的url
+    }
+
 }

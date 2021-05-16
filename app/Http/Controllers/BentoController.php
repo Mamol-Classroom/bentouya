@@ -26,6 +26,10 @@ class BentoController extends Controller
         $user_id = Auth::id();
         $bentos = Bento::where('user_id', $user_id)->get();
 
+        //テスト:确认是否取值成功
+        //$bento_id = $bentos[0]->id;
+        //dump($bentos[0]->get_bento_image_url());exit;   在Bento的Model里书写
+
         return view('bento.index', ['bentos' => $bentos]); //跳转到的页面名而不是route
     }
 
@@ -51,6 +55,9 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
+
+            $bento_img = $request->file('bento_img');  //检索已上传文件使用file方法
+            //dump($bento_img->extension());exit;
 
             $data = [
                 'bento_name' => $bento_name,
@@ -127,6 +134,20 @@ class BentoController extends Controller
             $bento->user_id = Auth::id();         //先找到登录者id再保存
 
             $bento->save();
+
+            //将上传的便当图片存储至服务器；和bento数据分别存储(因为bento数据库内没有bento_image字段，而是重新建立一个bentos_images的数据库);并且在这里需要读取已经存储过的$bento->id
+            $bento_img_name = $bento->bento_name.'.'.$bento_img->extension();  //便当名.文件扩展名extension
+            //$bento_img->getClientOriginalName();  //取得上传文件原来的命名
+            //$bento_img->extension();  //取得上传文件的扩展名
+            //$bento_img->store('bento_imgs/'.$bento->id);  //随机生成文件名:此时是在默认的storage/app文件夹下生成
+            $bento_img->storeAs('public/bento_imgs/'.$bento->id,$bento_img_name);  //在storage/app/public文件夹中建立bento_images文件夹再根据bento->id创建文件夹;由于框架设置了gitignore，会导致无法访问
+            //将public/storage文件夹和storage/app/public做关联，使客户端可以识别：php artisan storage：link
+
+            //将便当图片的数据存入数据库
+            $bento_image = new BentoImage();
+            $bento_image->bento_id = $bento->id;
+            $bento_image->image_url = 'bento_imgs/'.$bento->id.'/'.$bento_img_name; //即图片保存路径
+            $bento_image->save();
 
             $request->session()->flash('bento.add', $bento);    //闪存，只保存一次请求
 
