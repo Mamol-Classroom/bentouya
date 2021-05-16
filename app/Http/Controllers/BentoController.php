@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bento;
+use App\Models\Favourite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use function PHPUnit\Framework\returnArgument;
+use App\Models\BentosImage;
+use Illuminate\Database\Eloquent\Model;
+
 
 class BentoController extends Controller
 {
@@ -308,23 +313,37 @@ class BentoController extends Controller
     }
 
         //注目リストハートマーク追加
-        public function addFavourite(Request $request)
-    {
-        $bento_id = $request ->post('bento_id');
-        $user_id = Auth::id();
+    public function addFavourite(Request $request)
+        {
+            $bento_id = $request->post('bento_id');
+            $user_id = Auth::id();
 
-        //Database中でデータ確認
-        $bento_exist = Bento::find($bento_id);
-        if ($bento_exist == null) {
-            //エラー
+            //Database中でデータ確認
+            $bento_exist = Bento::find($bento_id);
+            if ($bento_exist == null) {
+                //エラー
+                return response()->json(['result' => 'fail']);
+            }
+
+            $favourite = Favourite::where('user_id', $user_id)
+                ->where('bento_id', $bento_id)
+                ->first();
+
+            if ($favourite == null) {
+                $favourite = new Favourite();
+                $favourite->bento_id = $bento_id;
+                $favourite->user_id = $user_id;
+                $favourite->save();
+
+                //前端にリクエスト
+                //Ajaxに経由で、リクエストresponse()->json(PHP array)
+                return response()->json(['result' => 'add']);
+            } else {
+                $favourite->delete();
+
+                //前端にリクエスト
+                //Ajaxに経由で、リクエストresponse()->json(PHP array)
+                return response()->jason(['result' => 'delete']);
+            }
         }
-
-        $favourite = new Favourite();
-        $favourite -> bento_id = $bento_id;
-        $favourite -> user_id = $user_id;
-        $favourite -> save();
-
-        //ユーザーページーに反応
-    }
-
 }

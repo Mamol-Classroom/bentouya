@@ -8,8 +8,16 @@ function addFavourite(bento_id,icon){
         },
         dataType:'json'
     }).done(function (result){
+        var action = result.result;
+        if (action === 'add'){
+            $(icon).addClass('active');
+        } else if (action === 'delete'){
+            $(icon).removeClass('active');
+        }
+    });
+}
 
-    })
-
-
+function removeFavourite(bento_id,icon){
+    addFavourite(bento_id,icon);
+    $(icon).closest('.bento').remove();
 }
