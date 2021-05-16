@@ -34,6 +34,7 @@
                                 </span>
                             </span>
                         </span>
+                            <div><p></p></div>
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                             <span class="a-button-inner">
                                 <input id="continue" tabindex="5" class="a-button-input" type="button" onclick="location.href='/register'" aria-labelledby="continue-announce">
@@ -42,8 +43,6 @@
                                 </span>
                             </span>
                         </span>
-
-
                             {{--
                             <div id="legalTextRow" class="a-row a-spacing-top-medium a-size-small">
                                 By continuing, you agree to Amazon's <a href="/gp/help/customer/display.html/ref=ap_signin_notification_condition_of_use?ie=UTF8&amp;nodeId=643006">Conditions of Use</a> and <a href="/gp/help/customer/display.html/ref=ap_signin_notification_privacy_notice?ie=UTF8&amp;nodeId=643000">Privacy Notice</a>.
@@ -51,7 +50,6 @@
                             --}}
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
