@@ -17,6 +17,10 @@
                     <td>{{ $name }}</td>
                 </tr>
                 <tr>
+                    <td>ユーザー画像</td>
+                    <td>{{ $headPortrait }}</td>
+                </tr>
+                <tr>
                     <td>郵便番号</td>
                     <td>{{ $postcode }}</td>
                 </tr>
