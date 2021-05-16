@@ -31,7 +31,6 @@
                             <p>￥ {{ number_format($bento->price) }}</p>
                         </a>
 
-
                     </div>
                 @endforeach
             @endif

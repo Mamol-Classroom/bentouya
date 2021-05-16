@@ -41,5 +41,6 @@ Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::get('/mypage/password_reset', [MypageController::class, 'password_reset'])->middleware('auth');
 Route::post('/mypage/password_reset', [MypageController::class, 'password_reset'])->middleware('auth');
+
 // 支払い
 
