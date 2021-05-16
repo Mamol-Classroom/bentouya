@@ -16,6 +16,11 @@
         @if(auth()->check())
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
+            @if(auth()->user()->user_image == null)
+                <img src="/storage/no-image.png" style="height: 55px">
+            @else
+                <img src="/storage/{{auth()->user()->user_image}}" style="height: 55px">
+            @endif
         @else
             <a href="/login">ログイン</a>
         @endif
