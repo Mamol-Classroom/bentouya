@@ -13,29 +13,20 @@ class MypageController extends Controller
 
     public function index(Request $request)
     {
-        // プロフィール
-        $error_message = [
-            'email' => '',
-            'name' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-        ];
-        $data = [
-            'email' => '',
-            'name' => '',
-            'postcode' => '',
-            'prefecture' => '',
-            'city' => '',
-            'address' => '',
-            'tel' => '',
-        ];
-        return view('mypage.index', [
-            'data' => $data,
-            'error_message' => $error_message
-        ]);
+        $user = Auth::user();
+        $data = $request->session()->get('data');
+        if($data == ''){
+            $data =[
+                'email'=>$user->email,
+                'name'=>$user->name,
+                'postcode'=>$user->postcode,
+                'prefecture'=>$user->prefecture,
+                'city'=>$user->city,
+                'address'=>$user->address,
+                'tel'=>$user->tel,
+            ];
+        return view('mypage.index', ['data' => $data]);
+        }
     }
 
     public function favourite(Request $request)
