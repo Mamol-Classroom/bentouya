@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div>
+    <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div><h3 class="shop_name">雷澤宇食堂</h3>
     <div class="profile">
         @if(auth()->check())
             <p>ようこそ、{{ auth()->user()->name }} 様</p>

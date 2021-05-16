@@ -42,11 +42,19 @@ header {
     width: 80%;
 }
 
+.shop_name{
+    text-align: center;
+    padding: 5px 500px 5px 5px;
+}
+
 .profile {
     display: flex;
-    align-items: end;
-    justify-content: end;
-    text-align: right;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: justify;
 }
 
 .profile p {
@@ -58,12 +66,14 @@ header {
     flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    margin-top:50px;
 }
 
 .bento {
-    border: #9c9c9c solid 1px;
-    margin: 5px;
-    width: 40%;
+    position:relative;
+    border:#9c9c9c solid 1px;
+    margin:10px 20px;
+    width:15%;
 }
 
 .bento a {
