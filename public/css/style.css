@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.center-l{
+    text-align: center;
+    font-size:40px;
+}
+
 .register-table {
     width: 100%;
 }

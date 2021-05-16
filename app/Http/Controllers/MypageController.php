@@ -132,6 +132,7 @@ class MypageController extends Controller
     public function passwordUpdate(Request $request)
     {
         $user = Auth::user();
+        $user_password = $user->password;
         $user_id = Auth::id();
 
         $error_message = $request->session()->get('password_error_message');
@@ -144,33 +145,43 @@ class MypageController extends Controller
         if ($error_message == null) {
             $error_message = [
                 'password' => null,
+                'new_password' => null,
                 'password_confirm' => null,
             ];
         }
 
         if ($data == null) {
             $data = [
-                'password' => '',
+                'new_password' => '',
                 'password_confirm' => '',
             ];
         }
 
         $has_error = false;
         if ($request->method() === 'POST') {
-            $password = $request->post('password');
+            $old_password = $request->post('password');
+            $new_password = $request->post('new_password');
             $password_confirm = $request->post('password_confirm');
 
             $data = [
-                'password' => $password,
+                'new_password' => $new_password,
                 'password_confirm' => $password_confirm,
             ];
 
-            if ($password == "") {
-                $error_message['password'] = '新しいパスワードを入力してください';
+            $email = $user->email;
+
+            if (!Auth::attempt(['email' => $email, 'password' => $old_password])) {
+                //确定当前用户输入的旧密码是否正确
+                $error_message['password'] = 'パスワードが間違いました';
                 $has_error = true;
             }
 
-            if ($password != $password_confirm) {
+            if ($new_password == "") {
+                $error_message['new_password'] = '新しいパスワードを入力してください';
+                $has_error = true;
+            }
+
+            if ($new_password != $password_confirm) {
                 $error_message['password_confirm'] = 'パスワードと一致ではありません';
                 $has_error = true;
             }
@@ -183,15 +194,25 @@ class MypageController extends Controller
             }
 
             //存值
-            $hashed_password =Hash::make($password);
+            $hashed_password =Hash::make($new_password);
             $user->password = $hashed_password;
             $user->save();
-            return redirect('/mypage/password-update');
+
+            return redirect('/mypage/password-update-success');
         }
-            return view('mypage.password_update', [
-                'data' => $data,
-                'error_message' => $error_message,
-            ]);
+
+        return view('mypage.password_update',[
+            'user' => $user,
+            'data'=>$data,
+            'error_message'=>$error_message,
+        ]);
+
+    }
+
+
+    public function passwordUpdateSuccess(Request $request) {
+
+      return view('mypage.password_update_success');
 
     }
 

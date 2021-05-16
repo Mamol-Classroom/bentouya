@@ -12,11 +12,20 @@
                 <form method="post" action="/mypage/password-update">
                     <table class="register-table">
                         <tr>
+                            <td>元パスワード</td>
+                            <td>
+                                <input type="password" name="password" value=""/>
+                                @if(isset($error_message)&&$error_message['password'] != null)
+                                    <span class="error-message">{{$error_message['password']}}</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
                             <td>新しいパスワード</td>
                             <td>
-                                <input type="password" name="password" value="{{ $data['password'] }}" />
-                                @if(isset($error_message) && $error_message['password'] != null)
-                                    <span class="error-message">{{ $error_message['password'] }}</span>
+                                <input type="password" name="new_password" value="{{ $data['new_password'] }}" />
+                                @if(isset($error_message) && $error_message['new_password'] != null)
+                                    <span class="error-message">{{ $error_message['new_password'] }}</span>
                                 @endif
                             </td>
                         </tr>

@@ -287,11 +287,12 @@ class TopController extends Controller
 
 
                      if (Auth::attempt(['email'=>$email,'password'=>$password])){
-
+                          //默认是hash加密后的密码，MD5，在register注册逻辑内编写
+                          // ログイン成功
                          return redirect('/');
 
                      } else {
-
+                         // ログイン失敗
                          $request->session()->put('login_failed', true);
 
                          return redirect('/login');
@@ -304,7 +305,7 @@ class TopController extends Controller
                 return redirect('/');
             } else {
                  // ログイン失敗
-                $request->session()->put('login_failed', true);
+                $request->session()->put('login_failed', true);;//保存以及修改put('名字‘,值)
 
                 return redirect('/login');
             }

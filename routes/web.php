@@ -50,7 +50,7 @@ Route::get('/mypage',[MypageController::class,'index'])->middleware('auth');
 Route::post('/mypage',[MypageController::class,'index'])->middleware('auth');
 Route::get('/mypage/password-update',[MypageController::class,'passwordUpdate'])->middleware('auth');
 Route::post('/mypage/password-update',[MypageController::class,'passwordUpdate'])->middleware('auth');
-
+Route::get('/mypage/password-update-success', [MypageController::class, 'passwordUpdateSuccess'])->middleware('auth');
 
 Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
 

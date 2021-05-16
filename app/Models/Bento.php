@@ -16,9 +16,15 @@ class Bento extends Model
 
     protected $table = 'bentos';
 
-    //数据库里有created at就可以不要
-    //public $timestamps = false;
+    //数据库里有created at就可以不要//public $timestamps = false;
 
+
+
+    //关于model的处理可以直接写在对应的model里；
+    //这里是要关联top页面以及mypage中的注目リスト，使收藏内容同步，并可以在注目リスト中取消收藏
+
+
+    //在top.blade中添加一个ajax来完成同步
     public function is_favourite($user_id){
         $bento_id =$this -> id;
         $favourite =Favourite::where('user_id',$user_id)
