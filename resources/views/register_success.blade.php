@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>userImage</td>
-                    <td>{{ $originalImg }}</td>
+                    <td><img src="{{ url('storage/'.$originalImg) }}"></td>
                 </tr>
             </table>
         </div>
