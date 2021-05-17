@@ -127,29 +127,29 @@ class MypageController extends Controller
     }
 
 
-    public function passwordChange(Request $request)
+    public function passwordUpdate(Request $request)
     {
         $user = Auth::user();
         $user_password = $user->password;
 
-        $error_message = $request->session()->get('ps_error_message');
-        $data = $request->session()->get('ps_data');
+        $error_message = $request->session()->get('password_error_message');
+        $data = $request->session()->get('password_data');
 
-        $request->session()->forget('ps_error_message');
-        $request->session()->forget('ps_data');
+        $request->session()->forget('password_error_message');
+        $request->session()->forget('password_data');
 
         if ($error_message == '') {
             $error_message = [
                 'password' => '',
-                'password_change' => '',
-                'password_change_confirm' => '',
+                'new_password' => '',
+                'password_confirm' => '',
             ];
         }
 
         if ($data == '') {
             $data = [
-                'password_change' => '',
-                'password_change_confirm' => '',
+                'new_password' => '',
+                'password_confirm' => '',
             ];
         }
 
@@ -157,12 +157,12 @@ class MypageController extends Controller
 
         if ($request->method() == 'POST') {
             $old_password = $request->post('password');  //post进来原密码
-            $password_change = $request->post('password_change'); //指的是html中tag的name
-            $password_change_confirm = $request->post('password_change_confirm');
+            $password_update  = $request->post('new_password'); //指的是html中tag的name
+            $password_confirm  = $request->post('password_confirm');
 
             $data = [
-                'password_change' => $password_change,
-                'password_change_confirm' => $password_change_confirm,
+                'new_password' => $password_update,
+                'password_confirm' => $password_confirm,
             ];
 
 
@@ -173,34 +173,40 @@ class MypageController extends Controller
                 $has_error = true;
             }
 
-            if ($password_change == '') {
-                $error_message['password_change'] = '新しいパスワードを入力してください';
+            if ($password_update == '') {
+                $error_message['new_password'] = '新しいパスワードを入力してください';
                 $has_error = true;
             }
 
-            if ($password_change_confirm != $password_change) {
-                $error_message['password_change_confirm'] = '変更したパスワードと一致ではありません';
+            if ($password_confirm != $password_update) {
+                $error_message['$password_confirm'] = '変更したパスワードと一致ではありません';
                 $has_error = true;
             }
 
             if ($has_error) {
-                $request->session()->put('ps_error_message', $error_message);
-                $request->session()->put('ps_data', $data);
+                $request->session()->put('password_error_message', $error_message);
+                $request->session()->put('password_data', $data);
 
-                return redirect('/mypage/password-change');
+                return redirect('/mypage/password_update');
             }
             //变更密码存入数据库
-            $changed_password = Hash::make($password_change);
+            $changed_password = Hash::make($password_update);
             $user->password = $changed_password;
             $user->save();
 
         }
 
-        return view('mypage.password-change',[
+        return view('mypage.password_update',[
             'user' => $user,
             'data'=>$data,
             'error_message'=>$error_message,
         ]);
+
+    }
+
+    public function passwordUpdateSuccess(Request $request) {
+
+        return view('mypage.password_update_success');
 
     }
 
@@ -227,6 +233,5 @@ class MypageController extends Controller
             'bentos'=>$bentos
         ]);
     }
-
 
 }

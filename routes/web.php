@@ -49,8 +49,9 @@ Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->m
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 
-Route::get('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
-Route::post('/mypage/password-change',[MypageController::class,'passwordChange'])->middleware('auth');
+Route::get('/mypage/password_update',[MypageController::class,'passwordUpdate'])->middleware('auth');
+Route::post('/mypage/password_update',[MypageController::class,'passwordUpdate'])->middleware('auth');
+Route::get('/mypage/password_update_success', [MypageController::class, 'passwordUpdateSuccess'])->middleware('auth');
 
 Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
 
