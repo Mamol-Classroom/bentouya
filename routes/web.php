@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\BentoController;
 use App\Http\Controllers\MypageController;
-
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
