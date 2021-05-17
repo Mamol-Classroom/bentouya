@@ -17,7 +17,7 @@
         @if(auth()->user()->avatar != null)
         <img src="{{ \Illuminate\Support\Facades\Storage::url(auth()->user()->avatar) }}" width="60px"height="60px">
         @else
-        <img src="">
+        <img src="/img/default-bento.jpeg" width="60px"height="60px">
         @endif
     </div>
     @endif
