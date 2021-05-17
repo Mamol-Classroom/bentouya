@@ -6,7 +6,7 @@
         <div class="subview">
             <h1>個人情報変更</h1>
             <div>
-                <form method="post" action="">
+                <form method="post" action="/mypage/update" enctype="multipart/form-data">
                     <table class="register-table">
                         <tr>
                             <td>メールアドレス</td>
@@ -70,6 +70,12 @@
                                     <span class="error-message">{{ $error_message['tel'] }}</span>
                                 @endif
                             </td>
+                        </tr>
+                        <tr>
+                        <td>個人頭像</td>
+                        <td>
+                            <input type="file" name="user_img" />
+                        </td>
                         </tr>
                         <tr>
                             <td></td>

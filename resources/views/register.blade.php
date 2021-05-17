@@ -4,7 +4,7 @@
 <main class="center">
     <h1>新規登録</h1>
     <div>
-        <form method="post" action="/register-user">
+        <form method="post" action="/register-user" enctype="multipart/form-data">
             <table class="register-table">
                 <tr>
                     <td>メールアドレス</td>
@@ -85,6 +85,13 @@
                         @if(isset($error_message) && $error_message['tel'] != null)
                             <span class="error-message">{{ $error_message['tel'] }}</span>
                         @endif
+                    </td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>個人頭像</td>
+                    <td>
+                        <input type="file" name="user_img" />
                     </td>
                 </tr>
                 <tr>
