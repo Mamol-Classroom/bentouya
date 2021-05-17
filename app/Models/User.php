@@ -18,7 +18,7 @@ class User extends Authenticatable  //寻找config文件夹下的auth.php文件�
 
     public function get_user_headPortrait_url()
     {
-        $headPortrait_url = $this->headPortrait_url;
+        $headPortrait_url = $this->headPortrait_url;  //$headPortrait_url是register.blade中的name属性
         if ($headPortrait_url == null) {
             return '/img/default_profile_img.jpg';
         }

@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td>ユーザー画像</td>
-                    <td><img src="{{ $headPortrait_url }}"></td>
+                    <td><img src="{{ $headPortrait_url }}"></td>  <!--页面内的变量是控制器里的key而不是变量本身-->
                 </tr>
                 <tr>
                     <td>郵便番号</td>

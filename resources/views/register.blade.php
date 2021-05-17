@@ -50,9 +50,6 @@
                     <td>ユーザー画像</td>
                     <td>
                         <input type="file" name="headPortrait_url" />
-                        @if(isset($error_message) && $error_message['headPortrait_url'] != null)
-                            <span class="error-message">{{ $error_message['headPortrait_url'] }}</span>
-                        @endif
                     </td>
                 </tr>
                 <tr>

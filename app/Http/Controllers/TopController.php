@@ -10,10 +10,10 @@ use App\Models\Bento;
 use App\Models\BentoImage;
 
 use Illuminate\Support\Facades\Auth;  //确定auth使用路径，认证登录
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;  //hash路径，密码加密
+use Illuminate\Support\Facades\Storage;  //图片存储路径
 
-//hash路径，密码加密
+
 
 class TopController extends Controller
 {
@@ -33,8 +33,11 @@ class TopController extends Controller
         $price_h = $request->query('price_h');
 
         //$headPortrait =$request->query('headPortrait_url');  //显示用户头像
-        $headPortrait = Auth::user()->get_user_headPortrait_url();
-
+        if(Auth::user() != null){           //判定用户是否登录
+            $headPortrait = Auth::user()->get_user_headPortrait_url();
+        }else{
+            $headPortrait = '';    //避免找不到变量报错
+        }
 
         $bento_query = Bento::query();
 
@@ -87,7 +90,6 @@ class TopController extends Controller
                 'address' => null,
                 'tel' => null,
                 'name' => null,
-                'headPortrait_url' => null,
             ];
         }
 
@@ -152,7 +154,6 @@ class TopController extends Controller
             'address' => null,
             'tel' => null,
             'name' => null,
-            'headPortrait_url' => null,
         ];
 
         if ($email == "") {
@@ -172,11 +173,6 @@ class TopController extends Controller
 
         if ($name == "") {
             $error_message['name']  = '请输入姓名';
-            $has_error = true;
-        }
-
-        if ($headPortrait == "") {
-            $error_message['headPortrait_url']  = '请选择头像';
             $has_error = true;
         }
 
@@ -252,11 +248,11 @@ class TopController extends Controller
         $headPortrait_name = $user->email.'.'.$headPortrait->extension();  //用户邮箱(唯一).文件扩展名extension
 
         //将头像存入数据库
-        $user->headPortrait_url = null;
+        $user->head_portrait_url = null;   //存入变量值，save之后再一次赋值
 
         $user->save();    //保存新实例
 
-        $user->headPortrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;
+        $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //头像url命名
         $user->save();
 
         $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);  //创建存储头像的文件夹
@@ -280,7 +276,7 @@ class TopController extends Controller
             'city' => $user->city,
             'address' => $user->address,
             'tel' => $user->tel,
-            'headPortrait_url' => Storage::url($user->headPortrait_url),
+            'headPortrait_url' => Storage::url($user->head_portrait_url),  //storeAs保存；Storage查询
         ]);
 
     }
