@@ -13,10 +13,7 @@
         <div class="bento-container">
             @foreach($bentos as $bento)
                 <div class="bento">
-                    <a href="/bento/update?bento_id={{ $bento->id }}">
-                        <p>{{ $bento->bento_name }}</p>
-                        <p>￥ {{ number_format($bento->price) }}</p>
-                    </a>
+                    @include('subview.bento',['bento'=>$bento])
                     <form onsubmit="return del()" method="post" action="/bento/delete">
                         <input type="hidden" name="bento_id" value="{{ $bento->id }}">
                         <button type="submit">販売終了</button>
