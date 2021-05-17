@@ -4,7 +4,9 @@
 
 @section('content')
     <main id="main">
-        <div></div>
+        <div>
+            <img src="{{ $bento_image_url }}">
+        </div>
         <div class="subview">
             <h1>{{ $bento_name }}</h1>
             <h3>￥ {{ number_format($price) }}</h3>
