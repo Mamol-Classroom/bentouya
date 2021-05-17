@@ -27,6 +27,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>ユーザー画像</td>
+                        <td>
+                            <input type="file" name="headPortrait_url" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td>郵便番号</td>
                         <td>
                             <input type="text" name="postcode" value="{{ $data['postcode'] }}" />

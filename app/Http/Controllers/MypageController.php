@@ -10,6 +10,7 @@ use App\Models\Favourite;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;   //取得保存图片
 
 class MypageController extends Controller
 {
@@ -50,6 +51,7 @@ class MypageController extends Controller
                'city'=>$user->city,
                'address'=>$user->address,
                'tel'=>$user->tel,
+               'headPortrait_url' => Storage::url($user->head_portrait_url),
             ];
         }
 
@@ -64,6 +66,8 @@ class MypageController extends Controller
             $address = $request->post('address');
             $tel = $request->post('tel');
 
+            $headPortrait = Auth::user()->get_user_headPortrait_url();
+
             $data = [
                 'email'=>$email,
                 'name'=>$name,
@@ -72,6 +76,7 @@ class MypageController extends Controller
                 'city'=>$city,
                 'address'=>$address,
                 'tel'=>$tel,
+                'headPortrait_url' => $headPortrait,
             ];
 
             $label_name = [
@@ -107,6 +112,9 @@ class MypageController extends Controller
             $user->city = $city;
             $user->address = $address;
             $user->tel = $tel;
+
+            $user->head_portrait_url = $headPortrait;
+
             $user->save();
 
         }
