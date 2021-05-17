@@ -92,7 +92,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
-        $originalImg = $request->post('user_image');
+        $originalImg = $request->file('user_image');
         $data = [
             'email' => $email,
             'password' => $password,
@@ -189,7 +189,7 @@ class TopController extends Controller
     if($request->hasFile('user_image')){
         if($originalImg->isValid()) {
             $filePath = $originalImg->store('public');
-            $user->image = str_replace('public/', '', $filePath);}
+            $user->user_image = str_replace('public/', '', $filePath);}
     }
         $user->save();
 
@@ -211,6 +211,7 @@ class TopController extends Controller
             'city' => $user->city,
             'address' => $user->address,
             'tel' => $user->tel,
+            'originalImg' => $user->user_image
         ]);
     }
 
