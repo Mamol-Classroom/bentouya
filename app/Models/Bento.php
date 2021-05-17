@@ -4,33 +4,39 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;  //laravel软删除->BentoControlle/需要在对应数据库中添加deleted_at字段
+//对数据库添加功能时需要在对应的model中添加路径！
+use Illuminate\Support\Facades\Storage;        //图片存储路径
+
 class Bento extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    use SoftDeletes;  //软删除
 
     protected $table = 'bentos';
 
-    public function is_favourite($user_id)
+    //关于model的处理可以直接写在对应的model里；
+    //这里是要关联top页面以及mypage中的注目リスト，使收藏内容同步，并可以在注目リスト中取消收藏
+    public function is_favourite($user_id)  //在top.blade中添加一个ajax来完成同步
     {
         $bento_id = $this->id;
-        $favourite = Favourite::where('user_id', $user_id)
-            ->where('bento_id', $bento_id)
+        $favourite = Favourite::where('user_id',$user_id)
+            ->where('bento_id',$bento_id)
             ->first();
 
-        return $favourite != null;
+        return $favourite != '';  //不为空表示已经被收藏
     }
 
-    public function get_bento_image_url()
+    public function get_bento_image_url()  //在BentoController里做测试看是否能接收到
     {
-        $bento_id = $this->id;
-        $bento_image = BentosImage::where('bento_id', $bento_id)->first();
-        if ($bento_image == null) {
-            return '/img/default-bento.jpg';
+        $bento_id = $this->id;  //当前用户上传的bento信息this
+        $bento_image = BentoImage::where('bento_id',$bento_id)->first();
+
+        if($bento_image == ''){
+            return '/img/default-bento.jpg';  //访问public/img文件夹下的bento默认图片(绝对路径)，避免top.blade报错
         }
 
-        return Storage::url($bento_image->image_url);
+        return Storage::url($bento_image->image_url);  //访问用户上传图片的url
     }
+
 }

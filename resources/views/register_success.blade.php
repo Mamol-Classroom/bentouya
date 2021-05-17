@@ -17,6 +17,10 @@
                     <td>{{ $name }}</td>
                 </tr>
                 <tr>
+                    <td>ユーザー画像</td>
+                    <td><img src="{{ $headPortrait_url }}"></td>  <!--页面内的变量是控制器里的key而不是变量本身-->
+                </tr>
+                <tr>
                     <td>郵便番号</td>
                     <td>{{ $postcode }}</td>
                 </tr>
@@ -36,13 +40,8 @@
                     <td>電話番号</td>
                     <td>{{ $tel }}</td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <a href="/login"><button type="button">ログイン</button></a>
-                    </td>
-                </tr>
             </table>
         </div>
+        <a href="/login"><button type="submit">登録画面へ</button></a>
     </main>
 @endsection

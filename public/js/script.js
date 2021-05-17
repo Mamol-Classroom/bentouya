@@ -1,26 +1,25 @@
-// 给后台传值用Ajax,重点记住jQuery的ajax的固定写法
-function addFavourite(bento_id, icon) {
-
-    $.ajax({
-        url: '/bento/favourite/add', //传值路径
-        type: 'post', //传值方法，一般都是POST方法
-        //传值的数据
-        data: {
-            bento_id: bento_id  //data是键（前面的bento_id是后台接值时POST里的key）值（后面的bento_id是要传的值，是函数addFavourite的参数）对的类型
+function addFavourite(bento_id, icon) { //top.blade页面中js传值的this，即onclick触发事件的div标签
+    // 使用Ajax保持页面不跳转并传值
+    $.ajax({                         //jquery中的文字数组写法{key：'value'}
+        url: '/bento/favourite/add', //route
+        type: 'post',                //传值方式
+        data: {                      //传递数据，数组形式
+            bento_id: bento_id       //user_id也使用，但是是从session中提取，没有使用ajax
         },
-        dataType: 'json' //数据的类型
-    }).done(function (result) {  //result为自定义，写的是后台反馈给前台的逻辑
-        //JavaScript有两种取值方式 1.通过点的方式（object.key）2.通过[]的方式(object[key])，通过[]的方式获取属性值，key是动态的，可以是字符串，也可以是数字，还可以是变量
-        var action = result.result; //前面的result是该函数的变量，存的是后台的数组（'result' => 'add'），后面的result是后台数组里的result，用来取值。
+        dataType: 'json'             //数据表现方式
+    }).done(function (result) {      //操作方法
+        var action = result.result;  //result函数的key:'result'=>'add'
         if (action === 'add') {
-            $(icon).addClass('active');
+            $(icon).addClass('active');//选取icon元素，添加css class：style.css中的active->图标变红
         } else if (action === 'delete') {
-            $(icon).removeClass('active');
+            $(icon).removeClass('active');//删除css class
         }
     });
 }
 
-function removeFavourite(bento_id, icon) {
-    addFavourite(bento_id, icon);
+function removeFavourite(bento_id,icon){
+    //调用上边的函数，并将值bento_id,icon传入，因为执行操作一致，无需重复书写
+    addFavourite(bento_id,icon);
+    //closest向上追溯(多层追溯)到name是bento的div，class是bento；remove删除
     $(icon).closest('.bento').remove();
 }

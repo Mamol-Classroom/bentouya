@@ -40,21 +40,15 @@
                             </div>
                             --}}
                         </div>
+                        <!--如何实现跳转页面到register-->
                         <div class="a-section">
-
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
-                            <span class="a-button-inner">
-                                <a href="/register" id="continue-announce" class="a-button-text" aria-hidden="true">
-                                    新規登録
-                                </a>
-                            </span>
+                                <span class="a-button-inner">
+                                    <a class="a-button-inner" href="/register"><span id="continue-announce" class="a-button-text" aria-hidden="true">
+                                    新規登録へ
+                                        </span></a>
                                 </span>
-
-                            {{--
-                            <div id="legalTextRow" class="a-row a-spacing-top-medium a-size-small">
-                                By continuing, you agree to Amazon's <a href="/gp/help/customer/display.html/ref=ap_signin_notification_condition_of_use?ie=UTF8&amp;nodeId=643006">Conditions of Use</a> and <a href="/gp/help/customer/display.html/ref=ap_signin_notification_privacy_notice?ie=UTF8&amp;nodeId=643000">Privacy Notice</a>.
-                            </div>
-                            --}}
+                            </span>
                         </div>
                     </form>
 
