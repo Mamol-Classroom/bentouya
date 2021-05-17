@@ -51,7 +51,7 @@ class MypageController extends Controller
                'city'=>$user->city,
                'address'=>$user->address,
                'tel'=>$user->tel,
-               'headPortrait_url' => Storage::url($user->head_portrait_url),
+               'headPortrait_url' => Auth::user()->get_user_headPortrait_url(),
             ];
         }
 
@@ -66,7 +66,7 @@ class MypageController extends Controller
             $address = $request->post('address');
             $tel = $request->post('tel');
 
-            $headPortrait = Auth::user()->get_user_headPortrait_url();
+            $headPortrait = Storage::url($user->head_portrait_url);
 
             $data = [
                 'email'=>$email,
@@ -189,6 +189,7 @@ class MypageController extends Controller
 
                 return redirect('/mypage/password-change');
             }
+
             //变更密码存入数据库
             $changed_password = Hash::make($password_change);
             $user->password = $changed_password;

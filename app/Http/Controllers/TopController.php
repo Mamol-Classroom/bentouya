@@ -40,6 +40,7 @@ class TopController extends Controller
         }
 
         $bento_query = Bento::query();
+        //$bento_query = Bento::query()->where('stock','>',0);不显示没有在库的bento
 
         /**    return view('top', [
                 'bentos' => $bentos,
@@ -65,17 +66,29 @@ class TopController extends Controller
         $bentos = $bento_query->paginate(4);   //laravel分页，每页4项->top.blade进行详细处理
         //$bentos = $bento_query->get();
 
+        $add_to_cart_bento_id = $request->session()->get('add_cart_bento');  //接收OrderController的flash
+        if($add_to_cart_bento_id != null){   //判定是否有收藏bento
+            $add_to_cart_bento = Bento::find($add_to_cart_bento_id);
+        }else{
+            $add_to_cart_bento = null;
+        }
+
         return view('top', [
             'bentos' => $bentos,
             'word' => $word,
             'price_l' => $price_l,
             'price_h' => $price_h,
             'headPortrait_url' => $headPortrait,
+            'add_to_cart_bento' => $add_to_cart_bento
         ]);
     }
 
     public function register(Request $request)    //注册页面
     {
+        if(Auth::check()){             //如果已登录则会先退出登录再进入注册页面(自己添加内容)
+            return redirect('/logout');
+        }
+
         $error_message = $request->session()->get('error_message');
         $data = $request->session()->get('data');
 

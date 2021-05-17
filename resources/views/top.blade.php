@@ -17,6 +17,14 @@
                 <button type="submit">検索</button>
             </form>
         </div>
+        @if($add_to_cart_bento != null)  <!--将加入购物车的商品显示到top页面-->
+            <div class="alert-msg">
+                <img src="{{$add_to_cart_bento->get_bento_image_url()}}" style="width:60px;" />
+                <span>カートに追加しました</span>
+                {{--<p>{{$bento->name}}</p>   如何显示商品名称和购买数量
+                <p>数量: {{number_format($bento->quantity)}}</p>--}}
+            </div>
+        @endif
         <div class="bento-container"> <!--商品展示-->
 
             @if(count($bentos) == 0)

@@ -145,6 +145,16 @@ nav ul li a {
     text-decoration: none;
 }
 
+.user-image {
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 68px;
+    border: #9c9c9c solid 1px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
 .favor {
     display: flex;
     position: absolute;
@@ -170,6 +180,29 @@ nav ul li a {
 
 .favor.active i {
     color: #ff0000;
+}
+
+.alert-msg {
+    margin: 0 20%;
+    border: #111111 solid 1px;
+    text-align: center;
+}
+
+.cart i {
+    width: 50px;
+    height: auto;
+}
+
+#cart-item-controller {
+    flex-grow: 1;
+}
+
+#cart-item-controller .bento {
+    width: 22%;
+}
+
+#cart-btn-controller {
+    width: 500px;
 }
 
 .profile img {
