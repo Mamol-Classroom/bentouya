@@ -31,6 +31,7 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
+            $bento_img = $request->file('bento_img');
 
             $data = [
                 'bento_name' => $bento_name,
@@ -106,7 +107,6 @@ class BentoController extends Controller
             $bento_image->bento_id = $bento->id;
             $bento_image->image_url = 'bento_imgs/'.$bento->id.'/'.$bento_img_name;
             $bento_image->save();
-
 
             $request->session()->flash('bento.add', $bento);
 

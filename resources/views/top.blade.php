@@ -23,11 +23,8 @@
             @else
                 @foreach($bentos as $bento)
                     <div class="bento">
+                        @include('subview.bento',['bento'=>$bento])
                         <div class="favor @if($bento->is_favourite(auth()->id())) active @endif" onclick="addFavourite({{$bento->id}},this)"><i class="fas fa-star"></i></div>
-                        <a href="/bento/{{$bento->id}}/detail">
-                        <p>{{ $bento->bento_name }}</p>
-                        <p>￥ {{ number_format($bento->price) }}</p>
-                        </a>
                     </div>
                 @endforeach
             @endif
