@@ -9,6 +9,10 @@
                 <form method="post" action="/mypage">
                     <table class="register-table">
                         <tr>
+                            <td>
+                        <img src="{{ $user->get_user_image_url() }}" style="width: 180px;" />
+                            </td>
+                        <tr>
                             <td>メールアドレス</td>
                             <td>
                                 <input type="text" name="email" value="{{ $data['email'] }}" disabled="disabled" />

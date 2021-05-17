@@ -32,7 +32,7 @@ class Bento extends Model
         $bento_id = $this->id;
         $bento_image = BentosImage::where('bento_id', $bento_id)->first();
         if ($bento_image == null) {
-            return '/img/default-bento.jpg';
+            return '/img/default-user.jpg';
         }
 
         return Storage::url($bento_image->image_url);
