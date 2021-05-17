@@ -81,7 +81,7 @@ class TopController extends Controller
         ]);
     }
 
-    public function registerUser(Request $request)
+    public function registerUser(Request $request,User $user)
     {
         $email = $request->post('email');
         $password = $request->post('password');
@@ -92,7 +92,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
-
+        $originalImg = $request->post('user_image');
         $data = [
             'email' => $email,
             'password' => $password,
@@ -169,7 +169,13 @@ class TopController extends Controller
             return redirect('/register');
         }
 
-        // 将输入的数据存入数据库
+
+
+
+
+
+
+            // 将输入的数据存入数据库
         $user = new User();
         $user->email = $email;
         $hashed_password = Hash::make($password);
@@ -180,6 +186,11 @@ class TopController extends Controller
         $user->city = $city;
         $user->address = $address;
         $user->tel = $tel;
+    if($request->hasFile('user_image')){
+        if($originalImg->isValid()) {
+            $filePath = $originalImg->store('public');
+            $user->image = str_replace('public/', '', $filePath);}
+    }
         $user->save();
 
         $request->session()->flash('registed_user', $user);

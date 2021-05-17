@@ -12,4 +12,6 @@ class User extends Authenticatable
 
     protected $table = 'users';
     public $timestamps = false;
+
+    protected $fillable = ['id','email','password','name','postcode','prefecture','city','address','tel','user_image'];
 }

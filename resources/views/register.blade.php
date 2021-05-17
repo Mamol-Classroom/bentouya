@@ -90,6 +90,11 @@
                     </td>
                 </tr>
                 <tr>
+                <tr>
+                    <td>
+                        <input type="file" name="user_image">
+                    </td>
+                </tr>
                     <td></td>
                     <td>
                         <button type="submit">確認</button>

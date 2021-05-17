@@ -36,17 +36,5 @@ class MypageController extends Controller
             'error_message' => $error_message
         ]);
     }
-    /*
-        public function image(Request $request, User $user) {
-
-            // バリデーション省略
-            $originalImg = $request->user_image;
-
-            if($originalImg->isValid()) {
-                $filePath = $originalImg->store('public');
-                $user->image = str_replace('public/', '', $filePath);
-                $user->save();
-                return redirect("/user/{$user->id}")->with('user', $user);
-            }
-         */
+    
 }

@@ -17,7 +17,7 @@ use App\Http\Controllers\MypageController;
 */
 Route::get('/', [TopController::class, 'top']);
 // ユーザー
-Route::get('/register', [TopController::class, 'register']);
+Route::get('/register', [TopController::class, 'register','image']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register-success', [TopController::class, 'registerSuccess']);
 Route::get('/login', [TopController::class, 'login']);

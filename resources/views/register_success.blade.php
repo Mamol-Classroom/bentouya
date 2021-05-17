@@ -36,6 +36,10 @@
                     <td>電話番号</td>
                     <td>{{ $tel }}</td>
                 </tr>
+                <tr>
+                    <td>userImage</td>
+                    <td>{{ $originalImg }}</td>
+                </tr>
             </table>
         </div>
     </main>
