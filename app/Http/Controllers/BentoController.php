@@ -345,7 +345,7 @@ class BentoController extends Controller
 
                 //前端にリクエスト
                 //Ajaxに経由で、リクエストresponse()->json(PHP array)
-                return response()->jason(['result' => 'delete']);
+                return response()->json(['result' => 'delete']);
             }
         }
 }

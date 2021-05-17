@@ -4,7 +4,7 @@
     <title>@yield('title')</title>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="/css/fontawesome-free-5.15.3-web/css/all/css">
+    <link rel="stylesheet" href="/css/fontawesome-free-5.15.3-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -32,5 +32,6 @@
     </nav>
 @endif
 @yield('content')
+<script src="/js/script.js"></script>
 </body>
 </html>
