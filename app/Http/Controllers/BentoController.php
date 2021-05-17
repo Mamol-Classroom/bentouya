@@ -152,20 +152,23 @@ class BentoController extends Controller
             //以原文件名上传
             //$bento_img->storeAs('bento_img',$bento_img->getClientOriginalName());
             //图片命名：自动生成新的便当名上传
-            $bento_img_name = $bento->bento_name.'.'.$bento_img->extension();
-            //建文件夹过程
-            $bento_img->storeAs('public/bento_imgs/'.$bento->id, $bento_img_name);
+            if ($bento_img != null) {
+                $bento_img_name = $bento->bento_name.'.'.$bento_img->extension();
+                //建文件夹过程
+                $bento_img->storeAs('public/bento_imgs/'.$bento->id, $bento_img_name);
 
 
-            //◉将图片的数据存入数据库bento_images
+                //◉将图片的数据存入数据库bento_images
 
 
 
-            $bento_image = new BentosImage();
-            $bento_image->bento_id = $bento->id;
-            //存入数据库过程
-            $bento_image->image_url = 'bento_imgs/'.$bento->id.'/'.$bento_img_name;
-            $bento_image->save();
+                $bento_image = new BentosImage();
+                $bento_image->bento_id = $bento->id;
+                //存入数据库过程
+                $bento_image->image_url = 'bento_imgs/'.$bento->id.'/'.$bento_img_name;
+                $bento_image->save();
+            }
+
 
             $request->session()->flash('bento.add',$bento);
 

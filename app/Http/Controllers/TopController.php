@@ -234,7 +234,7 @@ class TopController extends Controller
         $user->city = $city;
         $user->address = $address;
         $user->tel = $tel;
-        $user->save();
+        // $user->save();
 //头像上传
 
       //  $avatar_img_name = $user->name.'.'.$avatar_img->extension();
@@ -242,9 +242,11 @@ class TopController extends Controller
 
 //        $avatar_img->getClientOriginalName();
 //      $avatar_img->extension();
-       $avatar_img->storeAs('public/avatar_img',$avatar_img->getClientOriginalName());
-   //     $user->avatar = 'avatar_img/'.$user->id.'/'.$avatar_img_name;
-        $user->avatar = 'avatar_img/'.$avatar_img->getClientOriginalName();
+        if ($avatar_img != null) {
+            $avatar_img->storeAs('public/avatar_img',$avatar_img->getClientOriginalName());
+            //     $user->avatar = 'avatar_img/'.$user->id.'/'.$avatar_img_name;
+            $user->avatar = 'avatar_img/'.$avatar_img->getClientOriginalName();
+        }
         $user->save();
 
 
