@@ -33,6 +33,8 @@ class TopController extends Controller
 
         $bento_query = Bento::query();
 
+    //库存为0时不显示该便当
+    //    $bento_query = Bento::query()->where('stock','>',0);
 
         if ($word != null) {
             $bento_query->where('bento_name', 'like', '%'.$word.'%');
@@ -51,6 +53,12 @@ class TopController extends Controller
         //$bentos = $bento_query->get();
 
 
+        $add_to_cart_bento_id = $request->session()->get('add_cart_success');
+        if($add_to_cart_bento_id != null){
+            $add_to_cart_bento_id = Bento::find($add_to_cart_bento_id);
+        }else{
+            $add_to_cart_bento_id = null;
+        }
 
 
 /**
@@ -85,6 +93,7 @@ class TopController extends Controller
             'word' => $word,
             'price_l' => $price_l,
             'price_h' => $price_h,
+            'add_to_cart_bento_id' =>$add_to_cart_bento_id,
         ]);
     }
 
