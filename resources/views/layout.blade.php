@@ -14,10 +14,10 @@
     <div class="logo"><a href="/"><img src="/img/logo.jpg" width="100px" height="auto"></a></div>
     <div class="profile">
         @if(auth()->check())
-            <p>ようこそ、{{ $user->get_user_headPortrait_url(),auth()->user()->name }} 様</p>
+            <p>ようこそ、<img src="{{ $headPortrait_url }}"> {{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
         @else
-            <p>ようこそ、{{ $user->get_user_headPortrait_url() }}ゲスト 様</p>
+            <p>ようこそ、<img src="/img/default_profile_img.jpg"> ゲスト 様</p>
             <a href="/login">ログイン</a>
         @endif
     </div>

@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td>ユーザー画像</td>
-                    <td>{{ $headPortrait }}</td>
+                    <td><img src="{{ $headPortrait_url }}"></td>
                 </tr>
                 <tr>
                     <td>郵便番号</td>

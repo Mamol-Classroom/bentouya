@@ -16,14 +16,13 @@ class User extends Authenticatable  //寻找config文件夹下的auth.php文件�
     protected $table = 'users';
     public $timestamps = false;//改增时报错：laravel每个表里默认有create_at创建时间,和update_at更新时间
 
-    public function get_user_headPortrait_url($id,$user)
+    public function get_user_headPortrait_url()
     {
-        $user->headPortrait_url = User::where('id',$id)->first();
-
-        if($user->headPortrait_url == ''){
-            return '/img/用户默认头像.jpg';
+        $headPortrait_url = $this->headPortrait_url;
+        if ($headPortrait_url == null) {
+            return '/img/default_profile_img.jpg';
         }
 
-        return Storage::url($user->headPortrait_url);
+        return Storage::url($headPortrait_url);
     }
 }
