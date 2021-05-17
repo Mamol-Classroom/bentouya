@@ -14,6 +14,7 @@
     <div class="logo"><a href="/"><img src="/img/logo.jpg" width="100px" height="auto"></a></div>
     <div class="profile">
         @if(auth()->check())
+            <a class="cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
         @else

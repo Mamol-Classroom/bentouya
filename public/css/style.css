@@ -172,6 +172,28 @@ nav ul li a {
     color: #ff0000;
 }
 
+.alert-msg {
+    margin: 0 20%;
+    border: #111111 solid 1px;
+    text-align: center;
+}
+
+.cart i {
+    width: 50px;
+    height: auto;
+}
+
+#cart-item-controller {
+    flex-grow: 1;
+}
+
+#cart-item-controller .bento {
+    width: 22%;
+}
+
+#cart-btn-controller {
+    width: 500px;
+}
 /** amazon */
 .a-section {
     margin-bottom: 22px;
