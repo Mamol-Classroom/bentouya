@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bento;
+use App\Models\BentosImage;
 use App\Models\Favourite;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
+            $bento_img = $request->file('bento_img');
 
             $data = [
                 'bento_name' => $bento_name,
@@ -310,34 +312,37 @@ class BentoController extends Controller
 
     public function addFavourite(Request $request)
     {
-        $bento_id = $request->post('bento_id');
-        $user_id = Auth::id();
+        //接前台的信息
+        $bento_id = $request->post('bento_id'); //以此名传到前台
+        $user_id = Auth::id(); //确认当前登录用户的ID
 
-        // 該当弁当が存在するかどうかを確認する
-        $bento_exist = Bento::find($bento_id);
+        // 該当弁当が存在するかどうかを確認する。如果没有相应的便当会报错，所以需要设置条件来验证。
+        $bento_exist = Bento::find($bento_id); //去数据库查找。查找主键用FIND。
+
+        //此数据不存在时的处理逻辑
         if ($bento_exist == null) {
             // 报错
-            return response()->json(['result' => 'fail']);
+            return response()->json(['result' => 'fail']); //只返回数据用response，渲染页面用view，跳转页面用redirect。
         }
-
+        //把数据存入数据库
+        //首先先检查数据库是否已经存在该数据
         $favourite = Favourite::where('user_id', $user_id)
             ->where('bento_id', $bento_id)
             ->first();
-
+        //如果没有该数据
         if ($favourite == null) {
-            $favourite = new Favourite();
-            $favourite->bento_id = $bento_id;
-            $favourite->user_id = $user_id;
-            $favourite->save();
-
+            $favourite = new Favourite(); //新建一个实例
+            $favourite->bento_id = $bento_id;//把前台$bento_id传来的数据插入到数据库
+            $favourite->user_id = $user_id;//把前台$user_id传来的数据插入到数据库
+            $favourite->save();//保存
             // 给前台反馈
-            // 通过Ajax请求的路由，返回response()->json(PHP数组)
+            // 通过Ajax路径请求的数据，都必须用response()->json(返回的数据，类型是PHP数组)返回
             return response()->json(['result' => 'add']);
         } else {
+            //如果已经存在该数据
             $favourite->delete();
-
             // 给前台反馈
-            // 通过Ajax请求的路由，返回response()->json(PHP数组)
+            // 通过Ajax路径请求的数据，都必须用response()->json(返回的数据，类型是PHP数组)返回
             return response()->json(['result' => 'delete']);
         }
     }

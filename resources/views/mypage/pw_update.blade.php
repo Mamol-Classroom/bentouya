@@ -15,7 +15,7 @@
         <div class="subview">
             <h1>パスワード変更</h1>
             <div>
-                <form method="post" action="/mypage/passwordupdate">
+                <form method="post" action="/mypage/pw_update">
                     <table class="register-table">
                         <tr>
                             <td>現在のパスワード</td>

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Bento;
+use App\Models\Favourite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -113,14 +115,37 @@ class MypageController extends Controller
        $user=Auth::user();
        $user_password=$user->password;
 
+       $error_message = $request->session()->get('password.error_message');
+       $data = $request->session()->get('password.data');
+
+       $request->session()->forget('password.error_message');
+       $request->session()->forget('password.data');
+
+
+       if ($error_message == '') {
+           $error_message = [
+               'password' => '',
+               'newpassword' => '',
+               'password_confirm' => '',
+           ];
+       }
+
+       if ($data == '') {
+           $data = [
+               'newpassword' => '',
+               'password_confirm' => '',
+           ];
+       }
+       $has_error = false;
+
        if ($request->method() === 'POST') {
 
            $oldpassword = $request->post('password');
-           $passwordupdate = $request->post('newpassword');
+           $password_update = $request->post('newpassword');
            $password_confirm = $request->post('password_confirm');
 
            $data = [
-               'newpassword' => $passwordupdate,
+               'newpassword' => $password_update,
                'password_confirm' => $password_confirm,
            ];
 
@@ -131,54 +156,57 @@ class MypageController extends Controller
                $has_error = true;
            }
 
-           if ($passwordupdate == '') {
+           if ($password_update == '') {
                $error_message['newpassword'] = '新しいパスワードを入力してください';
                $has_error = true;
            }
 
-           if ($password_confirm != $passwordupdate) {
+           if ($password_confirm != $password_update) {
                $error_message['password_confirm'] = '変更したパスワードと一致ではありません';
                $has_error = true;
            }
 
        }
-       $error_message = $request->session()->get('password.error_message');
-       $data = $request->session()->get('password.data');
 
-       $request->session()->forget('password.error_message');
-       $request->session()->forget('password.data');
-
-
-       if ($error_message == null) {
-           $error_message = [
-               'password' => null,
-               'newpassword' => null,
-               'password_confirm' => null,
-           ];
-       }
-
-       if ($data == null) {
-           $data = [
-               'newpassword' => null,
-               'password_confirm' => null,
-           ];
-       }
-       $has_error = false;
-       if ($has_error) {
+            if ($has_error) {
                 $request->session()->put('password.error_message', $error_message);
                 $request->session()->put('password.data', $data);
 
-                return redirect('/mypage/passwordupdate');
+                return redirect('/mypage/pw_update');
             }
         //变更密码存入数据库
-           $changed_password = Hash::make($passwordupdate);
+           $changed_password = Hash:: make ($password_update);
            $user->password = $changed_password;
            $user->save();
 
-    return view('mypage.passwordupdate',[
+    return view('mypage.pw_update',[
            'user' => $user,
            'data'=>$data,
            'error_message'=>$error_message,
+       ]);
+   }
+
+    public function favourite(Request $request)
+   {
+       // ログインしているユーザーIDの取得
+       $user_id = Auth::id();
+       // favouritesテーブルから注目している弁当のIDリストの取得
+       $bento_id_list = [];
+       // ログインしているユーザーIDが注目したデーターの取得(Array)
+       $favourites = Favourite::where('user_id', $user_id)->get();
+       // $favouritesから弁当IDの取得して、$bento_id_listに追加
+       foreach ($favourites as $favourite) {
+           // 該当弁当IDの取得
+           $bento_id = $favourite->bento_id;
+           // 該当弁当IDを$bento_id_listの末に追加
+           $bento_id_list[] = $bento_id;
+       }
+
+       // Bentosテーブルから、弁当のIDリストに基づいて弁当情報の取得
+       $bentos = Bento::whereIn('id', $bento_id_list)->get();
+
+       return view('mypage.favourite', [
+           'bentos' => $bentos
        ]);
 
    }
