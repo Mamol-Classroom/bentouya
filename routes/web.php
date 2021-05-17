@@ -38,4 +38,7 @@ Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::post('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::get('/mypage/pw_update', [MypageController::class, 'passwordUpdate'])->middleware('auth');
 Route::post('/mypage/pw_update', [MypageController::class, 'passwordUpdate'])->middleware('auth');
+Route::get('/mypage/pw_update_success', [MypageController::class, 'passwordUpdateSuccess'])->middleware('auth');
+Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
+
 // 支払い
