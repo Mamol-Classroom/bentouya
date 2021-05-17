@@ -10,7 +10,7 @@
                     <table class="register-table">
                         <tr>
                             <td>
-                        <img src="{{ $user->get_user_image_url() }}" style="width: 180px;" />
+                    <img src="storage/{{auth()->user()->image_url}}" style="width: 180px;" />
                             </td>
                         <tr>
                             <td>メールアドレス</td>

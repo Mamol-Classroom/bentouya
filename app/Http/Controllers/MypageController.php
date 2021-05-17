@@ -24,8 +24,11 @@ class MypageController extends Controller
                 'city'=>$user->city,
                 'address'=>$user->address,
                 'tel'=>$user->tel,
+                'user_img' =>$user->image_url,
             ];
         }
+
+
         return view('mypage.index', ['data' => $data]);
     }
 

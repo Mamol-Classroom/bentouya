@@ -80,6 +80,7 @@ class TopController extends Controller
                 'address' => null,
                 'tel' => null,
                 'name' => null,
+                'user_img' => null,
             ];
         }
 
@@ -94,6 +95,7 @@ class TopController extends Controller
                 'address' => '',
                 'tel' => '',
                 'name' => '',
+                'user_img' => '',
             ];
         }
 
@@ -114,6 +116,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
+        $user_img = $request->file('user_img');
 
         $data = [
             'email' => $email,
@@ -125,6 +128,7 @@ class TopController extends Controller
             'address' => $address,
             'tel' => $tel,
             'name' => $name,
+            'user_img' => $user_img
         ];
 
         $has_error = false;
@@ -138,6 +142,7 @@ class TopController extends Controller
             'address' => null,
             'tel' => null,
             'name' => null,
+            'user_img' => null,
         ];
         if ($email == "") {
             $error_message['email']  = '请输入邮箱';
@@ -159,6 +164,11 @@ class TopController extends Controller
 
         if ($name == "") {
             $error_message['name']  = '请输入姓名';
+            $has_error = true;
+        }
+
+        if($user_img == "") {
+            $error_message['user_img']  = '请上傳頭像';
             $has_error = true;
         }
 
@@ -205,7 +215,20 @@ class TopController extends Controller
         $user->city = $city;
         $user->address = $address;
         $user->tel = $tel;
+        $user->image_url = '';
         $user->save();
+
+        // 将上传的图片存储至服务器
+        $user_img_name = $user->name.'.'.$user_img->extension();
+        //$bento_img->getClientOriginalName();  // 取得上传的文件原来的名字
+        //$bento_img->extension();  // 取得上传的文件的扩展名
+        //$bento_img->store('bento_imgs/'.$bento->id);  // 随机生成文件名
+        $user_img->storeAs('public/user_imgs/'.$user->id, $user_img_name);
+
+        // 将图片的数据存入数据库
+        $user->image_url = 'public/user_imgs/'.$user->id.'/'.$user_img_name;
+        $user->save();
+
 
         $request->session()->flash('registerd_user', $user);
 
