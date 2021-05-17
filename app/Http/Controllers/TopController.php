@@ -10,7 +10,10 @@ use App\Models\Bento;
 use App\Models\BentoImage;
 
 use Illuminate\Support\Facades\Auth;  //确定auth使用路径，认证登录
-use Illuminate\Support\Facades\Hash;  //hash路径，密码加密
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
+//hash路径，密码加密
 
 class TopController extends Controller
 {
@@ -29,7 +32,8 @@ class TopController extends Controller
         $price_l = $request->query('price_l');  //使用get方法，因为需要在这个函数内渲染模板
         $price_h = $request->query('price_h');
 
-        $headPortrait =$request->query('headPortrait_url');  //显示用户头像
+        //$headPortrait =$request->query('headPortrait_url');  //显示用户头像
+        $headPortrait = Auth::user()->get_user_headPortrait_url();
 
 
         $bento_query = Bento::query();
@@ -246,13 +250,16 @@ class TopController extends Controller
 
         //将上传头像存储至服务器：存储头像名->创建头像存储文件夹
         $headPortrait_name = $user->email.'.'.$headPortrait->extension();  //用户邮箱(唯一).文件扩展名extension
-        $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);  //创建存储头像的文件夹
 
         //将头像存入数据库
-        $user->headPortrait_url = $headPortrait;
-        $user->headPortrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;
+        $user->headPortrait_url = null;
 
         $user->save();    //保存新实例
+
+        $user->headPortrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;
+        $user->save();
+
+        $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);  //创建存储头像的文件夹
 
         $request->session()->flash('registed_user', $user);  //闪存，只存活一个请求
 
@@ -273,7 +280,7 @@ class TopController extends Controller
             'city' => $user->city,
             'address' => $user->address,
             'tel' => $user->tel,
-            'headPortrait_url' => $user->headPortrait_url,
+            'headPortrait_url' => Storage::url($user->headPortrait_url),
         ]);
 
     }

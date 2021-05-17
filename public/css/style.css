@@ -172,6 +172,11 @@ nav ul li a {
     color: #ff0000;
 }
 
+.profile img {
+    width: 50px;
+    height: auto;
+}
+
 /** amazon */
 .a-section {
     margin-bottom: 22px;
