@@ -10,7 +10,11 @@
                     <table class="register-table">
                         <tr>
                             <td>
-                    <img src="storage/{{auth()->user()->image_url}}" style="width: 180px;" />
+                                @if(Auth()->user()->image_url != null)
+                                <img src="storage/{{auth()->user()->image_url}}" style="width: 180px;" />
+                                @else
+                                <img src ="/img/default-user.jpg" />
+                                @endif
                             </td>
                         <tr>
                             <td>メールアドレス</td>
