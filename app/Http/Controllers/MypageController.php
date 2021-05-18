@@ -21,6 +21,8 @@ class MypageController extends Controller
 
         $user = Auth::user();  //使用User会报错
 
+        $headPortrait = $user->get_user_headPortrait_url();  //获取用户头像
+
         // $user_id = Auth::id(); 在session中取得旧文件，而不是直接从数据库中提取新数据
 
         $error_message = $request->session()->get('error_message');
@@ -51,7 +53,7 @@ class MypageController extends Controller
                'city'=>$user->city,
                'address'=>$user->address,
                'tel'=>$user->tel,
-               'headPortrait_url' => Auth::user()->get_user_headPortrait_url(),
+               'headPortrait_url_change' => $headPortrait,
             ];
         }
 
@@ -66,7 +68,7 @@ class MypageController extends Controller
             $address = $request->post('address');
             $tel = $request->post('tel');
 
-            $headPortrait = Storage::url($user->head_portrait_url);
+            $headPortrait_change = $request->file('headPortrait_url_change');
 
             $data = [
                 'email'=>$email,
@@ -76,7 +78,7 @@ class MypageController extends Controller
                 'city'=>$city,
                 'address'=>$address,
                 'tel'=>$tel,
-                'headPortrait_url' => $headPortrait,
+                'headPortrait_url_change' => $headPortrait_change,
             ];
 
             $label_name = [
@@ -113,15 +115,24 @@ class MypageController extends Controller
             $user->address = $address;
             $user->tel = $tel;
 
-            $user->head_portrait_url = $headPortrait;
+            if($headPortrait_change != null){       // 判断是否传输头像，避免报错
+                $headPortrait_change_name = $user->email.'.'.$headPortrait_change->extension();
+            }else{
+                $headPortrait_change_name = '';
+            }
+
+            $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_change_name;  //保存url
 
             $user->save();
+
+            $headPortrait_change->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_change_name);  //创建文件夹
 
         }
 
     return view('mypage.index',[
         'data'=>$data,
         'error_message'=>$error_message,
+        'headPortrait_url_change'=>Storage::url($user->head_portrait_url),  //storeAs保存；Storage查询
     ]);
 
     }

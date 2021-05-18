@@ -18,11 +18,17 @@ class User extends Authenticatable  //寻找config文件夹下的auth.php文件�
 
     public function get_user_headPortrait_url()
     {
-        $headPortrait_url = $this->headPortrait_url;  //$headPortrait_url是register.blade中的name属性
-        if ($headPortrait_url == null) {
+        /**$headPortrait_url = $this->headPortrait_url;  //$headPortrait_url是register.blade中的name属性
+        $headPortrait_url_change = $this->headPortrait_url_change;  //$headPortrait_url_change是mypage.index中的name属性*/
+        $headPortrait_url = $this->head_portrait_url;
+
+        if ($headPortrait_url == null) {        //无法显示更新头像的原因：可能是user模型里出了问题？
             return '/img/default_profile_img.jpg';
+
         }
 
         return Storage::url($headPortrait_url);
+
     }
+
 }

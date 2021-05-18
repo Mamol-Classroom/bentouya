@@ -29,7 +29,7 @@
                     <tr>
                         <td>ユーザー画像</td>
                         <td>
-                            <input type="file" name="headPortrait_url" />
+                            <input type="file" name="headPortrait_url_change" />
                         </td>
                     </tr>
                     <tr>

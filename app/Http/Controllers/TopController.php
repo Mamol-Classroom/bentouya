@@ -265,10 +265,11 @@ class TopController extends Controller
 
         $user->save();    //保存新实例
 
-        $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //头像url命名
+        $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //创建存储头像的文件夹
         $user->save();
 
-        $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);  //创建存储头像的文件夹
+        $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);   //创建文件夹
+        //将public/storage文件夹和storage/app/public做关联，使客户端可以识别：php artisan storage：link
 
         $request->session()->flash('registed_user', $user);  //闪存，只存活一个请求
 
