@@ -67,7 +67,12 @@ $(".quantity-minus").on('click', function () {
     var current_cart_quantity = cart_quantity.text();  // 取得当前数量
     current_cart_quantity = current_cart_quantity.replace(',', '');  // 将数量中的,去掉，1,000 -> 1000
     current_cart_quantity = parseInt(current_cart_quantity);  // 将字符串转换成数字
-    cart_quantity.text(current_cart_quantity - 1);
+    if(current_cart_quantity === '1'){
+        var tr = $(this).closest('span').find('.cart-quantity');
+    }else{
+        cart_quantity.text(current_cart_quantity - 1);
+    }
+
 
     // 商品小计重新计算
     var cart_subtal = $(this).closest('tr').find('.subtal');
