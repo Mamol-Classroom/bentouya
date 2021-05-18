@@ -82,7 +82,21 @@ class OrderController extends Controller
         // 从数据库中取得当前数量
         // 当前数量加1
         // 将改变后的数量存入数据库
-        $bento_id = $request->post('bento_id');
+        $bento_id_add = $request->post('bento_id_add');
+        $bento_id_delete = $request->post('bento_id_delete');
+        if($bento_id_add){
+            $bento_cart_add = Cart::where('bento_id',$bento_id_add)->first();
+            $bento_cart_add->quantity=$bento_cart_add->quantity + 1;
+            $bento_cart_add->save();
+        }
+
+        if($bento_id_delete){
+            $bento_cart_delete = Cart::where('bento_id',$bento_id_delete)->first();
+            $bento_cart_delete->quantity=$bento_cart_delete->quantity - 1;
+            $bento_cart_delete->save();
+        }
+
+
 
 
         return response()->json(['result' => 'success']);

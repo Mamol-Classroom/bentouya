@@ -33,7 +33,7 @@
         </td>
         <td class="tdthree">
             <span>
-                <input type="button" value="-">
+                <input class="quantity-delete" type="button" value="-">
                 <span class="num cart-quantity">{{number_format($bento->quantity)}}</span>
                 <input class="quantity-add" type="button" value="+">
             </span>
