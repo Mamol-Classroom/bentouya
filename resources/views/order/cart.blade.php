@@ -29,9 +29,9 @@
         </td>
         <td class="tdthree">
             <span>
-                <input type="button" value="-">
+                <input class="quantity-reduce" name="click" type="button" value="-">
                 <span class="num cart-quantity">{{number_format($bento->quantity)}}</span>
-                <input class="quantity-add" type="button" value="+">
+                <input class="quantity-add" name="click" type="button" value="+">
             </span>
         </td>
         <td class="tdfour"><span>単価：¥</span><span class="unit">{{number_format($bento->price)}}</span></td>
