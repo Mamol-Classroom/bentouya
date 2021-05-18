@@ -76,13 +76,14 @@ class OrderController extends Controller
     public function cartChangeQuantity(Request $request)
     {
 
-        $click = $request->post('click');
+
         // Ajax
         // 接收便当ID
         // 通过便当ID去数据库查找该购物车信息
         // 从数据库中取得当前数量
         // 当前数量加1
         // 将改变后的数量存入数据库
+        $click = $request->post('click');
         $bento_id = $request->post('bento_id');
         $user_id = Auth::id();
 
@@ -96,15 +97,13 @@ class OrderController extends Controller
 
         if ($click === '+') {
             $bento_cart->quantity = $old_quantity + 1;
-            $bento_cart ->save();
-            return response()->json(['result' => 'success']);
         }
-
-        if ($click === '-') {
+        elseif ($click === '-') {
             $bento_cart->quantity = $old_quantity - 1;
+        }
             $bento_cart ->save();
             return response()->json(['result' => 'success']);
-        }
+
 
 
 
