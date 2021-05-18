@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\Bento;
 use App\Models\Favourite;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Models\BentosImage;
 class BentoController extends Controller
 {
 
@@ -23,13 +25,17 @@ class BentoController extends Controller
     {
         //$bento_id = $request->query('id');
         $bento = Bento::find($bento_id);
+        $bento_image_url = $bento->get_bento_image_url();
 
         return view('bento.detail', [
+            'bento_id' => $bento->id,
             'bento_name' => $bento->bento_name,
             'price' => $bento->price,
             'bento_code' => $bento->bento_code,
             'guarantee_period' => $bento->guarantee_period,
             'description' => $bento->description,
+            'bento_stock' => $bento->stock,
+            'bento_image_url' => $bento_image_url
         ]);
     }
 
@@ -41,7 +47,7 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
-
+            $bento_image = $request->file('bento_image');
             $data = [
                 'bento_name' => $bento_name,
                 'price' => $price,
@@ -104,6 +110,16 @@ class BentoController extends Controller
             $bento->user_id = Auth::id();
 
             $bento->save();
+
+          /*  服了
+                if($request->hasFile('bento_image')){
+                $bentos_image = new BentosImage();
+                $bentos_image->bento_id = $bento->user_id;
+                $filePath = $bento_image->store('public');
+                $bentos_image->image_url = str_replace('public/', '', $filePath);
+                $bentos_image->save();
+            }
+            */
 
             $request->session()->flash('bento.add', $bento);
 

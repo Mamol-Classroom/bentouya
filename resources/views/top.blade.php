@@ -17,6 +17,12 @@
                 <button type="submit">検索</button>
             </form>
         </div>
+        @if($add_to_cart_bento != null)
+            <div style="text-align: center">
+                <img src="{{ $add_to_cart_bento->get_bento_image_url() }}" style="width: 70px" >
+                <span>カードに追加しました</span>
+            </div>
+        @endif
         <div class="bento-container">
             @if(count($bentos) == 0)
                 <p>弁当なし</p>

@@ -34,11 +34,19 @@ class TopController extends Controller
         $bentos = $bento_query->paginate(4);
         //$bentos = $bento_query->get();
 
+        $add_to_cart_bento_id = $request->session()->get('add_cart_bento_id');
+        if ($add_to_cart_bento_id != null) {
+            $add_to_cart_bento = Bento::find($add_to_cart_bento_id);
+        }else {
+            $add_to_cart_bento = '';
+        }
+
         return view('top', [
             'bentos' => $bentos,
             'word' => $word,
             'price_l' => $price_l,
             'price_h' => $price_h,
+            'add_to_cart_bento' => $add_to_cart_bento
         ]);
     }
 

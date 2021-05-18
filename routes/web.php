@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\BentoController;
 use App\Http\Controllers\MypageController;
-
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +37,6 @@ Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->m
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 
 // 支払い
-
+Route::post('/add-to-cart',[OrderController::class,'addToCart'])->middleware('auth');
 //favourite_list
 Route::get('/favourite_list',[BentoController::class, 'favourite_list'])->middleware('auth');
