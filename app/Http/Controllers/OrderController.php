@@ -85,13 +85,13 @@ class OrderController extends Controller
         $bento_id_add = $request->post('bento_id_add');
         $bento_id_delete = $request->post('bento_id_delete');
         if($bento_id_add){
-            $bento_cart_add = Cart::where('bento_id',$bento_id_add)->first();
+            $bento_cart_add = Cart::where('bento_id',$bento_id_add)->where('user_id',Auth::id())->first();
             $bento_cart_add->quantity=$bento_cart_add->quantity + 1;
             $bento_cart_add->save();
         }
 
         if($bento_id_delete){
-            $bento_cart_delete = Cart::where('bento_id',$bento_id_delete)->first();
+            $bento_cart_delete = Cart::where('bento_id',$bento_id_delete)->where('user_id',Auth::id())->first();
             $bento_cart_delete->quantity=$bento_cart_delete->quantity - 1;
             $bento_cart_delete->save();
         }
