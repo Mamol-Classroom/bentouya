@@ -6,7 +6,7 @@ use App\Models\Bento;
 use App\Models\Favourite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Testing\Fluent\Concerns\Hash;
 class MypageController extends Controller
 {
 
@@ -62,4 +62,9 @@ class MypageController extends Controller
             'bentos' => $bentos
         ]);
     }
+
+    public function mydetail(Request $request){
+        return view('mypage.mydetail');
+    }
+
 }
