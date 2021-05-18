@@ -34,17 +34,17 @@
         <td class="tdthree">
             <span>
                 <input class="quantity-reduce" name="click" type="button" value="-">
-                <span class="num cart-quantity">{{number_format($bento->quantity)}}</span>
+                <span class="cart-quantity">{{number_format($bento->quantity)}}</span>
                 <input class="quantity-add" name="click" type="button" value="+">
             </span>
         </td>
         <td class="tdfour"><span>単価：¥</span><span class="unit">{{number_format($bento->price)}}</span></td>
         <td class="tdfive"><span>小計：</span><span class="subtal">{{ $bento->quantity * $bento->price }}</span></td>
-        <td class="tdsix"><button>キャンセル</button></td>
+        <td class="tdsix"><button class="delete">キャンセル</button></td>
     </tr>
     @endforeach
     <tr>
-        <td   colspan="6"; class="talast">
+        <td   colspan="6" class="talast">
             <span>商品件数：
                 <span class="goods_num">{{ $total_quantity }}</span> 件;
                 合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円;
