@@ -93,14 +93,16 @@ class OrderController extends Controller
             $bento_cart->quantity = $old_quantity + 1;
             $bento_cart ->save();
 
-           );
+            return response()->json();
+
         }
 
         if ($click === '-') {
             $bento_cart->quantity = $old_quantity - 1;
             $bento_cart ->save();
-           );
-        }
+            return response()->json();
 
+
+}
     }
 }

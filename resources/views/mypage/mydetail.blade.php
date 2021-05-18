@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="{{ URL::asset('css/style1') }}">
     {{--<script type="text/javascript" src="{{ URL::asset('js/script1.js') }}"></script>--}}
 
-<div class="center">
+<div id="login" class="center">
      <form class="error" method="post">
          请输入旧密码<input type="password" name="oddpass" id="oddpass" maxlength="20"><br>
          请输入新密码<input type="password" name="newpass" id="newpass" maxlength="20"><br>
          请确认新密码<input type="password" name="confirmpass" id="confirmpass" maxlength="20"><br>
          请选择头像<input type="file" name="image" id="image">
-         <button id="login" type="submit" value="submit">確定</button>
+         <button type="submit" value="submit">確定</button>
      </form>
 
 </div>
@@ -28,7 +28,7 @@
 
                     setTimeout(function() {
                         old_password.classList.remove('error');
-                    }, 200);
+                    }, 300);
 
                     e.preventDefault();
                 } else {
@@ -42,7 +42,7 @@
 
                     setTimeout(function() {
                         new_password.classList.remove('error');
-                    }, 250);
+                    }, 300);
 
                     e.preventDefault();
                 } else {
@@ -56,7 +56,7 @@
 
                     setTimeout(function() {
                         confirm_password.classList.remove('error');
-                    }, 250);
+                    }, 300);
 
                     e.preventDefault();
                 } else {
