@@ -15,6 +15,7 @@
         @if(auth()->check())
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
+            <a class="cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
         @else
             <p>ようこそ、ゲスト様</p>
             <a href="/login">ログイン</a>
