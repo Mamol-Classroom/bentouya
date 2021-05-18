@@ -109,7 +109,7 @@ $(".quantity-reduce").on('click', function () {
 
 
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
-    
+
     var bento_id = bento_id_input.val();
 
     $.ajax({
