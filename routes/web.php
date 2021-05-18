@@ -42,5 +42,8 @@ Route::post('/mypage/password_change',[MypageController::class,'password_change'
 Route::get('/mypage/favourite', [MypageController::class, 'favourite'])->middleware('auth');
 Route::post('/mypage/favourite', [MypageController::class, 'favourite'])->middleware('auth');
 // 支払い
+Route::get('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
+Route::post('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
+
 Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
 Route::post('/add-to-cart', [OrderController::class, 'addToCart'])->middleware('auth');
