@@ -29,7 +29,9 @@
             @else
                 @foreach($bentos as $bento)
                     <div class="bento">
+                        <a href="/bento/{{ $bento->id }}/detail">
                         @include('subview.bento',['bento'=>$bento])
+                        </a>
                         <div class="favor @if($bento->is_favourite(auth()->id())) active @endif" onclick="addFavourite({{$bento->id}},this)"><i class="fas fa-star"></i></div>
                     </div>
                 @endforeach
