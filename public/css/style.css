@@ -121,6 +121,10 @@ nav ul li a {
     text-align: center;
 }
 
+.subview img{
+    width:180px;
+}
+
 .inline-input {
     width: 276px !important;
     margin: 10px 0;
@@ -192,6 +196,11 @@ nav ul li a {
 
 #cart-btn-controller {
     width: 500px;
+}
+table img{
+    display:block;
+    margin:auto ;
+    width:180px;
 }
 
 /** amazon */

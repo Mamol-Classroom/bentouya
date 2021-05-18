@@ -8,15 +8,11 @@
             <div>
                 <form method="post" action="/mypage">
                     <table class="register-table">
-                        <tr>
-                            <td>
-                                @if(Auth()->user()->image_url != null)
-                                <img src="storage/{{auth()->user()->image_url}}" style="display:block; margin:auto ; width:180px; " />
-                                @else
-                                <img src ="/img/default-user.jpg" />
-                                @endif
-                            </td>
-                        <tr>
+                        @if(Auth()->user()->image_url != null)
+                            <img src="storage/{{auth()->user()->image_url}}"  />
+                        @else
+                            <img src ="/img/default-user.jpg" />
+                        @endif
                             <td>メールアドレス</td>
                             <td>
                                 <input type="text" name="email" value="{{ $data['email'] }}" disabled="disabled" />
