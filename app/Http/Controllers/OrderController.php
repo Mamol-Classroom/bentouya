@@ -15,6 +15,7 @@ class OrderController extends Controller
         $carts = Cart::where('user_id', Auth::id())->get();
         $bento_list = [];
         $total_price = 0;
+        $total_quantity = 0;
         foreach ($carts as $cart) {
             $bento_id = $cart->bento_id;
             $quantity = $cart->quantity;
@@ -23,12 +24,14 @@ class OrderController extends Controller
             $bento->quantity = $quantity;
 
             $bento_list[] = $bento;
+            $total_quantity += $quantity;
             $total_price += $bento->price * $quantity;
         }
 
         return view('order.cart', [
             'bentos' => $bento_list,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'total_quantity' => $total_quantity,
         ]);
     }
 

@@ -44,7 +44,7 @@
                 </tr>
             @endforeach
             <tr>
-                <td   colspan="6"; class="talast">
+                <td colspan="6" ; class="talast">
             <span>商品件数：
                 <span class="goods_num">{{ $total_quantity }}</span> 件;
                 合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円;
