@@ -94,6 +94,9 @@ class OrderController extends Controller
                 $bento_cart ->save();
             }
         }
+        elseif ($click === 'cancel'){
+            $bento_cart->delete();
+        }
 
             return response()->json(['result' => 'success']);
 
