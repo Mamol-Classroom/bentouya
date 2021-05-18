@@ -4,7 +4,7 @@
     <title>@yield('title')</title>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="/css/fontawesome-free-5.15.3-web/css/all/css">
+    <link rel="stylesheet" href="/css/fontawesome-free-5.15.3-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -12,6 +12,17 @@
 <body>
 <header>
     <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div><h3 class="shop_name">雷澤宇食堂</h3>
+
+    @if(auth() -> check())
+    <div class="user_img">
+        @if(auth() -> user() -> user_img != null)
+            <img src="{{ \Illuminate\Support\Facades\Storage::url(auth() -> user() -> user_img) }}" width="60px" height="60px">
+        @else
+        <img src="/img/default-bento.jpeg" width="60px" height="60px">
+        @endif
+    </div>
+    @endif
+
     <div class="profile">
         @if(auth()->check())
             <p>ようこそ、{{ auth()->user()->name }} 様</p>
@@ -32,5 +43,6 @@
     </nav>
 @endif
 @yield('content')
+<script src="/js/script.js"></script>
 </body>
 </html>

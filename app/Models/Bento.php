@@ -12,7 +12,7 @@ class Bento extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'bento';
+    protected $table = 'bentos';
     //public $timestamps =false;
 
     public function is_favourite($user_id)

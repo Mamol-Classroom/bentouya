@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BentosImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -176,7 +177,7 @@ class MypageController extends Controller
         $favourites = Favourite::where('user_id',$user_id)->get();
         foreach ($favourites as $favourite){
             $bento_id = $favourite->bento_id;
-            $bneto_id_list[] = $bento_id;
+            $bento_id_list[] = $bento_id;
         }
 
         $bentos= Bento::whereIn('id',$bento_id_list)->get();

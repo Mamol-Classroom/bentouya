@@ -6,7 +6,7 @@
     <main class="center">
         <h1>弁当登録</h1>
         <div>
-            <form method="post" action="/bento/add">
+            <form method="post" action="/bento/add" enctype="multipart/form-data">
                 <table class="register-table">
                     <tr>
                         <td>弁当名</td>
@@ -33,6 +33,12 @@
                             @if(isset($error_message) && $error_message['description'] != null)
                                 <span class="error-message">{{ $error_message['description'] }}</span>
                             @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>画像</td>
+                        <td>
+                            <input type="file" name="bento_img"/>
                         </td>
                     </tr>
                     <tr>

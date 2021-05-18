@@ -92,6 +92,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
+        $user_img = $request->file('user_img');
 
         $data = [
             'email' => $email,
@@ -106,6 +107,7 @@ class TopController extends Controller
         ];
 
         $has_error = false;
+
         $error_message = [
             'email' => null,
             'password' => null,
@@ -117,28 +119,29 @@ class TopController extends Controller
             'tel' => null,
             'name' => null,
         ];
+
         if ($email == "") {
-            $error_message['email']  = '请输入邮箱';
+            $error_message['email']  = 'メールアドレスをご入力ください';
             $has_error = true;
         }
 
         if ($password == "") {
-            $error_message['password']  = '请输入密码';
+            $error_message['password']  = 'パスワードをご入力ください';
             $has_error = true;
         }
 
         if ($password != $password_confirm) {
-            $error_message['password_confirm']  = '两次输入的密码不一致';
+            $error_message['password_confirm']  = 'パスワード一致ではありません';
             $has_error = true;
         }
 
         if ($name == "") {
-            $error_message['name']  = '请输入姓名';
+            $error_message['name']  = '名前をご入力ください';
             $has_error = true;
         }
 
         if ($postcode == "") {
-            $error_message['postcode']  = '请输入邮编';
+            $error_message['postcode']  = '郵便番号をご入力ください';
             $has_error = true;
         }
 
@@ -180,6 +183,20 @@ class TopController extends Controller
         $user->city = $city;
         $user->address = $address;
         $user->tel = $tel;
+
+        if ($user_img != null){
+            $user_img->storeAs('public/user_imgs/',$user_img->getClientOriginalName());
+            $user->user_img = 'user_imgs'.$user_img->getClientOriginalName();
+        }
+
+        //$user_img_name = $user->name.'.'.$user_img->extension();
+        //$user_img->storeAs('public/user_imgs'.$user->id,$user_img_name);
+
+        //$user_image = new UsersImage();
+        //$user_image -> user_id = $user -> id;
+        //$user_image -> user_img_url = 'user_imgs'.$user->id.'/'.$user_img_name;
+        //$user_image -> save();
+
         $user->save();
 
         $request->session()->flash('registed_user', $user);

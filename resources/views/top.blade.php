@@ -26,11 +26,6 @@
                         <div class="favor @if($bento -> is_favourite(auth() -> id())) active @endif" onclick="addFavourite({{$bento -> id}},this)"><i class="fas fa-heart"></i></div>
                         @include('subview.bento',['bento' => $bento])
 
-                        <a href="/bento/detail?id={{ $bento->id }}">
-                            <p>{{ $bento->bento_name }}</p>
-                            <p>￥ {{ number_format($bento->price) }}</p>
-                        </a>
-
                     </div>
                 @endforeach
             @endif

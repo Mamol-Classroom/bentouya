@@ -49,6 +49,7 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
+            $bento_img = $request->file('bento_img');
 
             $data = [
                 'description' => $description,
@@ -59,6 +60,7 @@ class BentoController extends Controller
             ];
 
             $has_error = false;
+
             $error_message = [
                 'bento_name' => null,
                 'price' => null,
@@ -112,6 +114,19 @@ class BentoController extends Controller
             $bento->user_id = Auth::id();
 
             $bento->save();
+
+            //イメージをアップロード
+            $bento_img_name = $bento->bento_name.'.'.$bento_img->extension();
+            //$bento_img->getClientOriginalName();  // 取得上传的文件原来的名字
+            //$bento_img->extension();  // 取得上传的文件的扩展名
+            //$bento_img->store('bento_imgs/'.$bento->id);  // 随机生成文件名
+            $bento_img->storeAs('public/bento_imgs/'.$bento->id,$bento_img_name);
+
+            //イメージをデータベースに保存
+            $bento_image = new BentosImage();
+            $bento_image -> bento_id = $bento -> id;
+            $bento_image -> image_url = 'bento_imgs/'.$bento -> id.'/'.$bento_img_name;
+            $bento_image -> save();
 
             $request->session()->flash('bento.add', $bento);
 
@@ -182,8 +197,8 @@ class BentoController extends Controller
         $bento->delete();  // hard delete
 
         // soft delete
-//        $bento->deleted_flag = 1;
-//        $bento->save();
+        //$bento->deleted_flag = 1;
+        //$bento->save();
 
         return redirect('/bentos');
     }
@@ -330,6 +345,7 @@ class BentoController extends Controller
             $favourite = Favourite::where('user_id', $user_id)
                 ->where('bento_id', $bento_id)
                 ->first();
+            //dump($favourite);exit;
 
             if ($favourite == null) {
                 $favourite = new Favourite();
@@ -345,7 +361,7 @@ class BentoController extends Controller
 
                 //前端にリクエスト
                 //Ajaxに経由で、リクエストresponse()->json(PHP array)
-                return response()->jason(['result' => 'delete']);
+                return response()->json(['result' => 'delete']);
             }
         }
 }
