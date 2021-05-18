@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Bento;
 use App\Models\Favourite;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 
 class MypageController extends Controller
 {
@@ -62,4 +66,17 @@ class MypageController extends Controller
             'bentos' => $bentos
         ]);
     }
+
+    public function mydetail(Request $request)
+    {
+        Auth::check();
+        $user=Auth::user();
+        $user_id=Auth::id();
+        $old_password=$user->password;
+
+
+
+        return view('mypage.mydetail');
+    }
 }
+
