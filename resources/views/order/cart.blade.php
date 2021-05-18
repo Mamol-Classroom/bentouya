@@ -19,26 +19,43 @@
             </tr>
             </thead>
 
-            <tbody>
-            @foreach($bentos as $bento)
-                <tr class="trclass">
-                    <td class="tdone"> <img src="{{ $bento->get_bento_image_url() }}" style="width: 180px; height:135px "/></td>
-                    <td class="tdtwo">{{$bento->bento_name}}</td>
-                    <td class="tdthree"><span><input type="button" value="-"><span class="num">{{number_format($bento->quantity)}}</span><input type="button" value="+"></span></td>
-                    <td class="tdfour"><span>単価：¥</span><span class="unit">{{number_format($bento->price)}}</span></td>
-                    <td class="tdfive"><span>小計：</span><span class="subtal">0</span></td>
-                    <td class="tdsix"><button>キャンセル</button></td>
-                </tr>
-            @endforeach
-            <tr><td colspan="6" class="talast"><span>商品件数：<span class="goods_num">0</span> 件; 合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円; </span></td></tr>
-            </tbody>
-        </table>
+    <tbody>
+    @foreach($bentos as $bento)
+    <tr class="trclass">
+        <td class="tdone"> <img src="{{ $bento->get_bento_image_url() }}" style="width: 180px; height:135px "/></td>
+        <td class="tdtwo ">
+            {{$bento->bento_name}}
+            <input type="hidden" name="bento_id" value="{{ $bento->id }}" />
+        </td>
+        <td class="tdthree">
+            <span>
+                <input type="button" value="-">
+                <span class="num cart-quantity">{{number_format($bento->quantity)}}</span>
+                <input class="quantity-add" type="button" value="+">
+            </span>
+        </td>
+        <td class="tdfour"><span>単価：¥</span><span class="unit">{{number_format($bento->price)}}</span></td>
+        <td class="tdfive"><span>小計：</span><span class="subtal">{{ $bento->quantity * $bento->price }}</span></td>
+        <td class="tdsix"><button>キャンセル</button></td>
+    </tr>
+    @endforeach
+    <tr>
+        <td   colspan="6"; class="talast">
+            <span>商品件数：
+                <span class="goods_num">{{ $total_quantity }}</span> 件;
+                合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円;
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
     @endif
 
     <div >
-        <p>¥{{number_format($total_price)}}</p>
+        ¥<span class="pricetal">{{number_format($total_price)}}</span>
         <button type="button">レジに進む</button>
     </div>
 </div>
+<script src="/js/cart.js"></script>
 @endsection
