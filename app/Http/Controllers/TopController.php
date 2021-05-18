@@ -236,7 +236,7 @@ class TopController extends Controller
         $user_img->storeAs('public/user_imgs/'.$user->id, $user_img_name);
 
         // 将图片的数据存入数据库
-        $user->image_url = 'public/user_imgs/'.$user->id.'/'.$user_img_name;
+        $user->image_url = 'user_imgs/'.$user->id.'/'.$user_img_name;
         $user->save();
 
 
