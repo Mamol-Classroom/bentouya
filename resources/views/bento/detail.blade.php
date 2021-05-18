@@ -6,7 +6,7 @@
     <main id="main">
         <div></div>
         <div>
-            <img src="{{$bento_image_url}}">  <!--添加bento图片：bug非默认图片大小不可控-->
+            <img class="bento-detail-img" src="{{$bento_image_url}}" />  <!--添加bento图片：bug非默认图片大小不可控-->
         </div>
         <div class="subview">
             <h1>{{ $bento_name }}</h1>

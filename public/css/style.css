@@ -145,6 +145,13 @@ nav ul li a {
     text-decoration: none;
 }
 
+.bento-detail-img{
+    display: block;
+    width: 380px;
+    height: auto;
+    text-decoration: none;
+}
+
 .user-image {
     justify-content: center;
     align-items: center;

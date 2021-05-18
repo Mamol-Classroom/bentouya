@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <div class="logo"><a href="/"><img src="/img/logo.jpg" width="100px" height="auto"></a></div>
+    <div class="logo"><a href="/"><img src="/img/logo.jpg" width="60px" height="auto"></a></div>
     <div class="profile">
         @if(auth()->check())
             <a class="cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
@@ -20,7 +20,7 @@
                         避免重复代码，可以直接从前台获取数据：auth()->user()->-->
             <a href="/logout">ログアウト</a>
         @else
-            <p>ようこそ、<img src="/img/default_profile_img.jpg"> ゲスト 様</p>
+            <p>ようこそ、<img src="/img/default_profile_img.jpg" width="60px" heigth="auto"> ゲスト 様</p>
             <a href="/login">ログイン</a>
         @endif
     </div>
