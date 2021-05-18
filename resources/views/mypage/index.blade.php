@@ -11,7 +11,7 @@
                         <tr>
                             <td>
                                 @if(Auth()->user()->image_url != null)
-                                <img src="storage/{{auth()->user()->image_url}}" style="width: 180px;" />
+                                <img src="storage/{{auth()->user()->image_url}}" style="display:block; margin:auto ; width:180px; " />
                                 @else
                                 <img src ="/img/default-user.jpg" />
                                 @endif
