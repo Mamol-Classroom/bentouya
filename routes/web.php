@@ -44,8 +44,6 @@ Route::post('/bento/favourite/add',[BentoController::class, 'addFavourite'])->mi
 //直接通过路由传参数Route::get('/bento/detail',[BentoController::class,'detail']);
 Route::get('/bento/detail/{bento_id}',[BentoController::class,'detail']);
 
-
-
 //マイページ
 Route::get('/mypage',[MypageController::class,'index'])->middleware('auth');
 Route::post('/mypage',[MypageController::class,'index'])->middleware('auth');
@@ -54,9 +52,6 @@ Route::post('/mypage/password-update',[MypageController::class,'passwordUpdate']
 Route::get('/mypage/password-update-success', [MypageController::class, 'passwordUpdateSuccess'])->middleware('auth');
 
 Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
-
-
-
 
 //支払い
 Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');

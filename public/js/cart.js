@@ -49,10 +49,11 @@ $(".quantity-add").on('click', function () {
     var bento_id = bento_id_input.val();
 
     $.ajax({
-        url: '/cart-change-quantity+',
+        url: '/cart-change-quantity',
         type: 'post',
         data: {
-            bento_id: bento_id
+            bento_id: bento_id,
+            click:'+'
         },
         dataType: 'json'
     }).done(function (res) {
@@ -102,12 +103,11 @@ var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
 var bento_id = bento_id_input.val();
 
 $.ajax({
-    url: '/cart-change-quantity-',
+    url: '/cart-change-quantity',
     type: 'post',
     data: {
         bento_id: bento_id,
-        click:'+',
-        click:'-',
+        click:'-'
 
     },
     dataType: 'json'

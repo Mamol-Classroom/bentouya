@@ -54,6 +54,7 @@ class OrderController extends Controller
 
         $cart_bento = Cart::where('bento_id',$bento_id)->where('user_id',$user_id)->first();
         if ($cart_bento == null){
+            //重新添加一条数据
             $cart = new Cart();
             $cart ->user_id = $user_id;
             $cart ->bento_id = $bento_id;
@@ -84,16 +85,23 @@ class OrderController extends Controller
         // 将改变后的数量存入数据库
         $user_id =Auth::id();
         $bento_id = $request->post('bento_id');
-        $quantity = $request->post('quantity');
+        $click = $request->post('click');
         $bento_cart = Cart::where('bento_id',$bento_id)->where('user_id',$user_id)->first();
-        $cart = new Cart();
-        $cart ->user_id = $user_id;
-        $cart ->bento_id = $bento_id;
-        $cart ->quantity = $quantity;
-        $cart_bento->quantity = $cart_bento->quantity + 1;
-        $cart_bento ->save();
 
-
+        if($click === '+')
+        {
+        $bento_cart->quantity = $bento_cart->quantity + 1;
+        $bento_cart ->save();
+        }
+        elseif ($click === '-') {
+            if ($bento_cart->quantity === 1) {
+                $bento_cart->delete();
+            } else {
+                $bento_cart->quantity = $bento_cart->quantity - 1;
+                $bento_cart ->save();
+            }
+        }
         return response()->json(['result' => 'success']);
     }
+
 }
