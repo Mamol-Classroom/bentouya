@@ -52,6 +52,7 @@ $(".quantity-add").on('click', function () {
         url: '/cart-change-quantity',
         type: 'post',
         data: {
+            click:'+',
             bento_id: bento_id
         },
         dataType: 'json'
@@ -116,6 +117,7 @@ $(".quantity-reduce").on('click', function () {
         url: '/cart-change-quantity',
         type: 'post',
         data: {
+            click:'-',
             bento_id: bento_id
         },
         dataType: 'json'
