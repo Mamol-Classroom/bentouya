@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\BentoController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +36,13 @@ Route::post('/bento/update', [BentoController::class, 'update'])->middleware('au
 Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->middleware('auth');
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
-<<<<<<< HEAD
 Route::get('favourite', [MypageController::class, 'favourite'])->middleware('auth');
-Route::get('mydetail',[MypageController::class,'mydetail'])->middleware('auth');
-Route::post('mydetail',[MypageController::class,'mydetail'])->middleware('auth');
-// 支払い
-=======
-// 注目リスト
-Route::get('/expection',[MypageController::class, 'expection'])->middleware('auth');
->>>>>>> 40a48097d336a303e66b9f31595748f411a87a48
 
+Route::get('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
+Route::post('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
+// 支払い
+Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
+Route::post('/add-to-cart', [OrderController::class, 'addToCart'])->middleware('auth');
+
+
+Route::post('/cart-change-quantity', [OrderController::class, 'cartChangeQuantity'])->middleware('auth');
