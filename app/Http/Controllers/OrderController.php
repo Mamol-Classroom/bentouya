@@ -84,6 +84,11 @@ class OrderController extends Controller
         // 将改变后的数量存入数据库
         $bento_id = $request->post('bento_id');
 
+        $cart_bento = Cart::where('bento_id', $bento_id)->where('user_id', Auth::id())->first();
+
+        $cart_bento->quantity = $cart_bento->quantity + 1;
+
+        $cart_bento->save();
 
         return response()->json(['result' => 'success']);
     }
