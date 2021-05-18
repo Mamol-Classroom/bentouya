@@ -76,20 +76,27 @@ class OrderController extends Controller
     public function cartChangeQuantity(Request $request)
     {
         // Ajax
-
+        $click = $request->post('click');
         // 接收便当ID
         // 通过便当ID去数据库查找该购物车信息
         // 从数据库中取得当前数量
         // 当前数量加1
         // 将改变后的数量存入数据库
+
         $bento_id = $request->post('bento_id');
 
         $cart_bento = Cart::where('bento_id', $bento_id)->where('user_id', Auth::id())->first();
 
-        $cart_bento->quantity = $cart_bento->quantity + 1;
+        if($click === '+') {
+            $cart_bento->quantity = $cart_bento->quantity + 1;
+            $cart_bento->save();
+        }elseif($click === '-') {
+            $cart_bento->quantity = $cart_bento->quantity - 1;
+            $cart_bento->save();
+        }
 
-        $cart_bento->save();
+            return response()->json(['result' => 'success']);
 
-        return response()->json(['result' => 'success']);
+
     }
 }
