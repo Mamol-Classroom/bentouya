@@ -90,11 +90,9 @@ class OrderController extends Controller
         if ($click === '+') {
             $cart_bento->quantity = $old_quantity + 1;
         }
-        elseif($click === '-')
-            {
-                $cart_bento->quantity = $old_quantity - 1 ;
-            }
-
+        elseif($click === '-') {
+                $cart_bento->quantity = $old_quantity - 1;
+        }
         $cart_bento -> save();
 
         return response()->json(['result' => 'success']);
