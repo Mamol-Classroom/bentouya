@@ -45,4 +45,6 @@ Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth
 
 
 // 支払い
-
+Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
+Route::post('/add-to-cart',[OrderController::class,'addToCart'])->middleware('auth');
+Route::post('/cart-change-quantity', [OrderController::class, 'cartChangeQuantity'])->middleware('auth');
