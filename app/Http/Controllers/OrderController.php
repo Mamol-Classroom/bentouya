@@ -92,16 +92,15 @@ class OrderController extends Controller
         if ($click === '+') {
             $bento_cart->quantity = $old_quantity + 1;
             $bento_cart ->save();
-            return response()->json(['result' => 'success']);
+
+           );
         }
 
         if ($click === '-') {
             $bento_cart->quantity = $old_quantity - 1;
             $bento_cart ->save();
-            return response()->json(['result' => 'success']);
+           );
         }
-
-
 
     }
 }

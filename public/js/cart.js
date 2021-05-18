@@ -6,7 +6,7 @@ $(".quantity-add").on('click', function () {
     current_cart_quantity = parseInt(current_cart_quantity);
     cart_quantity.text(current_cart_quantity + 1);
 
-    // 商品小计重新计算
+
     var cart_subtal = $(this).closest('tr').find('.subtal');
     var cart_price = $(this).closest('tr').find('.unit');
     var current_cart_price = cart_price.text();
@@ -78,7 +78,7 @@ $(".quantity-reduce").on('click', function () {
     current_goods_num = parseInt(current_goods_num);
     goods_num.text(current_goods_num - 1);
 
-  
+
     var price_tal = $('span.pricetal');
     var all_subtal = $('.subtal');
     var tal = 0;
