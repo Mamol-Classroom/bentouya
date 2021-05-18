@@ -79,16 +79,24 @@ $(".quantity-reduce").on('click', function () {
     var current_cart_quantity = cart_quantity.text();  // 取得当前数量
     current_cart_quantity = current_cart_quantity.replace(',', '');  // 将数量中的,去掉，1,000 -> 1000
     current_cart_quantity = parseInt(current_cart_quantity);  // 将字符串转换成数字
-    cart_quantity.text(current_cart_quantity - 1);
+    if (current_cart_quantity === 1) {
+        // 整条删除
+        var tr = $(this).closest('tr');
+        tr.remove();
+    } else {
+        cart_quantity.text(current_cart_quantity - 1);
 
-    // 商品小计重新计算
-    var cart_subtal = $(this).closest('tr').find('.subtal');
-    var cart_price = $(this).closest('tr').find('.unit');
-    var current_cart_price = cart_price.text();
-    current_cart_price = current_cart_price.replace(',', '');  // 将数量中的,去掉，1,000 -> 1000
-    current_cart_price = parseInt(current_cart_price);
-    var subtal = current_cart_price * (current_cart_quantity - 1);
-    cart_subtal.text(subtal);
+        // 商品小计重新计算
+        var cart_subtal = $(this).closest('tr').find('.subtal');
+        var cart_price = $(this).closest('tr').find('.unit');
+        var current_cart_price = cart_price.text();
+        current_cart_price = current_cart_price.replace(',', '');  // 将数量中的,去掉，1,000 -> 1000
+        current_cart_price = parseInt(current_cart_price);
+        var subtal = current_cart_price * (current_cart_quantity - 1);
+        cart_subtal.text(subtal);
+    }
+
+
 
     // 商品件数减1
     var goods_num = $('span.goods_num');
