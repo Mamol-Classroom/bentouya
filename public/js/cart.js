@@ -14,8 +14,8 @@ $('.quantity-add').on('click',function(){   //+按钮的name
     cart_quantity.text(current_cart_quantity + 1);
 
     //商品小计重新计算
-    var cart_subtal =  $(this).closest('tr').find('subtal');
-    var cart_price = $(this).closest('tr').find('unit');
+    var cart_subtal =  $(this).closest('tr').find('.subtal');
+    var cart_price = $(this).closest('tr').find('.unit');
     var current_cart_price = cart_price.text();
     current_cart_price = current_cart_price.replace(',','');
     current_cart_price = parseInt(current_cart_price);  //parseInt：将字符串转换为int类型后才可以运算
