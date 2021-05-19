@@ -1,4 +1,4 @@
-
+<?php
 @extends('mypage.layout')
 
 @section('title', 'プロフィール')
