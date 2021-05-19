@@ -37,9 +37,6 @@ Route::post('/bento/favourite/add', [BentoController::class, 'addFavourite'])->m
 // マイページ
 Route::get('/mypage', [MypageController::class, 'index'])->middleware('auth');
 Route::get('favourite', [MypageController::class, 'favourite'])->middleware('auth');
-
-Route::get('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
-Route::post('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
 // 支払い
 Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
 Route::post('/add-to-cart', [OrderController::class, 'addToCart'])->middleware('auth');
