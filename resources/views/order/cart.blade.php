@@ -58,7 +58,7 @@
 
     <div >
         ¥<span class="pricetal">{{number_format($total_price)}}</span>
-        <button type="button">レジに進む</button>
+        <button type="button"><a href="/order">レジに進む</a></button>
     </div>
 
     <script src="/js/cart.js"></script>

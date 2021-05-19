@@ -45,6 +45,7 @@ Route::post('/mypage/favourite', [MypageController::class, 'favourite'])->middle
 Route::get('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
 Route::post('/mydetail',[MypageController::class,'mydetail'])->middleware('auth');
 
-Route::get('/cart', [OrderController::class, 'index'])->middleware('auth');
+Route::get('/cart', [OrderController::class, 'cart'])->middleware('auth');
 Route::post('/add-to-cart', [OrderController::class, 'addToCart'])->middleware('auth');
 Route::post('/cart-change-quantity', [OrderController::class, 'cartChangeQuantity'])->middleware('auth');
+Route::get('/order', [OrderController::class, 'index'])->middleware('auth');

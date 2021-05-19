@@ -10,7 +10,45 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
+
     public function index(Request $request)
+    {
+        $data = $request->session()->get('order.adderess');
+        $error_message = $request->session()->get('order.error_message');
+
+        $request->session()->forget('order.adderess');
+        $request->session()->forget('order.error_message');
+
+        if($data == null)
+        {
+            $data =[
+                'postcode' => '',
+                'prefecture' => '',
+                'city' => '',
+                'address' => '',
+                'tel' => '',
+                'name' => '',
+            ];
+        }
+        if($error_message == null)
+        {
+            $error_message =[
+                'postcode' => '',
+                'prefecture' => '',
+                'city' => '',
+                'address' => '',
+                'tel' => '',
+                'name' => '',
+            ];
+        }
+
+        return view ('order.index',
+            ['data' => $data,
+             'error_message' => $error_message
+            ] );
+    }
+
+    public function cart(Request $request)
     {
         $carts = Cart::where('user_id', Auth::id())->get();
         $bento_list = [];
