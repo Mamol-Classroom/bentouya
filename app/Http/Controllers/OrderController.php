@@ -15,6 +15,7 @@ class OrderController extends Controller
     {
         $carts = Cart::where('user_id', Auth::id())->get();
         $bento_list = [];
+        $total_quantity = 0;
         $total_price = 0;
         foreach ($carts as $cart) {
             $bento_id = $cart->bento_id;
@@ -24,12 +25,15 @@ class OrderController extends Controller
             $bento->quantity = $quantity;
 
             $bento_list[] = $bento;
+
+            $total_quantity += $quantity;
             $total_price += $bento->price * $quantity;
         }
 
-        return view('order.cart', [
-            'bentos' => $bento_list,
-            'total_price' => $total_price
+        return view('order.cart',[
+            'bentos' =>$bento_list,
+            'total_quantity' => $total_quantity,
+            'total_price'=>$total_price,
         ]);
     }
 
@@ -54,5 +58,20 @@ class OrderController extends Controller
         $request->session()->flash('add_cart_bento', $bento_id);
 
         return redirect('/');
+    }
+
+    public function cartChangeQuantity(Request $request)
+    {
+        // Ajax
+
+        // 接收便当ID
+        // 通过便当ID去数据库查找该购物车信息
+        // 从数据库中取得当前数量
+        // 当前数量加1
+        // 将改变后的数量存入数据库
+        $bento_id = $request->post('bento_id');
+
+
+        return response()->json(['result' => 'success']);
     }
 }
