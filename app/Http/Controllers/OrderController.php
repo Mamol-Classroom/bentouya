@@ -121,7 +121,75 @@ class OrderController extends Controller
 
     public function payment(request $request)
     {
-        return view('payment');
+        if ($request->method() === 'post' )
+        {
+          // 处理支付
+          $card_no = $request->post('card_no');
+          $expire_month = $request->post('expire_month');
+          $expire_year = $request->post('expire_year');
+          $cvc = $request->post('cvc');
+          //将上述数据传送给信用卡公司
+          //等待支付处理完成，获得反馈（返回值 支付成功 / 支付失败）
+          //（假数据）
+            $payment_success = true;
+
+            // 生成订单数据
+            if (!$payment_success) {
+                // 支付失败
+                $request->session()->flash('payment.error_message', true);
+
+                return redirect('/payment');
+            }
+
+            // 支付成功，生成订单数据
+            $address = $request->session()->get('order.address');
+            $request->session()->forget('order.address');
+
+            $order = new Order();
+            $order->user_id = Auth::id();
+            $order->name = $address['name'];
+            $order->postcode = $address['postcode'];
+            $order->prefecture = $address['prefecture'];
+            $order->city = $address['city'];
+            $order->address = $address['address'];
+            $order->tel = $address['tel'];
+            $order->status = 1;
+            $order->save();
+
+            $cart_bentos = Cart::where('user_id', Auth::id())->get();
+            foreach ($cart_bentos as $cart) {
+                $bento = Bento::find($cart->bento_id);
+
+                $order_detail = new OrderDetail();
+                $order_detail->order_id = $order->id;
+                $order_detail->bento_id = $cart->bento_id;
+                $order_detail->bento_name = $bento->bento_name;
+                $order_detail->price = $bento->price;
+                $order_detail->bento_code = $bento->bento_code;
+                $order_detail->description = $bento->description;
+                $order_detail->guarantee_period = $bento->guarantee_period;
+                $order_detail->quantity = $cart->quantity;
+                $order_detail->save();
+
+                // 削减商品在库数
+                $bento->stock = $bento->stock - $order_detail->quantity;
+                $bento->save();
+
+                // 清空购物车
+                $cart->delete();
+            }
+
+            return redirect('/order/complete');
+        }
+
+        $payment_failed = $request->session()->has('payment.error_message');
+
+        return view('order.payment', ['payment_failed' => $payment_failed]);
+    }
+
+    public function complete(Request $request)
+    {
+        return view('order.complete');
     }
 
     public function cart(Request $request)

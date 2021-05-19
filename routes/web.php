@@ -51,3 +51,5 @@ Route::post('/cart-change-quantity', [OrderController::class, 'cartChangeQuantit
 Route::get('/order', [OrderController::class, 'index'])->middleware('auth');
 Route::post('/order', [OrderController::class, 'order'])->middleware('auth');
 Route::get('/payment', [OrderController::class, 'payment'])->middleware('auth');
+Route::post('/payment', [OrderController::class, 'payment'])->middleware('auth');
+Route::get('/order/complete', [OrderController::class, 'complete'])->middleware('auth');
