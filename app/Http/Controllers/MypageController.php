@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Bento;
 use App\Models\Favourite;
+use App\Models\OrderDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -259,4 +260,14 @@ class MypageController extends Controller
 
     }
 
+
+    public function orderHistory(Request $request)
+    {
+        $order_id = Auth::id();
+        $history_bentos = OrderDetail::where('order_id',$order_id)->get();
+
+
+
+        return view('mypage.order_history');
+    }
 }
