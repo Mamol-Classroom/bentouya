@@ -92,7 +92,7 @@
                 <tr>
                     <td>画像</td>
                     <td>
-                        <input type="file" name="user_img"/>
+                        <input type="file" name="profile_img_url"/>
                     </td>
                 </tr>
 

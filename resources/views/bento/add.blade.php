@@ -5,6 +5,11 @@
 @section('content')
     <main class="center">
         <h1>弁当登録</h1>
+
+        <div>
+            <img src="{{$bento_img_url}}" width="500px" height="500px">
+        </div>
+
         <div>
             <form method="post" action="/bento/add" enctype="multipart/form-data">
                 <table class="register-table">

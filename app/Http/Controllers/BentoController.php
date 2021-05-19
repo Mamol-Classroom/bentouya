@@ -234,9 +234,17 @@ class BentoController extends Controller
         $bento_id = $request->query('bento_id');
         $bento = Bento::find($bento_id);
 
+        $bento_image_url = $bento->get_bento_image_url();
+
+
         if ($bento == null || $bento->user_id != Auth::id()) {
             throw new NotFoundHttpException();
         }
+            /*
+                 return view( 'bento.update',[
+                'bento_img_url' => $bento_image_url
+            ]);
+             */
 
         $error_message = $request->session()->get('bento.update.error_message');
         $data = $request->session()->get('bento.update.data');
@@ -261,7 +269,8 @@ class BentoController extends Controller
                 'description' => $bento->description,
                 'stock' => $bento->stock,
                 'guarantee_period' => $bento->guarantee_period,
-            ];
+                'bento_img_change' => $bento->bento_img_change,
+                ];
         }
 
         $has_error = false;
@@ -272,6 +281,7 @@ class BentoController extends Controller
             $description = $request->post('description');
             $stock = $request->post('stock');
             $guarantee_period = $request->post('guarantee_period');
+            //$bento_image_change = $request->file('bento_img_change');
 
             $data = [
                 'bento_name' => $bento_name,

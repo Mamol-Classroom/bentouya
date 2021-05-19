@@ -14,9 +14,9 @@
     <div class="logo"><img src="/img/logo.jpg" width="100px" height="auto"></div><h3 class="shop_name">雷澤宇食堂</h3>
 
     @if(auth() -> check())
-    <div class="user_img">
-        @if(auth() -> user() -> user_img != null)
-            <img src="{{ \Illuminate\Support\Facades\Storage::url(auth() -> user() -> user_img) }}" width="60px" height="60px">
+    <div class="profile_img_url">
+        @if(auth() -> user() -> profile_img_url != null)
+            <img src="{{ \Illuminate\Support\Facades\Storage::url(auth() -> user() -> profile_img_url) }}" width="60px" height="60px">
         @else
         <img src="/img/default-bento.jpeg" width="60px" height="60px">
         @endif

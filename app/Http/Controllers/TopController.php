@@ -92,7 +92,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
-        $user_img = $request->file('user_img');
+        $profile_img_url = $request->file('profile_img_url');
 
         $data = [
             'email' => $email,
@@ -184,17 +184,17 @@ class TopController extends Controller
         $user->address = $address;
         $user->tel = $tel;
 
-        if ($user_img != null){
-            $user_img->storeAs('public/user_imgs/',$user_img->getClientOriginalName());
-            $user->user_img = 'user_imgs'.$user_img->getClientOriginalName();
+        if ($profile_img_url != null){
+            $profile_img_url->storeAs('public/profile_img_urls/',$profile_img_url->getClientOriginalName());
+            $user->profile_img_url = 'profile_img_urls'.$profile_img_url->getClientOriginalName();
         }
 
-        //$user_img_name = $user->name.'.'.$user_img->extension();
-        //$user_img->storeAs('public/user_imgs'.$user->id,$user_img_name);
+        //$profile_img_url_name = $user->name.'.'.$profile_img_url->extension();
+        //$profile_img_url->storeAs('public/profile_img_urls'.$user->id,$profile_img_url_name);
 
         //$user_image = new UsersImage();
         //$user_image -> user_id = $user -> id;
-        //$user_image -> user_img_url = 'user_imgs'.$user->id.'/'.$user_img_name;
+        //$user_image -> profile_img_url_url = 'profile_img_urls'.$user->id.'/'.$profile_img_url_name;
         //$user_image -> save();
 
         $user->save();
