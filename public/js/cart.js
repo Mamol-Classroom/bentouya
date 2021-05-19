@@ -49,7 +49,8 @@ $('.quantity-add').on('click',function(){   //+按钮的name
         url: '/cart-change-quantity',
         type: 'post',
         data: {
-            bento_id: bento_id
+            bento_id: bento_id,
+            click: '+'
         },
         dataType: 'json'
     }).done(function (res){
@@ -118,7 +119,8 @@ $(".quantity-reduce").on('click', function () {
         url: '/cart-change-quantity',
         type: 'post',
         data: {
-            bento_id: bento_id
+            bento_id: bento_id,
+            click: '-'
         },
         dataType: 'json'
     }).done(function (res) {

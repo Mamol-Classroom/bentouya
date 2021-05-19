@@ -121,7 +121,7 @@ class MypageController extends Controller
                 $headPortrait_change_name = '';
             }
 
-            $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_change_name;  //保存url
+            $user->profile_img_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_change_name;  //保存url
 
             $user->save();
 
@@ -132,7 +132,7 @@ class MypageController extends Controller
     return view('mypage.index',[
         'data'=>$data,
         'error_message'=>$error_message,
-        'headPortrait_url_change'=>Storage::url($user->head_portrait_url),  //storeAs保存；Storage查询
+        'headPortrait_url_change'=>Storage::url($user->profile_img_url),  //storeAs保存；Storage查询
     ]);
 
     }
