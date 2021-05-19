@@ -21,7 +21,7 @@
             <div class="alert-msg">
                 <img src="{{$add_to_cart_bento->get_bento_image_url()}}" style="width:60px;" />
                 <span>カートに追加しました</span>
-                <p>{{$add_to_cart_bento->bento_name}}</p> {{--如何显示商品名称和购买数量--}}
+                <p>{{$add_to_cart_bento->bento_name}}</p> {{--获取商品名称和购买数量：这里没有quantity，需要在添加购物车时flash过来--}}
                 <p>数量: {{number_format($add_to_cart_bento_quantity)}}</p>
             </div>
         @endif
