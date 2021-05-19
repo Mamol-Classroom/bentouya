@@ -102,29 +102,22 @@ class MypageController extends Controller
 
     public function orderlist(request $request)
     {
-        $order_id = Order::where('user_id', Auth::id())->find('id');
+        $order = Order::where('user_id', Auth::id())->first();
+        $order_id = $order->id;
         $order_details = OrderDetail::where('order_id',$order_id)->get();
+        dump($order_details);exit;
         $order_detail = [];
         $total_price = 0;
         $total_quantity = 0;
         foreach ($order_details as $order_detail) {
-            $bento_id = $order_detail->bento_id;
-            $bento_name = $order_detail->bento_name;
             $quantity = $order_details->quantity;
-            $price = $order_details->price;
-
-
             $order_detail[] = $order_detail;
             $total_quantity += $quantity;
             $total_price += $order_detail->price * $quantity;
         }
-
         return view('mypage.order_list', [
             'order_detail' => $order_detail,
             'order_id' => $order_id,
-            'bento_id' => $bento_id,
-            'bento_name' => $bento_name,
-            'price' => $price,
             'total_price' => $total_price,
             'total_quantity' => $total_quantity,
         ]);
