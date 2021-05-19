@@ -6,6 +6,9 @@
     <main class="center">
         <h1>お支払い</h1>
         <div>
+            @if($payment_failed)
+                <p class="error-message">支払い失敗</p>
+            @endif
             <form method="post" action="/payment" >
                 <table class="register-table">
                     <tr>

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Bento;
 use App\Models\Cart;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
@@ -14,25 +15,20 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $data = $request->session()->get('order.adderess');
+        $data = $request->session()->get('order.address');
         $error_message = $request->session()->get('order.error_message');
 
-        $request->session()->forget('order.adderess');
-        $request->session()->forget('order.error_message');
-
-        if($data == null)
-        {
+        if($data == null) {
             $data =[
-                'postcode' => $user->postcode,
-                'prefecture' => $user->prefecture,
-                'city' => $user->city,
-                'address' => $user->address,
-                'tel' => $user->tel,
-                'name' => $user->name,
+                'postcode' => $user-> postcode,
+                'prefecture' => $user-> prefecture,
+                'city' => $user-> city,
+                'address' => $user-> address,
+                'tel' => $user-> tel,
+                'name' => $user-> name,
             ];
         }
-        if($error_message == null)
-        {
+        if($error_message == null) {
             $error_message =[
                 'postcode' => '',
                 'prefecture' => '',
@@ -42,10 +38,12 @@ class OrderController extends Controller
                 'name' => '',
             ];
         }
+        $request->session()->forget('order.address');
+        $request->session()->forget('order.error_message');
 
-        return view ('order.index',
-            ['data' => $data,
-             'error_message' => $error_message
+        return view ('order.index', [
+            'data' => $data,
+            'error_message' => $error_message
             ] );
     }
 
@@ -121,8 +119,7 @@ class OrderController extends Controller
 
     public function payment(request $request)
     {
-        if ($request->method() === 'post' )
-        {
+        if ($request->method() === 'post' ) {
           // 处理支付
           $card_no = $request->post('card_no');
           $expire_month = $request->post('expire_month');

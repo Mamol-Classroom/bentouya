@@ -5,7 +5,7 @@
 
 @section('content')
     <link rel="stylesheet" type="text/css" href="/css/cart.css">
-    <body>
+    <div id="cart">
 
     @if(count($bentos) == 0)
         <a href="/">買い物を続ける</a>
@@ -44,25 +44,19 @@
                 </tr>
             @endforeach
             <tr>
-                <td colspan="6" ; class="talast">
-            <span>商品件数：
-                <span class="goods_num">{{ $total_quantity }}</span> 件;
-                合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円;
-            </span>
+                <td colspan="5" class="talast">
+                        <span>商品件数：
+                            <span class="goods_num">{{ $total_quantity }}</span> 件;
+                            合計金額： ￥<span class="pricetal">{{ number_format($total_price) }}</span> 円;
+                        </span>
+                </td>
+                <td>
+                    <button type="button"><a href="/order">レジに進む</a></button>
                 </td>
             </tr>
             </tbody>
         </table>
-
     @endif
-
-    <div >
-        ¥<span class="pricetal">{{number_format($total_price)}}</span>
-        <button type="button"><a href="/order">レジに進む</a></button>
     </div>
-
     <script src="/js/cart.js"></script>
-
-    </body>
-
 @endsection
