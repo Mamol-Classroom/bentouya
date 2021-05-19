@@ -49,7 +49,7 @@
                 <tr>
                     <td>アバター</td>
                     <td>
-                        <input type="file" name="avatar_img"/>
+                        <input type="file" name="profile_img_url_img"/>
                     </td>
                 </tr>
 

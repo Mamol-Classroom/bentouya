@@ -20071,7 +20071,7 @@ user:
   search:
     terms:
       - account
-      - avatar
+      - profile_img_url
       - head
       - human
       - man
@@ -20091,7 +20091,7 @@ user-alt:
   search:
     terms:
       - account
-      - avatar
+      - profile_img_url
       - head
       - human
       - man
@@ -20108,7 +20108,7 @@ user-alt-slash:
   search:
     terms:
       - account
-      - avatar
+      - profile_img_url
       - head
       - human
       - man
@@ -20124,7 +20124,7 @@ user-astronaut:
   label: User Astronaut
   search:
     terms:
-      - avatar
+      - profile_img_url
       - clothing
       - cosmonaut
       - nasa
@@ -20160,7 +20160,7 @@ user-circle:
   search:
     terms:
       - account
-      - avatar
+      - profile_img_url
       - head
       - human
       - man
@@ -20321,7 +20321,7 @@ user-ninja:
   search:
     terms:
       - assassin
-      - avatar
+      - profile_img_url
       - dangerous
       - deadly
       - sneaky
@@ -20355,7 +20355,7 @@ user-plus:
   search:
     terms:
       - add
-      - avatar
+      - profile_img_url
       - positive
       - sign up
       - signup
@@ -20419,7 +20419,7 @@ user-tag:
   label: User Tag
   search:
     terms:
-      - avatar
+      - profile_img_url
       - discount
       - label
       - person
@@ -20435,7 +20435,7 @@ user-tie:
   label: User Tie
   search:
     terms:
-      - avatar
+      - profile_img_url
       - business
       - clothing
       - formal

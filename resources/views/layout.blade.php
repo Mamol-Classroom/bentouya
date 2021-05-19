@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="/css/fontawesome-free-5.15.3-web/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -13,9 +13,9 @@
 <header>
     <div class="logo"><img src="/img/logo.jpg"width="100px"height="auto"></div>
     @if(auth()->check())
-    <div class="avatar">
-        @if(auth()->user()->avatar != null)
-        <img src="{{ \Illuminate\Support\Facades\Storage::url(auth()->user()->avatar) }}" width="60px"height="60px">
+    <div class="profile_img_url">
+        @if(auth()->user()->profile_img_url != null)
+        <img src="{{ \Illuminate\Support\Facades\Storage::url(auth()->user()->profile_img_url) }}" width="60px"height="60px">
         @else
         <img src="/img/default-bento.jpeg" width="60px"height="60px">
         @endif

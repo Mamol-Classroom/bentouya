@@ -152,7 +152,7 @@ class TopController extends Controller
         $address = $request->post('address');
         $tel = $request->post('tel');
         $name = $request->post('name');
-        $avatar_img = $request->file('avatar_img');
+        $profile_img_url_img = $request->file('profile_img_url_img');
 
 
 
@@ -246,15 +246,15 @@ class TopController extends Controller
         // $user->save();
 //头像上传
 
-      //  $avatar_img_name = $user->name.'.'.$avatar_img->extension();
-   //     $avatar_img->storeAs('public/avatar_img/'.$user->id, $avatar_img_name);
+      //  $profile_img_url_img_name = $user->name.'.'.$profile_img_url_img->extension();
+   //     $profile_img_url_img->storeAs('public/profile_img_url_img/'.$user->id, $profile_img_url_img_name);
 
-//        $avatar_img->getClientOriginalName();
-//      $avatar_img->extension();
-        if ($avatar_img != null) {
-            $avatar_img->storeAs('public/avatar_img',$avatar_img->getClientOriginalName());
-            //     $user->avatar = 'avatar_img/'.$user->id.'/'.$avatar_img_name;
-            $user->avatar = 'avatar_img/'.$avatar_img->getClientOriginalName();
+//        $profile_img_url_img->getClientOriginalName();
+//      $profile_img_url_img->extension();
+        if ($profile_img_url_img != null) {
+            $profile_img_url_img->storeAs('public/profile_img_url_img',$profile_img_url_img->getClientOriginalName());
+            //     $user->profile_img_url = 'profile_img_url_img/'.$user->id.'/'.$profile_img_url_img_name;
+            $user->profile_img_url = 'profile_img_url_img/'.$profile_img_url_img->getClientOriginalName();
         }
         $user->save();
 

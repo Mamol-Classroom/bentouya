@@ -15,16 +15,16 @@ class User extends Authenticatable
     protected $table = 'users';
     public $timestamps = false;
 
- /**  public function no_avatar_url(){
-       $avatar = User::query('avatar',id);
+ /**  public function no_profile_img_url_url(){
+       $profile_img_url = User::query('profile_img_url',id);
 
-        if ($avatar == null ){
+        if ($profile_img_url == null ){
 
             return '/img/default-bento.jpeg';
         }
 
         //url方法会在前面自动加/storage
-        return Storage::url($avatar->avatar);
+        return Storage::url($profile_img_url->profile_img_url);
     }*/
 
 }

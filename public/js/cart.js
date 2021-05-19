@@ -146,7 +146,7 @@ $(".delete").on('click', function () {
     tr.remove();
 
 /**    //取当前键入购物车的便当数量
-    var cart_quantity = $(this).closest('span').find('.cart-quantity');  // 取得数量的元素
+    var cart_quantity = $(this).closest('tr').find('.cart-quantity');  // 取得数量的元素
     var current_cart_quantity = cart_quantity.text();  // 取得当前数量
     current_cart_quantity = current_cart_quantity.replace(',', '');  // 将数量中的,去掉，1,000 -> 1000
     current_cart_quantity = parseInt(current_cart_quantity);  // 将字符串转换成数字
