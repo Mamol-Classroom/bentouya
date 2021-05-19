@@ -9,7 +9,7 @@
             @if($payment_failed)
                 <p class="error-message">支払い失敗</p>
             @endif
-            <form method="post" action="/payment" >
+            <form method="post" action="/payment">
                 <table class="register-table">
                     <tr>
                         <td>カード番号</td>
@@ -20,15 +20,15 @@
                     <tr>
                         <td>有効期限</td>
                         <td>
-                            <input type="text" name="expire_month" value="" placeholder="月"/>
+                            <input type="text" name="expire-month" value="" placeholder="月"/>
                             -
-                            <input type="text" name="expire_year" value="" placeholder="年"/>
+                            <input type="text" name="expire-year" value="" placeholder="年"/>
                         </td>
                     </tr>
                     <tr>
                         <td>CVC</td>
                         <td>
-                            <input type="text" name="prefecture" value="" placeholder="CVC"/>
+                            <input type="text" name="cvc" value="" placeholder="CVC"/>
                         </td>
                     </tr>
                     <tr>
