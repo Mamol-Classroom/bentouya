@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Bento;
 use App\Models\Favourite;
+Use App\Models\Cart;
+use App\Models\OrderDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,6 +98,35 @@ class MypageController extends Controller
             'error_message' => $error_message
         ]);
     }
+
+    public function orderlist(request $request)
+    {
+        $user_id = Auth::id();
+        $Order_list = OrderDetail::where('user_id', Auth::id())->get();
+        $bento_list = [];
+        $total_price = 0;
+        $total_quantity = 0;
+        foreach ($carts as $cart) {
+            $bento_id = $cart->bento_id;
+            $quantity = $cart->quantity;
+
+            $bento = Bento::find($bento_id);
+            $bento->quantity = $quantity;
+
+            $bento_list[] = $bento;
+            $total_quantity += $quantity;
+            $total_price += $bento->price * $quantity;
+        }
+
+        return view('order.cart', [
+            'bentos' => $bento_list,
+            'total_price' => $total_price,
+            'total_quantity' => $total_quantity,
+        ]);
+    }
+        return view('mypage.order_list',);
+    }
+
     public function password_change(Request $request)
     {
 
