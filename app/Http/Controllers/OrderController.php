@@ -13,6 +13,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+        $user = Auth::user();
         $data = $request->session()->get('order.adderess');
         $error_message = $request->session()->get('order.error_message');
 
@@ -22,12 +23,12 @@ class OrderController extends Controller
         if($data == null)
         {
             $data =[
-                'postcode' => '',
-                'prefecture' => '',
-                'city' => '',
-                'address' => '',
-                'tel' => '',
-                'name' => '',
+                'postcode' => $user->postcode,
+                'prefecture' => $user->prefecture,
+                'city' => $user->city,
+                'address' => $user->address,
+                'tel' => $user->tel,
+                'name' => $user->name,
             ];
         }
         if($error_message == null)
@@ -46,6 +47,81 @@ class OrderController extends Controller
             ['data' => $data,
              'error_message' => $error_message
             ] );
+    }
+
+    public function order(request $request)
+    {
+        $postcode = $request -> post('postcode');
+        $prefecture = $request -> post('prefecture');
+        $city = $request -> post('city');
+        $address = $request -> post('address');
+        $tel = $request -> post('tel');
+        $name = $request -> post('name');
+
+        $data = [
+            'postcode' => $postcode,
+            'prefecture' => $prefecture,
+            'city' => $city,
+            'address' => $address,
+            'tel' => $tel,
+            'name' => $name,
+        ];
+
+        $has_error = false;
+        $error_message = [
+            'postcode' => null,
+            'prefecture' => null,
+            'city' => null,
+            'address' => null,
+            'tel' => null,
+            'name' => null,
+        ];
+
+        if ($name == "") {
+            $error_message['name']  = '请输入姓名';
+            $has_error = true;
+        }
+
+        if ($postcode == "") {
+            $error_message['postcode']  = '请输入邮编';
+            $has_error = true;
+        }
+
+        if ($prefecture == "") {
+            $error_message['prefecture']  = '都道府県を入力してください';
+            $has_error = true;
+        }
+
+        if ($city == "") {
+            $error_message['city']  = '市区町村を入力してください';
+            $has_error = true;
+        }
+
+        if ($address == "") {
+            $error_message['address']  = '住所を入力してください';
+            $has_error = true;
+        }
+
+        if ($tel == "") {
+            $error_message['tel']  = '電話番号を入力してください';
+            $has_error = true;
+        }
+
+        if ($has_error) {
+            $request->session()->put('order.error_message', $error_message);
+            $request->session()->put('order.address', $data);
+
+            return redirect('/order');
+        }
+
+        $request->session()->put('order.address', $data);
+
+        return redirect('/payment');
+    }
+
+    public function payment(request $request)
+    {
+        return view('payment');
     }
 
     public function cart(Request $request)

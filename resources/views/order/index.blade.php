@@ -6,7 +6,7 @@
     <main class="center">
         <h1>配送先入力</h1>
         <div>
-            <form method="post" action="" >
+            <form method="post" action="/order" >
                 <table class="register-table">
                     <tr>
                         <td>名前</td>
