@@ -194,6 +194,51 @@ nav ul li a {
 #cart-btn-controller {
     width: 500px;
 }
+
+#cart table{
+    width:80%;
+    position:relative;
+    margin:30px auto;
+    border-collapse: collapse;
+    border:1px solid gray;
+}
+#cart th{
+    background: cornflowerblue;
+    height:2.5em;
+}
+#cart .tdone{
+    width:10%;
+}
+#cart .tdtwo{
+    width:20%;
+}
+#cart .tdthree{
+    width:20%;
+}
+#cart .tdfour{
+    width:20%;
+}
+#cart .tdfive{
+    width:20%;
+}
+#cart .tdsix{
+    width:10%;
+}
+#cart td{
+    height:6em;
+    text-align: center;
+    border:1px solid #ccc;
+}
+#cart .num{
+    display:inline-block;
+    width:3em;
+}
+#cart input{
+    height:2em;
+}
+#cart .talast{
+    text-align: left;
+}
 /** amazon */
 .a-section {
     margin-bottom: 22px;
