@@ -67,6 +67,7 @@ class TopController extends Controller
         //$bentos = $bento_query->get();
 
         $add_to_cart_bento_id = $request->session()->get('add_cart_bento');  //接收OrderController的flash
+        $add_to_cart_bento_quantity = $request->session()->get('add_cart_quantity');  //接收OrderController的flash
         if($add_to_cart_bento_id != null){   //判定是否有收藏bento
             $add_to_cart_bento = Bento::find($add_to_cart_bento_id);
         }else{
@@ -79,7 +80,8 @@ class TopController extends Controller
             'price_l' => $price_l,
             'price_h' => $price_h,
             'headPortrait_url' => $headPortrait,
-            'add_to_cart_bento' => $add_to_cart_bento
+            'add_to_cart_bento' => $add_to_cart_bento,
+            'add_to_cart_bento_quantity' => $add_to_cart_bento_quantity
         ]);
     }
 
@@ -261,11 +263,11 @@ class TopController extends Controller
         $headPortrait_name = $user->email.'.'.$headPortrait->extension();  //用户邮箱(唯一).文件扩展名extension
 
         //将头像存入数据库
-        $user->head_portrait_url = null;   //存入变量值，save之后再一次赋值
+        $user->profile_img_url = null;   //存入变量值，save之后再一次赋值
 
         $user->save();    //保存新实例
 
-        $user->head_portrait_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //创建存储头像的文件夹
+        $user->profile_img_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //创建存储头像的文件夹
         $user->save();
 
         $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);   //创建文件夹
@@ -290,7 +292,7 @@ class TopController extends Controller
             'city' => $user->city,
             'address' => $user->address,
             'tel' => $user->tel,
-            'headPortrait_url' => Storage::url($user->head_portrait_url),  //storeAs保存；Storage查询
+            'headPortrait_url' => Storage::url($user->profile_img_url),  //storeAs保存；Storage查询
         ]);
 
     }
