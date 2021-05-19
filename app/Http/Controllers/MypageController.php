@@ -104,23 +104,27 @@ class MypageController extends Controller
     {
         $order_id = Order::where('user_id', Auth::id())->find('id');
         $order_details = OrderDetail::where('order_id',$order_id)->get();
-        $bento_list = [];
+        $order_detail = [];
         $total_price = 0;
         $total_quantity = 0;
         foreach ($order_details as $order_detail) {
             $bento_id = $order_detail->bento_id;
+            $bento_name = $order_detail->bento_name;
             $quantity = $order_details->quantity;
+            $price = $order_details->price;
 
-            $bento = Bento::find($bento_id);
-            $bento->quantity = $quantity;
 
-            $bento_list[] = $bento;
+            $order_detail[] = $order_detail;
             $total_quantity += $quantity;
-            $total_price += $bento->price * $quantity;
+            $total_price += $order_detail->price * $quantity;
         }
 
         return view('mypage.order_list', [
-            'bentos' => $bento_list,
+            'order_detail' => $order_detail,
+            'order_id' => $order_id,
+            'bento_id' => $bento_id,
+            'bento_name' => $bento_name,
+            'price' => $price,
             'total_price' => $total_price,
             'total_quantity' => $total_quantity,
         ]);

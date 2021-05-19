@@ -10,7 +10,7 @@
             <thead>
             <tr>
                 <th>注文番號</th>
-                <th>{{ $OrderDetail->order_id}}</th>
+                <th>{{ order_id}}</th>
             </tr>
             <tr>
                 <th class="tdone">画像</th>
@@ -41,7 +41,6 @@
             </tr>
             </tbody>
         </table>
-        @endif
     </div>
     <script src="/js/cart.js"></script>
 
