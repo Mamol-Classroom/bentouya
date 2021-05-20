@@ -108,7 +108,7 @@ class MypageController extends Controller
         $order_detail = [];
         $total_price = 0;
         $total_quantity = 0;
-        foreach ($order_details as $order_detail) {
+        foreach ($order_details() as $order_detail) {
             $quantity = $order_details->quantity;
             $order_detail[] = $order_detail;
             $total_quantity += $quantity;
