@@ -120,7 +120,6 @@ class MypageController extends Controller
                 $bentos = BentosImage::where('bento_id', $bento_id)->get();
                 foreach ($bentos as $bento) {
                         $bento_images = $bento->image_url;
-                    exit;
                         if ($bento_images != null) {
                         $bento_image = Storage::url($bento_images);
                     } else {
