@@ -103,9 +103,8 @@ class MypageController extends Controller
     public function orderlist(request $request)
     {
         $order = Order::where('user_id', Auth::id())->first();
-        $order_id = $order->id;
+        $order_id[] = $order->wherein('id',[]);
         $order_details = OrderDetail::where('order_id',$order_id)->get();
-        dump($order_details);exit;
         $order_detail = [];
         $total_price = 0;
         $total_quantity = 0;

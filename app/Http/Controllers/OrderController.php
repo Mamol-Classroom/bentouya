@@ -125,6 +125,8 @@ class OrderController extends Controller
           $expire_month = $request->post('expire-month');
           $expire_year = $request->post('expire-year');
           $cvc = $request->post('cvc');
+
+
           //将上述数据传送给信用卡公司
           //等待支付处理完成，获得反馈（返回值 支付成功 / 支付失败）
           //（假数据）

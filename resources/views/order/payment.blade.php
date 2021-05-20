@@ -3,6 +3,7 @@
 @section('title','お支払い')
 
 @section('content')
+
     <main class="center">
         <h1>お支払い</h1>
         <div>
