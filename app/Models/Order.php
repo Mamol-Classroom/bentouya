@@ -27,7 +27,7 @@ class Order extends Model
 
     public function get_order_details()
     {
-        $orders_details =OrderDetail::where('order_id',$this->id);
-
+        $orders_details =OrderDetail::where('order_id',$this->id)->get();
+        return $orders_details;
     }
 }

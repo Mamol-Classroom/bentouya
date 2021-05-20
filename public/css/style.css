@@ -7,20 +7,7 @@
     font-size:40px;
 }
 
-.order-table{
-    width: 100%;
-}
-.order-table td{
-    width: 50%;
-    padding: 5px;
-}
-.order-table tr td:first-child {
-    text-align: right;
-}
 
-.order-table tr td:last-child {
-    text-align: left;
-}
 
 .register-table {
     width: 100%;
@@ -236,7 +223,61 @@ nav ul li a {
     width: 500px;
 }
 
+#order-history {
+    text-align: center;
+    width: 100%;
+}
 
+.history-container {
+    padding: 20px 290px;
+}
+
+.order-container {
+    border: #9c9c9c solid 1px;
+    margin: 20px 0;
+}
+
+.order-info {
+    display: flex;
+    border-bottom: #9c9c9c solid 1px;
+}
+
+.order-time {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.order-total {
+    color: #ff0000;
+    font-weight: 600;
+    padding-right: 20px;
+}
+
+.order-bento {
+    display: flex;
+    border-bottom: #9c9c9c solid 1px;
+}
+
+.order-bento:last-child {
+    border: none;
+}
+
+.bento-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bento-img-container img {
+    width: auto;
+    height: 100px;
+}
+
+.bento-info-container {
+    text-align: center;
+    flex-grow: 1;
+}
 
 /** amazon */
 .a-section {

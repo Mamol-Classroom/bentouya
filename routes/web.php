@@ -68,4 +68,4 @@ Route::post('/payment',[OrderController::class,'payment'])->middleware('auth');
 Route::get('/order/complete',[OrderController::class,'complete'])->middleware('auth');
 
 
-
+Route::get('/order/history',[OrderController::class,'history'])->middleware('auth');

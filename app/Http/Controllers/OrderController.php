@@ -336,9 +336,33 @@ class OrderController extends Controller
         }
 
             return response()->json(['result' => 'success']);
+    }
+
+
+    public function history(Request $request)
+    {
+//排序orderBy
+        $orders = Order::where('user_id',Auth::id())->orderBy('created_at', 'desc')->get();
+
+
+
+        return view('order.history',[
+
+            'orders' => $orders
+        ]);
+
 
 
 
 
     }
+
+
+
+
+
+
+
+
+
 }
