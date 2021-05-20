@@ -119,7 +119,7 @@ class OrderController extends Controller
 
     public function payment(request $request)
     {
-        if ($request->method() === 'post' ) {
+        if ($request->method() === 'POST' ) {
           // 处理支付
           $card_no = $request->post('card_no');
           $expire_month = $request->post('expire-month');
