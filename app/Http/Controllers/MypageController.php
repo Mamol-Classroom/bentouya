@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bento;
+use App\Models\BentosImage;
 use App\Models\Favourite;
 Use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,25 +105,36 @@ class MypageController extends Controller
     public function orderlist(request $request)
     {
         $orders = Order::where('user_id', Auth::id())->get();
-
         foreach($orders as $order) {
             $order_id = $order->id;
             $order_details = OrderDetail::where('order_id', $order_id)->get();
             $total_price = 0;
             $total_quantity = 0;
             foreach ($order_details as $order_detail) {
+                $bento_id = $order_detail->bento_id;
                 $bento_name = $order_detail->bento_name;
-                $quantity = $order_details->quantity;
+                $quantity = $order_detail->quantity;
                 $total_quantity += $quantity;
                 $price = $order_detail->price;
                 $total_price += $order_detail->price * $quantity;
+                $bentos = BentosImage::where('bento_id', $bento_id)->get();
+                foreach ($bentos as $bento) {
+                        $bento_images = $bento->image_url;
+                    exit;
+                        if ($bento_images != null) {
+                        $bento_image = Storage::url($bento_images);
+                    } else {
+                        $bento_image = Storage::url('/img/default-bento.jpg');
+                    }
+                }
             }
         }
 
         return view('mypage.order_list', [
+            'bento_image' =>$bento_image,
             'order_detail' => $order_detail,
             'order_id' => $order_id,
-            'order_name' => $bento_name,
+            'bento_name' => $bento_name,
             'quantity' => $quantity,
             'price' => $price,
             'total_price' => $total_price,
