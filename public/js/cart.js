@@ -42,15 +42,15 @@ $('.quantity-add').on('click',function(){   //+按钮的name
     price_tal.text(tal);
 
     //发送ajax请求改变数据库
-    var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
-    var bento_id = bento_id_input.val();
+    var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');  //追溯到input标签中的属性
+    var bento_id = bento_id_input.val();  //取value
 
     $.ajax({
         url: '/cart-change-quantity',
         type: 'post',
         data: {
             bento_id: bento_id,
-            click: '+'
+            click: '+'  //对应cart.blade中的name和value
         },
         dataType: 'json'
     }).done(function (res){
