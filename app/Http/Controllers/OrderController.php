@@ -119,6 +119,7 @@ class OrderController extends Controller
 
     public function payment(request $request)
     {
+        //POST 要大寫才會判定
         if ($request->method() === 'POST' ) {
           // 处理支付
           $card_no = $request->post('card_no');

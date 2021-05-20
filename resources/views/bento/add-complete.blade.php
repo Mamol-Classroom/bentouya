@@ -1,3 +1,4 @@
+
 @extends('layout')
 
 @section('title', '弁当登録完了')
