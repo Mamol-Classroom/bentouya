@@ -8,7 +8,7 @@
     <div>
         <table>
             <thead>
-
+            @foreach($orders as $order)
             <tr>
                 <th>注文番號</th>
                 <th colspan="4">{{ $order_id}}</th>
@@ -21,7 +21,6 @@
                 <th class="tdfive">価格</th>
             </tr>
             </thead>
-
             <tbody>
                 <tr class="trclass">
                     <td class="tdone"> <img src="{{ $bento_image }}" style="width: 180px; height:135px "/></td>
@@ -38,6 +37,7 @@
                         </span>
                 </td>
             </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

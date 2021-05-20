@@ -104,7 +104,29 @@ class MypageController extends Controller
 
     public function orderlist(request $request)
     {
-        $orders = Order::where('user_id', Auth::id())->get();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //循環太多會拖緩網頁速度 這個邏輯只能跑出單個數據
+       /** $orders = Order::where('user_id', Auth::id())->get();
         foreach($orders as $order) {
             $order_id = $order->id;
             $order_details = OrderDetail::where('order_id', $order_id)->get();
@@ -130,6 +152,7 @@ class MypageController extends Controller
         }
 
         return view('mypage.order_list', [
+            'order' => $order,
             'bento_image' =>$bento_image,
             'order_detail' => $order_detail,
             'order_id' => $order_id,
@@ -138,7 +161,7 @@ class MypageController extends Controller
             'price' => $price,
             'total_price' => $total_price,
             'total_quantity' => $total_quantity,
-        ]);
+        ]);*/
 
     }
 
