@@ -56,8 +56,14 @@ Route::post('/mypage/password-change',[MypageController::class,'passwordChange']
 Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
 
 // 支払い
-Route::get('/cart',[OrderController::class,'index'])->middleware('auth');
+Route::get('/cart',[OrderController::class,'cart'])->middleware('auth');
 Route::post('/add-to-cart',[OrderController::class,'addToCart'])->middleware('auth');  //存储flash数据
 
 Route::post('/cart-change-quantity',[OrderController::class,'cartChangeQuantity'])->middleware('auth');
 
+Route::get('/order',[OrderController::class,'index'])->middleware('auth');
+Route::post('/order',[OrderController::class,'index'])->middleware('auth');
+
+Route::get('/payment',[OrderController::class,'payment'])->middleware('auth');
+Route::post('/payment',[OrderController::class,'payment'])->middleware('auth');
+Route::get('/order/complete',[OrderController::class,'complete'])->middleware('auth');

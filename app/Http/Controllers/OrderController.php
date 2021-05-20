@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Bento;
 use App\Models\Cart;
 
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +15,176 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function index(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->session()->get('order.address');
+        $error_message = $request->session()->get('order.error_message');
+
+        if($data == null){
+            $data = [
+                'postcode' => $user->postcode,
+                'prefecture' => $user->prefecture,
+                'city' => $user->city,
+                'address' => $user->address,
+                'tel' => $user->tel,
+                'name' => $user->name,
+            ];
+        }
+
+        if($error_message == null){
+            $error_message = [
+                'postcode' => null,
+                'prefecture' => null,
+                'city' => null,
+                'address' => null,
+                'tel' => null,
+                'name' => null,
+            ];
+        }
+
+        $request->session()->forget('order.address');
+        $request->session()->forget('order.error_message');
+
+        return view('order.index',[
+            'data' => $data,
+            'error_message' => $error_message,
+        ]);
+
+    }
+
+    public function order(Request $request)
+    {
+        $postcode = $request->post('postcode');
+        $prefecture = $request->post('prefecture');
+        $city = $request->post('city');
+        $address = $request->post('address');
+        $tel = $request->post('tel');
+        $name = $request->post('name');
+
+        $data = [
+            'postcode' => $postcode,
+            'prefecture' => $prefecture,
+            'city' => $city,
+            'address' => $address,
+            'tel' => $tel,
+            'name' => $name,
+        ];
+
+        $has_error = false;
+        $error_message = [
+            'postcode' => null,
+            'prefecture' => null,
+            'city' => null,
+            'address' => null,
+            'tel' => null,
+            'name' => null,
+        ];
+
+        $label_name = [
+            'postcode' => '郵便番号',
+            'prefecture' => '都道府県',
+            'city' => '市区町村',
+            'address' => '住所',
+            'tel' => '電話番号',
+            'name' => '名前',
+        ];
+
+        foreach($data as $key => $value){
+            if($value == ''){
+                $error_message[$key] = $label_name[$key].'を入力してください';
+                $has_error = true;
+            }
+        }
+
+        if($has_error){
+            $request->session()->put('order.error_message',$error_message);
+            $request->session()->put('order.address',$data);
+
+            return redirect('/order');
+        }
+
+        $request->session()->put('order.address',$data);  //将填写的数据代入支付页面
+
+        return redirect('/payment');
+
+    }
+
+    public function payment(Request $request)  //不设限制可以直接进入支付页面，比较危险
+    {
+        if($request->method() === 'POST'){
+            //处理支付
+            $card_no = $request->post('card_no');  //key是payment.blade中的name
+            $expire_month = $request->post('expire-month');
+            $expire_year = $request->post('expire-year');
+            $cvc = $request->post('cvc');
+            // 将上述数据传送给信用卡公司
+            // 等待支付处理完成，获得反馈（返回值 支付成功 / 支付失败）
+            // （假数据）
+            $payment_success = true;
+
+            //生成订单数据
+            if(!$payment_success){
+                //支付失败
+                $request->session()->flash('payment.error_message',true);  //闪存一次支付失败信息
+
+                return redirect('/payment');  //将支付失败信息重定向到支付页面
+            }
+
+            //支付成功，生成订单数据
+            $address = $request->session()->get('order.address');  //接收上边order页面传来的数据
+            $request->session()->forget('order,address');
+
+            //将支付成功的订单存入数据库
+            $order = new Order();
+            $order->user_id = Auth::id();
+            $order->name = $address['name'];  //$order->name = $name; ??
+            $order->postcode = $address['postcode'];
+            $order->prefecture = $address['prefecture'];
+            $order->city = $address['city'];
+            $order->address = $address['address'];
+            $order->tel = $address['tel'];
+            $order->status = 1;  //1在数据库中的说明为：注文済み
+            $order->save();
+
+            //将支付成功的订单bento详细信息存入数据库
+            $cart_bentos = Cart::where('user_id',Auth::id())->get();
+            foreach ($cart_bentos as $cart){
+                $order_detail = new OrderDetail();
+                $order_detail->order_id = $order->id;
+                $order_detail->bento_id = $cart->bento_id;
+
+                $bento = Bento::find($cart->bento_id);  //取Bento里的数据是为了保留购买时的原始数据：因为如果前段在顾客支付后修改了bento,购物车里的数据也会实时更新
+                $order_detail->bento_name = $bento->bento_name;
+                $order_detail->price = $bento->price;
+                $order_detail->bento_code = $bento->bento_code;
+                $order_detail->description = $bento->description;
+                $order_detail->guarantee_period = $bento->guarantee_period;
+                $order_detail->quantity = $cart->quantity;
+                $order_detail->save();
+
+                //削减商品在库数
+                $bento->stock = $bento->stock - $order_detail->quantity;
+                $bento->save();
+
+                //清空购物车
+                $cart->delete();  //直接硬删除
+            }
+
+            return redirect('/order/complete');
+
+        }
+
+        $payment_failed = $request->session()->has('payment.error_message');  //has:判定支付是否成功即可，不需要get保留私密数据
+
+        return view('order.payment',['payment_failed' => $payment_failed]);
+    }
+
+    public function complete(Request $request)
+    {
+        return view('order.complete');
+    }
+
+    public function cart(Request $request)
     {
         $carts = Cart::where('user_id',Auth::id())->get();
         $bento_list = [];
