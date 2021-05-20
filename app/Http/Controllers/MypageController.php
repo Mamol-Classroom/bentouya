@@ -263,8 +263,8 @@ class MypageController extends Controller
 
     public function orderHistory(Request $request)
     {
-        $order_id = Auth::id();
-        $history_bentos = OrderDetail::where('order_id',$order_id)->get();
+        $user_id = Auth::id();
+        $history_bentos = OrderDetail::where('order_id',$user_id)->get();
 
 
 

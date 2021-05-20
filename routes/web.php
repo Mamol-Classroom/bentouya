@@ -55,7 +55,6 @@ Route::get('/mypage/password-update-success', [MypageController::class, 'passwor
 
 Route::get('/favourite',[MypageController::class,'favourite'])->middleware('auth');
 
-Route::get('/order/history',[MypageController::class,'orderHistory'])->middleware('auth');
 
 
 //支払い
@@ -67,3 +66,6 @@ Route::post('/order',[OrderController::class,'order'])->middleware('auth');
 Route::get('/payment',[OrderController::class,'payment'])->middleware('auth');
 Route::post('/payment',[OrderController::class,'payment'])->middleware('auth');
 Route::get('/order/complete',[OrderController::class,'complete'])->middleware('auth');
+
+
+

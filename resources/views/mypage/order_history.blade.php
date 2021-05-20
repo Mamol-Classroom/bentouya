@@ -1,10 +1,10 @@
 
-@extends('layout')
+@extends('mypage.layout')
 
 @section('title','注文履歴')
 
 
-@section('content')
+@section('mypage-content')
     <link rel="stylesheet" type="text/css" href="/css/cart.css">
     <body>
 

@@ -152,7 +152,7 @@ class OrderController extends Controller
             }
             //支付成功，生成订单数据
             $address = $request->session()->get('order.address');
-            $request->session()->forget('order.address');
+           // $request->session()->forget('order.address');
 
             $order = new Order();
             $order->user_id = Auth::id();
@@ -166,13 +166,16 @@ class OrderController extends Controller
             $order->save();
 
 
+            $cart_bentos = Cart::where('user_id',Auth::id())->get();
 
 
 
-                $cart_bentos = Cart::where('user_id',Auth::id())->get();
+
+                $order_detail_list= [];
 
                 foreach ($cart_bentos as $cart){
                     $bento = Bento::find($cart->bento_id);
+                    $bento_img = $bento->get_bento_image_url();
 
                     $order_detail =new OrderDetail();
                     $order_detail->order_id = $order->id;
@@ -185,15 +188,19 @@ class OrderController extends Controller
                     $order_detail->quantity = $cart->quantity;
                     $order_detail->save();
 
+                    $order_detail-> bento_img = $bento_img;
+                    $order_detail_list[] = $order_detail;
+
+
                     //削减商品库存数量
                     $bento->stock = $bento->stock - $order_detail->quantity;
                     $bento->save();
 
                     //清空购物车
                     $cart->delete();
-
                 }
 
+            $request->session()->put('order.detail.list',$order_detail_list);
                 return redirect('/order/complete');
         }
 
@@ -205,25 +212,23 @@ class OrderController extends Controller
     public function complete(Request $request)
     {
 
-      //  $order_detail = $request->session()->get('order.detail');
-        //$order = $request->session()->get('order.address');
+       $order_detail_list = $request->session()->get('order.detail.list');
+        $data = $request->session()->get('order.address');
 
-        return view('order.complete');
+        $request->session()->forget('order.address');
 
-    /*    ,[    ' bento_id' => $order_detail-> bento_id,
-            'bento_name' => $order_detail->bento_name,
-            'price' => $order_detail->price,
-            'quantity' => $order_detail->quantity,
-            'name' => $order_detail->name,
-            'postcode' => $order_detail->postcode,
-            'prefecture' => $order_detail->prefecture,
-            'city' => $order_detail->city,
-            'address' => $order_detail->address,
-            'tel' => $order_detail->tel,
+        return view('order.complete',[
 
+            'name' => $data['name'],
+            'postcode' => $data['postcode'],
+            'prefecture' => $data['prefecture'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+            'tel' => $data['tel'],
 
+            'order_detail_list'=>$order_detail_list,
         ]);
-*/
+
 
     }
 

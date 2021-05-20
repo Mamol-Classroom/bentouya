@@ -4,11 +4,11 @@
 
 @section('content')
     <main class="center">
-
+        <link rel="stylesheet" type="text/css" href="/css/cart.css">
         <h1>注文完了</h1>
 
         <div>
-        <p>{{$order_detail->name}}様,注文完了しました。ご購入誠にありがとうございました。</p>
+        <p>{{$name}}様,注文完了しました。ご購入誠にありがとうございました。</p>
         </div>
 
         <div>
@@ -39,28 +39,34 @@
 
         <div>
             <p>注文内容</p>
-            <table class="register-table">
+            <table>
+                <thead>
                 <tr>
-                    <td>弁当コード</td>
-                    <td>{{$order_detail-> bento_id }}</td>
+                    <th class="tdone">画像</th>
+                    <th class="tdtwo">商品名</th>
+                    <th class="tdthree">数量</th>
+                    <th class="tdfour">単価</th>
+                    <th class="tdfive">価格</th>
+
                 </tr>
-                <tr>
-                    <td>弁当名</td>
-                    <td>{{ $order_detail->bento_name }}</td>
-                </tr>
-                <tr>
-                    <td>価格</td>
-                    <td>{{ $order_detail->price }}</td>
-                </tr>
-                <tr>
-                    <td>数量</td>
-                    <td>{{$order_detail->quantity}}</td>
-                </tr>
-                <tr>
-                    <td>電話番号</td>
-                    <td>{{ $tel }}</td>
-                </tr>
+                </thead>
+
+                <tbody>
+                @foreach($order_detail_list as $order_detail)
+                    <tr class="trclass">
+                        <td class="tdone"> <img src="{{$order_detail-> bento_img }}" style="width: 180px; height:135px "/></td>
+                        <td class="tdtwo ">{{$order_detail-> bento_id}}</td>
+                        <td class="tdthree">{{ $order_detail->bento_name }}</td>
+                        <td class="tdfour">{{number_format($order_detail->price)}}</td>
+                        <td class="tdfive">{{$order_detail->quantity}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
+
+
+
+
         </div>
     </main>
 @endsection
