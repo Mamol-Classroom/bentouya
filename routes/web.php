@@ -46,3 +46,5 @@ Route::post('/order', [OrderController::class, 'order'])->middleware('auth');
 Route::get('/payment', [OrderController::class, 'payment'])->middleware('auth');
 Route::post('/payment', [OrderController::class, 'payment'])->middleware('auth');
 Route::get('/order/complete', [OrderController::class, 'complete'])->middleware('auth');
+// 注文履歴
+Route::get('/order/history', [OrderController::class, 'history'])->middleware('auth');
