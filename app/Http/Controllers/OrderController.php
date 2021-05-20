@@ -84,7 +84,7 @@ class OrderController extends Controller
             $bento_cart->quantity = $old_quantity + 1;
             $bento_cart->save();
 
-            return response()->json(['result' => 'sccess']);
+            return response()->json(['result' => 'add']);
         }
 
         elseif($click === '-' ){
@@ -95,7 +95,12 @@ class OrderController extends Controller
                 $bento_cart->save();
             }
 
-            return response()->json(['result' => 'sccess']);
+            return response()->json(['result' => 'reduce']);
+        }
+        elseif($click === 'キャンセル'){
+            $bento_cart->delete();
+
+            return response()->json(['result' => 'delete']);
         }
 
 

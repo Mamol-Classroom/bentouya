@@ -1,4 +1,4 @@
-$('.quantity-add').on('click',function(){   //+按钮的name
+$(".quantity-add").on('click',function(){   //+按钮的name
     //点击变更购物车bento数量添加按钮事件，触发的逻辑(jq)
     //数量+1
     //商品小计重新计算
@@ -40,6 +40,11 @@ $('.quantity-add').on('click',function(){   //+按钮的name
         tal += bento_subtal;
     }
     price_tal.text(tal);
+
+    //让レジに進む前边的金额也保持同步
+    var reg_price_tal = $('span.procetal');
+    var current_reg_price_tal = tal;
+    reg_price_tal.text(current_reg_price_tal);
 
     //发送ajax请求改变数据库
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');  //追溯到input标签中的属性
@@ -111,6 +116,11 @@ $(".quantity-reduce").on('click', function () {
     }
     price_tal.text(tal);
 
+    //让レジに進む前边的金额也保持同步
+    var reg_price_tal = $('span.procetal');
+    var current_reg_price_tal = tal;
+    reg_price_tal.text(current_reg_price_tal);
+
     // 发送ajax请求改变数据库
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
     var bento_id = bento_id_input.val();
@@ -121,6 +131,66 @@ $(".quantity-reduce").on('click', function () {
         data: {
             bento_id: bento_id,
             click: '-'
+        },
+        dataType: 'json'
+    }).done(function (res) {
+        // ajax返回结果之后所作的处理
+        //console.log(res);
+    });
+});
+
+$(".delete").on('click',function(){
+
+    //删除前台显示框
+    var tr = $(this).closest('tr');
+    tr.remove();
+
+    //点击变更购物车bento删除按钮事件，触发的逻辑(jq)
+    //商品件数重新计算
+    //合计金额重新计算
+
+    //商品件数重新计算
+    var goods_num = $('span.goods_num');
+    var current_goods_num = goods_num.text();
+    var cart_quantity = $(this).closest('tr').find('.cart-quantity');
+    var current_cart_quantity = cart_quantity.text();
+
+    current_goods_num = current_goods_num.replace(',','');
+    current_goods_num =parseInt(current_goods_num);
+    current_cart_quantity = current_cart_quantity.replace(',','');
+    current_cart_quantity = parseInt(current_cart_quantity);
+
+    var new_goods_num = current_goods_num - current_cart_quantity;
+    goods_num.text(new_goods_num);
+
+    //合计金额重新计算
+    var price_tal = $('span.pricetal');
+    var current_price_tal = price_tal.text();
+    var subtal = $(this).closest('tr').find('span.subtal').text();
+
+    current_price_tal = current_price_tal.replace(',','');
+    current_price_tal =parseInt(current_price_tal);
+    subtal = subtal.replace(',','');
+    subtal =parseInt(subtal);
+
+    var new_price_tal = current_price_tal - subtal;
+    price_tal.text(new_price_tal);
+
+    //让レジに進む前边的金额也保持同步
+    var reg_price_tal = $('span.procetal');
+    var current_reg_price_tal = new_price_tal;
+    reg_price_tal.text(current_reg_price_tal);
+
+    //获取当前商品的id
+    var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
+    var bento_id = bento_id_input.val();
+
+    $.ajax({
+        url: '/cart-change-quantity',
+        type: 'post',
+        data: {
+            bento_id: bento_id,
+            click: 'キャンセル'
         },
         dataType: 'json'
     }).done(function (res) {
