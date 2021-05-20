@@ -97,7 +97,7 @@ class OrderController extends Controller
 
             return response()->json(['result' => 'reduce']);
         }
-        elseif($click === 'キャンセル'){
+        elseif($click === 'cancel'){
             $bento_cart->delete();
 
             return response()->json(['result' => 'delete']);

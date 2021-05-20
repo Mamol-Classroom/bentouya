@@ -41,10 +41,10 @@ $(".quantity-add").on('click',function(){   //+按钮的name
     }
     price_tal.text(tal);
 
-    //让レジに進む前边的金额也保持同步
-    var reg_price_tal = $('span.procetal');
-    var current_reg_price_tal = tal;
-    reg_price_tal.text(current_reg_price_tal);
+    //让レジに進む前边的金额也保持同步：这里将两处的tag和class改成一样的了，不需要添加
+    //var reg_price_tal = $('span.procetal');
+    //var current_reg_price_tal = tal;
+    //reg_price_tal.text(current_reg_price_tal);
 
     //发送ajax请求改变数据库
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');  //追溯到input标签中的属性
@@ -116,11 +116,6 @@ $(".quantity-reduce").on('click', function () {
     }
     price_tal.text(tal);
 
-    //让レジに進む前边的金额也保持同步
-    var reg_price_tal = $('span.procetal');
-    var current_reg_price_tal = tal;
-    reg_price_tal.text(current_reg_price_tal);
-
     // 发送ajax请求改变数据库
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
     var bento_id = bento_id_input.val();
@@ -176,11 +171,6 @@ $(".delete").on('click',function(){
     var new_price_tal = current_price_tal - subtal;
     price_tal.text(new_price_tal);
 
-    //让レジに進む前边的金额也保持同步
-    var reg_price_tal = $('span.procetal');
-    var current_reg_price_tal = new_price_tal;
-    reg_price_tal.text(current_reg_price_tal);
-
     //获取当前商品的id
     var bento_id_input = $(this).closest('tr').find('input[name="bento_id"]');
     var bento_id = bento_id_input.val();
@@ -190,7 +180,7 @@ $(".delete").on('click',function(){
         type: 'post',
         data: {
             bento_id: bento_id,
-            click: 'キャンセル'
+            click: 'cancel'
         },
         dataType: 'json'
     }).done(function (res) {

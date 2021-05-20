@@ -4,7 +4,7 @@
 
 @section('content')
     <link rel="stylesheet" type="text/css" href="/css/cart.css">
-    <body>
+    <div id="cart">
 
     @if(count($bentos) == 0)
         <a href="/">買い物を続ける</a>
@@ -39,15 +39,19 @@
                     </td>
                     <td class="tdfour"><span>単価：¥</span><span class="unit">{{number_format($bento->price)}}</span></td>
                     <td class="tdfive"><span>小計：</span><span class="subtal">{{$bento->quantity * $bento->price}}</span></td>
-                    <td class="tdsix"><button class="delete">キャンセル</button></td>
+                    <td class="tdsix"><button class="delete" >キャンセル</button></td>
                 </tr>
             @endforeach
             <tr>
-                <td   colspan="6" class="talast">
+                <td   colspan="5" class="talast">
                     <span>
                         商品件数：<span class="goods_num">{{$total_quantity}}</span> 件;
-                        合計金額： <span class="pricetal">{{number_format($total_price)}}</span> 円;
+                        合計金額：￥<span class="pricetal">{{number_format($total_price)}}</span> 円;
                     </span>
+                </td>
+                <td >
+                    ￥<span class="pricetal">{{number_format($total_price)}}</span>
+                    <button type="button"><a href="/order">レジに進む</a></button>
                 </td>
             </tr>
             </tbody>
@@ -55,12 +59,9 @@
 
     @endif
 
-    <div >
-        ¥<span class="procetal">{{number_format($total_price)}}</span>
-        <button type="button">レジに進む</button>
-    </div>
 
+    </div>
     <script src="/js/cart.js"></script>  <!--引用购物车·的js文件包(jq和ajax)-->
 
-    </body>
+
 @endsection
