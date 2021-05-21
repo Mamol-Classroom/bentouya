@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Bento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class TopController extends Controller
 {
@@ -141,7 +142,36 @@ class TopController extends Controller
             'user_img' => $user_img
         ];
 
-        $has_error = false;
+        $rules=[
+            'email' => ['required','email'],
+            'password' => 'required',
+            'password_confirm' => ['required',new EqualWithValue($data['password'])],
+            'postcode' => 'required',
+            'prefecture' => 'required',
+            'city' => 'required',
+            'address' =>'required',
+            'tel' => 'required',
+            'name' => 'required',
+        ];
+        $messages=[
+            'email.required' => 'メールアドレスを入力してください',
+            'email.email' => 'メールアドレスの形式が間違いました',
+            'password.required' => 'パスワードを入力してください',
+            'password_confirm.required' => '確認パスワードを入力してください',
+            'password_confirm' =>'',
+            'postcode.required' => '郵便番号を入力してください',
+            'prefecture.required' => '都道府県を入力してください',
+            'city.required' => '市区町村を入力してください',
+            'address.required' =>'住所を入力してください',
+            'tel.required' => '電話番号を入力してください',
+            'name.required' => '名前を入力してください',
+        ];
+
+
+        $validator = validator::make($data,$rules,$messages);
+        $validator->$validator();
+
+       /** $has_error = false;
         $error_message = [
             'email' => null,
             'password' => null,
@@ -213,7 +243,7 @@ class TopController extends Controller
 
             return redirect('/register');
         }
-
+        */
         // 将输入的数据存入数据库
         $user = new User();
         $user->email = $email;
