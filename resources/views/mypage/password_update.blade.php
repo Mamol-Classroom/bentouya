@@ -38,7 +38,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <button type="submit" onclick="return del();">パスワードを変更へ</button>
+                            <button type="submit">パスワードを変更へ</button>
                         </td>
                     </tr>
                 </table>

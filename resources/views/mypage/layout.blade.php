@@ -11,6 +11,5 @@
         </ul>
 
         @yield('mypage-content')
-
     </main>
 @endsection

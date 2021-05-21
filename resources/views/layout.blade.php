@@ -14,12 +14,11 @@
     <div class="logo"><a href="/"><img src="/img/logo.jpg" width="100px" height="auto"></a></div>
     <div class="profile">
         @if(auth()->check())
-            <p>ようこそ、<img src="{{ auth()->user()->get_user_headPortrait_url() }}"> {{ auth()->user()->name }} 様</p>
-            <!--layout是top、mypage、bento页面共通的部分，如果需要后台引用，则需要在三个后台定义变量；
-            避免重复代码，可以直接从前台获取数据：auth()->user()->-->
+            <a class="cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
+            <p>ようこそ、{{ auth()->user()->name }} 様</p>
             <a href="/logout">ログアウト</a>
         @else
-            <p>ようこそ、<img src="/img/default_profile_img.jpg"> ゲスト 様</p>
+            <p>ようこそ、ゲスト 様</p>
             <a href="/login">ログイン</a>
         @endif
     </div>
@@ -36,6 +35,5 @@
 @yield('content')
 
 <script src="/js/script.js"></script>
-<script src="/js/bentoDeleteConfirm.js"></script>
 </body>
 </html>

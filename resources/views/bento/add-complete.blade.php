@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <td>説明</td>
-                    <td>{!! nl2br($description) !!}</td>  <!--将用户输入的回车转换为php语言，并保持类型一致-->
+                    <td>{!! nl2br($description) !!}</td>
                 </tr>
                 <tr>
                     <td>賞味期限</td>

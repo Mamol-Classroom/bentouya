@@ -7,7 +7,6 @@
         <h1>弁当修正</h1>
         <div>
             <form method="post" action="/bento/update?bento_id={{ $bento_id }}">
-                <!--将bento的id反馈在url上为了区分便当的id；也可以写成bento/updete/?bento_id=-->
                 <table class="register-table">
                     <tr>
                         <td>弁当名</td>

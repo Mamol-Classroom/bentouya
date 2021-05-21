@@ -6,14 +6,12 @@
     <main class="center">
         <h1>新規登録</h1>
         <div>
-            <form method="post" action="/register-user" enctype="multipart/form-data">
+            <form method="post" action="/register-user">
                 <table class="register-table">
                     <tr>
                         <td>メールアドレス</td>
                         <td>
-                            <!--插入正确数据-->
                             <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
-                            <!--报错-->
                             @if(isset($error_message) && $error_message['email'] != null)
                                 <span class="error-message">{{ $error_message['email'] }}</span>
                             @endif
@@ -44,12 +42,6 @@
                             @if(isset($error_message) && $error_message['name'] != null)
                                 <span class="error-message">{{ $error_message['name'] }}</span>
                             @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ユーザー画像</td>
-                        <td>
-                            <input type="file" name="headPortrait_url" />
                         </td>
                     </tr>
                     <tr>

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-
 use App\Models\Bento;
 use App\Models\Favourite;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;   //取得保存图片
 
 class MypageController extends Controller
 {
@@ -18,46 +15,10 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // プロフィール
+        $user = Auth::user();
+        $user_id = Auth::id();
 
-        $user = Auth::user();  //使用User会报错
-
-        // $user_id = Auth::id(); 在session中取得旧文件，而不是直接从数据库中提取新数据
-
-        $error_message = $request->session()->get('error_message');
-        $data = $request->session()->get('data');
-
-        $error_message = $request->session()->forget('error_message');
-        $data = $request->session()->forget('data');
-
-        if($error_message == ''){
-            $error_message = [
-                'email'=>'',
-                'password'=>'',
-                'name'=>'',
-                'postcode'=>'',
-                'prefecture'=>'',
-                'city'=>'',
-                'address'=>'',
-                'tel'=>'',
-            ];
-        }
-
-        if($data == ''){
-            $data =[
-                'email'=>$user->email,
-                'name'=>$user->name,
-                'postcode'=>$user->postcode,
-                'prefecture'=>$user->prefecture,
-                'city'=>$user->city,
-                'address'=>$user->address,
-                'tel'=>$user->tel,
-                'headPortrait_url' => Storage::url($user->head_portrait_url),
-            ];
-        }
-
-        $has_error = false;
-
-        if($request->method() == 'POST'){
+        if ($request->method() === 'POST') {
             $email = $request->post('email');
             $name = $request->post('name');
             $postcode = $request->post('postcode');
@@ -66,45 +27,42 @@ class MypageController extends Controller
             $address = $request->post('address');
             $tel = $request->post('tel');
 
-            $headPortrait = Auth::user()->get_user_headPortrait_url();
-
             $data = [
-                'email'=>$email,
-                'name'=>$name,
-                'postcode'=>$postcode,
-                'prefecture'=>$prefecture,
-                'city'=>$city,
-                'address'=>$address,
-                'tel'=>$tel,
-                'headPortrait_url' => $headPortrait,
+                'email' => $email,
+                'name' => $name,
+                'postcode' => $postcode,
+                'prefecture' => $prefecture,
+                'city' => $city,
+                'address' => $address,
+                'tel' => $tel,
             ];
 
+            $has_error = false;
             $label_name = [
-                'email'=>'メールアドレス',
-                'name'=>'名前',
-                'postcode'=>'郵便番号',
-                'prefecture'=>'都道府県',
-                'city'=>'市区町村',
-                'address'=>'住所',
-                'tel'=>'電話番号',
+                'email' => 'メールアドレス',
+                'name' => '名前',
+                'postcode' => '郵便番号',
+                'prefecture' => '都道府県',
+                'city' => '市区町村',
+                'address' => '住所',
+                'tel' => '電話番号',
             ];
 
-            foreach($data as $key=>$value){
-                if($value = ''){
-                    $error_message[$key] = $label_name[$key].'を入力してください';
+            foreach ($data as $key => $value) {
+                if ($value == '') {
+                    $error_message[$key] = '请输入'.$label_name[$key];
                     $has_error = true;
                 }
             }
 
-            if($has_error){
-                $request->session()->put('error_message',$error_message);
-                $request->session()->put('data',$data);
+            if ($has_error) {
+                $request->session()->put('bento.error_message', $error_message);
+                $request->session()->put('bento.data', $data);
 
                 return redirect('/mypage');
             }
 
-            //将更新数据存入数据库
-
+            // 将输入的数据存入数据库
             $user->email = $email;
             $user->name = $name;
             $user->postcode = $postcode;
@@ -112,60 +70,70 @@ class MypageController extends Controller
             $user->city = $city;
             $user->address = $address;
             $user->tel = $tel;
-
-            $user->head_portrait_url = $headPortrait;
-
             $user->save();
 
+            return redirect('/mypage');
         }
 
-        return view('mypage.index',[
-            'data'=>$data,
-            'error_message'=>$error_message,
+        $error_message = $request->session()->get('error_message');
+        $data = $request->session()->get('data');
+
+        $request->session()->forget('error_message');
+        $request->session()->forget('data');
+
+        if ($error_message == null) {
+            $error_message = [
+                'email' => null,
+                'name' => null,
+                'postcode' => null,
+                'prefecture' => null,
+                'city' => null,
+                'address' => null,
+                'tel' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'email' => $user -> email,
+                'name' => $user -> name,
+                'postcode' =>$user -> postcode,
+                'prefecture' => $user -> prefecture,
+                'city' => $user -> city,
+                'address' => $user -> address,
+                'tel' => $user -> tel,
+            ];
+        }
+
+        return view('mypage.index', [
+            'data' => $data,
+            'error_message' => $error_message
         ]);
-
     }
-
 
     public function passwordUpdate(Request $request)
     {
-        $user = Auth::user();
-        $user_password = $user->password;
+        $user=Auth::user();
+        $user_password=$user->password;
 
-        $error_message = $request->session()->get('password_error_message');
-        $data = $request->session()->get('password_data');
+        if ($request->method() === 'POST') {
 
-        $request->session()->forget('password_error_message');
-        $request->session()->forget('password_data');
-
-        if ($error_message == '') {
-            $error_message = [
-                'password' => '',
-                'new_password' => '',
-                'password_confirm' => '',
-            ];
-        }
-
-        if ($data == '') {
-            $data = [
-                'new_password' => '',
-                'password_confirm' => '',
-            ];
-        }
-
-        $has_error = false;
-
-        if ($request->method() == 'POST') {
-            $old_password = $request->post('password');  //post进来原密码
-            $password_update  = $request->post('new_password'); //指的是html中tag的name
-            $password_confirm  = $request->post('password_confirm');
+            $old_password = $request->post('password');
+            $password_update = $request->post('new_password');
+            $password_confirm = $request->post('password_confirm');
 
             $data = [
                 'new_password' => $password_update,
                 'password_confirm' => $password_confirm,
             ];
 
+            $error_message = [
+                'password' => null,
+                'newpassword' => null,
+                'password_confirm' => null,
+            ];
 
+            $has_error = false;
             $email = $user->email;   //不定义下边的判定登录用户旧密码将会报错，因为没有被引用
             if (!Auth::attempt(['email' => $email, 'password' => $old_password])) {
                 //确定当前用户输入的旧密码是否正确
@@ -179,13 +147,13 @@ class MypageController extends Controller
             }
 
             if ($password_confirm != $password_update) {
-                $error_message['$password_confirm'] = '変更したパスワードと一致ではありません';
+                $error_message['password_confirm'] = '変更したパスワードと一致ではありません';
                 $has_error = true;
             }
 
             if ($has_error) {
-                $request->session()->put('password_error_message', $error_message);
-                $request->session()->put('password_data', $data);
+                $request->session()->put('password.error_message', $error_message);
+                $request->session()->put('password.data', $data);
 
                 return redirect('/mypage/password_update');
             }
@@ -193,8 +161,30 @@ class MypageController extends Controller
             $changed_password = Hash::make($password_update);
             $user->password = $changed_password;
             $user->save();
-
+            return redirect('/mypage/password_update_success');
         }
+        $error_message = $request->session()->get('password.error_message');
+        $data = $request->session()->get('password.data');
+
+        $request->session()->forget('password.error_message');
+        $request->session()->forget('password.data');
+
+
+        if ($error_message == null) {
+            $error_message = [
+                'password' => null,
+                'new_password' => null,
+                'password_confirm' => null,
+            ];
+        }
+
+        if ($data == null) {
+            $data = [
+                'new_password' => null,
+                'password_confirm' => null,
+            ];
+        }
+
 
         return view('mypage.password_update',[
             'user' => $user,
@@ -212,26 +202,25 @@ class MypageController extends Controller
 
     public function favourite(Request $request)
     {
-        //ログインしているユーザーIDの取得
+        // ログインしているユーザーIDの取得
         $user_id = Auth::id();
-        //favouritesテーブルから注目している弁当のIDリストの取得
+        // favouritesテーブルから注目している弁当のIDリストの取得
         $bento_id_list = [];
-        //ログインしているユーザーIDが注目したデーターの取得(Array)
-        $favourites = Favourite::where('user_id',$user_id)->get();
-        //$favouritesから弁当IDの取得して、$bento_id_listに追加
-        foreach ($favourites as $favourite){
-            //該当弁当IDの取得
+        // ログインしているユーザーIDが注目したデーターの取得(Array)
+        $favourites = Favourite::where('user_id', $user_id)->get();
+        // $favouritesから弁当IDの取得して、$bento_id_listに追加
+        foreach ($favourites as $favourite) {
+            // 該当弁当IDの取得
             $bento_id = $favourite->bento_id;
-            //該当弁当IDを$bento_id_listの末に追加
+            // 該当弁当IDを$bento_id_listの末に追加
             $bento_id_list[] = $bento_id;
         }
 
-        //Bentosテーブルから、弁当のIDリストに基づいて弁当情報の取得
-        $bentos = Bento::whereIn('id',$bento_id_list)->get();  //whereIn定点查询
+        // Bentosテーブルから、弁当のIDリストに基づいて弁当情報の取得
+        $bentos = Bento::whereIn('id', $bento_id_list)->get();
 
-        return view('mypage.favourite',[
-            'bentos'=>$bentos
+        return view('mypage.favourite', [
+            'bentos' => $bentos
         ]);
     }
-
 }

@@ -2,6 +2,11 @@
     text-align: center;
 }
 
+.center-l{
+    text-align: center;
+    font-size:40px;
+}
+
 .register-table {
     width: 100%;
 }
@@ -172,11 +177,73 @@ nav ul li a {
     color: #ff0000;
 }
 
-.profile img {
+.alert-msg {
+    margin: 0 20%;
+    border: #111111 solid 1px;
+    text-align: center;
+}
+
+.cart i {
     width: 50px;
     height: auto;
 }
 
+#cart-item-controller {
+    flex-grow: 1;
+}
+
+#cart-item-controller .bento {
+    width: 22%;
+}
+
+#cart-btn-controller {
+    width: 500px;
+}
+
+#cart table{
+    width:80%;
+    position:relative;
+    margin:30px auto;
+    border-collapse: collapse;
+    border:1px solid gray;
+}
+#cart th{
+    background: cornflowerblue;
+    height:2.5em;
+}
+#cart .tdone{
+    width:10%;
+}
+#cart .tdtwo{
+    width:20%;
+}
+#cart .tdthree{
+    width:20%;
+}
+#cart .tdfour{
+    width:20%;
+}
+#cart .tdfive{
+    width:20%;
+}
+#cart .tdsix{
+    width:10%;
+}
+#cart td{
+    height:6em;
+    text-align: center;
+    border:1px solid #ccc;
+}
+#cart .num{
+    display:inline-block;
+    width:3em;
+}
+#cart input{
+    height:2em;
+}
+#cart .talast{
+    text-align: left;
+}
 /** amazon */
 .a-section {
     margin-bottom: 22px;
@@ -274,7 +341,6 @@ label, legend {
     height: 29px;
     box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset;
     border-radius: 2px;
-    text-decoration: none;
 }
 
 element.style {

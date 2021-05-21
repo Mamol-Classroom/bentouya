@@ -1,22 +1,13 @@
-@extends('mypage.layout')
+@extends('layout')
 
-@section('title', 'マイページ')
+@section('title', '配送先入力')
 
-@section('mypage-content')
-    <div class="subview">
-        <h1>プロフィール</h1>
+@section('content')
+    <main class="center">
+        <h1>配送先入力</h1>
         <div>
-            <form method="post" action="">
+            <form method="post" action="/order">
                 <table class="register-table">
-                    <tr>
-                        <td>メールアドレス</td>
-                        <td>
-                            <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
-                            @if(isset($error_message) && $error_message['email'] != null)
-                                <span class="error-message">{{ $error_message['email'] }}</span>
-                            @endif
-                        </td>
-                    </tr>
                     <tr>
                         <td>名前</td>
                         <td>
@@ -80,5 +71,5 @@
                 </table>
             </form>
         </div>
-    </div>
+    </main>
 @endsection

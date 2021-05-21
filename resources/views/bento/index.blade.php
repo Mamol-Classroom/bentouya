@@ -3,7 +3,6 @@
 @section('title', '弁当管理')
 
 @section('content')
-    <script type="text/javascript" src="/js/bentoDeleteConfirm.js"></script>
     <main id="main">
         <ul id="main-nav">
             <li><a href="/bento/add">商品追加</a></li>
@@ -13,16 +12,10 @@
             <div class="bento-container">
                 @foreach($bentos as $bento)
                     <div class="bento">
-                    {{--<a href="/bento/update?bento_id={{ $bento->id }}">
-                        <!--将bento的id反馈在url上为了区分便当的id；也可以写成bento/updete/?bento_id=-->
-                        <p>{{ $bento->bento_name }}</p>
-                        <p>￥ {{ number_format($bento->price) }}</p>
-                    </a>--}}
-                    @include('bento/bento_inf_include',['bento'=>$bento])
-                    <!--$bento可以不传值，因为include里边的$bento会自动传进来-->
+                        @include('subview.bento', ['bento' => $bento])
                         <form method="post" action="/bento/delete">
                             <input type="hidden" name="bento_id" value="{{ $bento->id }}">
-                            <button type="submit"  onclick="return del();">販売終了</button>
+                            <button type="submit">販売終了</button>
                         </form>
                     </div>
                 @endforeach
