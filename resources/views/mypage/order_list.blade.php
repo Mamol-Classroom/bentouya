@@ -8,7 +8,6 @@
     <div>
         <table>
             <thead>
-            @foreach($orders as $order)
             <tr>
                 <th>注文番號</th>
                 <th colspan="4">{{ $order_id}}</th>
@@ -37,7 +36,6 @@
                         </span>
                 </td>
             </tr>
-                @endforeach
             </tbody>
         </table>
     </div>

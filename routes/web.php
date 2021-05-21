@@ -20,8 +20,8 @@ Route::get('/', [TopController::class, 'top']);
 Route::get('/register', [TopController::class, 'register']);
 Route::post('/register-user', [TopController::class, 'registerUser']);
 Route::get('/register-success', [TopController::class, 'registerSuccess']);
-Route::get('/login', [TopController::class, 'login']);
-Route::post('/login', [TopController::class, 'login']);
+Route::get('/login', [TopController::class, 'login'])->name('get_login');
+Route::post('/login', [TopController::class, 'login'])->name('post_login');
 Route::get('/logout', [TopController::class, 'logout'])->middleware('auth');
 // 弁当
 Route::get('/bentos', [BentoController::class, 'index'])->middleware('auth');

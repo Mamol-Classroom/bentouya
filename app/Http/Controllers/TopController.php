@@ -274,7 +274,10 @@ class TopController extends Controller
                 // ログイン失敗
                 $request->session()->put('login_failed', true);
 
-                return redirect('/login');
+                //return redirect('route();
+                //return redirect('route('get_login);
+                return redirect()->route('get_login');
+
             }
 
             /**
