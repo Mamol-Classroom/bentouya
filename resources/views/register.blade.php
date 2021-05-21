@@ -6,7 +6,7 @@
 <main class="center">
     <h1>新規登録</h1>
     <div>
-        <form method="post" action="/register-user" enctype="multipart/form-data">
+        <form method="post" action="{{ route('post_register-user') }}" enctype="multipart/form-data">
             <table class="register-table">
                 <tr>
                     <td>メールアドレス</td>

@@ -22,7 +22,7 @@
             </tr>
             </thead>
 
-            <tbody>
+            <body>
             @foreach($bentos as $bento)
                 <tr class="trclass">
                     <td class="tdone"> <img src="{{ $bento->get_bento_image_url() }}" style="width: 180px; height:135px "/></td>
@@ -54,7 +54,7 @@
                     <button type="button"><a href="/order">レジに進む</a></button>
                 </td>
             </tr>
-            </tbody>
+            </body>
         </table>
 
     @endif

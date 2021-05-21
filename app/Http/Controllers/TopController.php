@@ -222,7 +222,7 @@ class TopController extends Controller
             $request->session()->put('error_message', $error_message);  //存在(服务器)，REDIS里，携带数据
             $request->session()->put('data', $data);
 
-            return redirect('/register');  //重定向
+            return redirect()->route('get_register');  //重定向
         }
 
 /**
@@ -260,22 +260,27 @@ class TopController extends Controller
         $user->tel = $tel;
 
         //将上传头像存储至服务器：存储头像名->创建头像存储文件夹
-        $headPortrait_name = $user->email.'.'.$headPortrait->extension();  //用户邮箱(唯一).文件扩展名extension
+        if($headPortrait != null){  //避免不上传头像时extends部分取不到报错
 
-        //将头像存入数据库
-        $user->profile_img_url = null;   //存入变量值，save之后再一次赋值
+            $headPortrait_name = $user->email.'.'.$headPortrait->extension();  //用户邮箱(唯一).文件扩展名extension
 
-        $user->save();    //保存新实例
+            //将头像存入数据库
+            $user->profile_img_url = null;   //存入变量值，save之后再一次赋值
 
-        $user->profile_img_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //创建存储头像的文件夹
+            $user->save();    //保存新实例
+
+            $user->profile_img_url = 'user_headPortrait/'.$user->id.'/'.$headPortrait_name;  //创建存储头像的文件夹
+            $user->save();
+
+            $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);   //创建文件夹
+            //将public/storage文件夹和storage/app/public做关联，使客户端可以识别：php artisan storage：link
+        }
+
         $user->save();
-
-        $headPortrait->storeAs('public/user_headPortrait/'.$user->id,$headPortrait_name);   //创建文件夹
-        //将public/storage文件夹和storage/app/public做关联，使客户端可以识别：php artisan storage：link
 
         $request->session()->flash('registed_user', $user);  //闪存，只存活一个请求
 
-        return redirect('/register-success');     //重定向
+        return redirect()->route('get_register-success');     //重定向
     }
 
     public function registerSuccess(Request $request)
@@ -306,7 +311,7 @@ class TopController extends Controller
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 //默认是hash加密后的密码，MD5，在register注册逻辑内编写
                 // ログイン成功
-                return redirect('/');
+                return redirect(route('get_top'));
             }
             else{
                 // ログイン失敗

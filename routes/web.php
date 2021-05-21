@@ -16,12 +16,12 @@ use App\Http\Controllers\OrderController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [TopController::class, 'top']);
+Route::get('/', [TopController::class, 'top'])->name('get_top');
 
 // ユーザー
-Route::get('/register', [TopController::class, 'register']);
-Route::post('/register-user', [TopController::class, 'registerUser']);
-Route::get('/register-success', [TopController::class, 'registerSuccess']);
+Route::get('/register', [TopController::class, 'register'])->name('get_register');
+Route::post('/register-user', [TopController::class, 'registerUser'])->name('post_register-user');
+Route::get('/register-success', [TopController::class, 'registerSuccess'])->name('get_register-success');
 
 Route::get('/login', [TopController::class, 'login']);
 Route::post('/login', [TopController::class, 'login']);
@@ -62,7 +62,7 @@ Route::post('/add-to-cart',[OrderController::class,'addToCart'])->middleware('au
 Route::post('/cart-change-quantity',[OrderController::class,'cartChangeQuantity'])->middleware('auth');
 
 Route::get('/order',[OrderController::class,'index'])->middleware('auth');
-Route::post('/order',[OrderController::class,'index'])->middleware('auth');
+Route::post('/order',[OrderController::class,'order'])->middleware('auth');
 
 Route::get('/payment',[OrderController::class,'payment'])->middleware('auth');
 Route::post('/payment',[OrderController::class,'payment'])->middleware('auth');

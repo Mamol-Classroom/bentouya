@@ -31,7 +31,7 @@
                         <td>
                             <input type="text" name="prefecture" value="{{ $data['prefecture'] }}" />
                             @if(isset($error_message) && $error_message['prefecture'] != null)
-                                <span class="error-message">{{ $data['prefecture'] }}</span>
+                                <span class="error-message">{{ $error_message['prefecture'] }}</span>
                             @endif
                         </td>
                     </tr>

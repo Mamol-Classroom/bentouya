@@ -95,7 +95,6 @@ class OrderController extends Controller
                 $has_error = true;
             }
         }
-
         if($has_error){
             $request->session()->put('order.error_message',$error_message);
             $request->session()->put('order.address',$data);
@@ -109,8 +108,13 @@ class OrderController extends Controller
 
     }
 
-    public function payment(Request $request)  //不设限制可以直接进入支付页面，比较危险
+    public function payment(Request $request)
     {
+
+        if(!$request->session()->has('order.address')){  //has:判定是否存在邮送信息，返回true或者false
+            return redirect()->route('get_top');
+        }
+
         if($request->method() === 'POST'){
             //处理支付
             $card_no = $request->post('card_no');  //key是payment.blade中的name
@@ -137,7 +141,7 @@ class OrderController extends Controller
             //将支付成功的订单存入数据库
             $order = new Order();
             $order->user_id = Auth::id();
-            $order->name = $address['name'];  //$order->name = $name; ??
+            $order->name = $address['name'];  //从上边get传过来的session里取值
             $order->postcode = $address['postcode'];
             $order->prefecture = $address['prefecture'];
             $order->city = $address['city'];
@@ -153,7 +157,7 @@ class OrderController extends Controller
                 $order_detail->order_id = $order->id;
                 $order_detail->bento_id = $cart->bento_id;
 
-                $bento = Bento::find($cart->bento_id);  //取Bento里的数据是为了保留购买时的原始数据：因为如果前段在顾客支付后修改了bento,购物车里的数据也会实时更新
+                $bento = Bento::find($cart->bento_id);  //Cart内没有详细的bento信息
                 $order_detail->bento_name = $bento->bento_name;
                 $order_detail->price = $bento->price;
                 $order_detail->bento_code = $bento->bento_code;
@@ -231,7 +235,7 @@ class OrderController extends Controller
         $request->session()->flash('add_cart_bento',$bento_id);  //TopController内接收
         $request->session()->flash('add_cart_quantity',$quantity);  //TopController内接收
 
-        return redirect('/');   //重定向到首页
+        return redirect()->route('get_top');   //重定向到首页
     }
     public function cartChangeQuantity(Request $request)
     {
