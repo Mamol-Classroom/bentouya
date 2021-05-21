@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\EqualWithValue;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Bento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class TopController extends Controller
 {
@@ -52,41 +54,7 @@ class TopController extends Controller
 
     public function register(Request $request)
     {
-        $error_message = $request->session()->get('error_message');
-        $data = $request->session()->get('data');
-
-        if ($error_message == null) {
-            $error_message = [
-                'email' => null,
-                'password' => null,
-                'password_confirm' => null,
-                'postcode' => null,
-                'prefecture' => null,
-                'city' => null,
-                'address' => null,
-                'tel' => null,
-                'name' => null,
-            ];
-        }
-
-        if ($data == null) {
-            $data = [
-                'email' => '',
-                'password' => '',
-                'password_confirm' => '',
-                'postcode' => '',
-                'prefecture' => '',
-                'city' => '',
-                'address' => '',
-                'tel' => '',
-                'name' => '',
-            ];
-        }
-
-        return view('register', [
-            'error_message' => $error_message,
-            'data' => $data
-        ]);
+        return view('register');
     }
 
     public function registerUser(Request $request)
@@ -113,69 +81,34 @@ class TopController extends Controller
             'name' => $name,
         ];
 
-        $has_error = false;
-        $error_message = [
-            'email' => null,
-            'password' => null,
-            'password_confirm' => null,
-            'postcode' => null,
-            'prefecture' => null,
-            'city' => null,
-            'address' => null,
-            'tel' => null,
-            'name' => null,
+
+
+        $rules = [
+            'email' => ['required', 'email'],
+            'password' => 'required',
+            'password_confirm' => [new EqualWithValue($data['password'])],
+            'postcode' => 'required',
+            'prefecture' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'tel' => 'required',
+            'name' => 'required'
         ];
-        if ($email == "") {
-            $error_message['email']  = '请输入邮箱';
-            $has_error = true;
-        }
 
-        if ($password == "") {
-            $error_message['password']  = '请输入密码';
-            $has_error = true;
-        }
+        $messages = [
+            'email.required' => 'メールアドレスを入力してください',
+            'email.email' => 'メールアドレスの形式がまちがいました',
+            'password.required' => 'パスワードを入力してください',
+            'postcode.required' => '郵便番号を入力してください',
+            'prefecture.required' => '都道府県を入力してください',
+            'city.required' => '市区町村を入力してください',
+            'address.required' => '住所を入力してください',
+            'tel.required' => '電話番号を入力してください',
+            'name.required' => '名前を入力してください',
+        ];
 
-        if ($password != $password_confirm) {
-            $error_message['password_confirm']  = '两次输入的密码不一致';
-            $has_error = true;
-        }
-
-        if ($name == "") {
-            $error_message['name']  = '请输入姓名';
-            $has_error = true;
-        }
-
-        if ($postcode == "") {
-            $error_message['postcode']  = '请输入邮编';
-            $has_error = true;
-        }
-
-        if ($prefecture == "") {
-            $error_message['prefecture']  = '都道府県を入力してください';
-            $has_error = true;
-        }
-
-        if ($city == "") {
-            $error_message['city']  = '市区町村を入力してください';
-            $has_error = true;
-        }
-
-        if ($address == "") {
-            $error_message['address']  = '住所を入力してください';
-            $has_error = true;
-        }
-
-        if ($tel == "") {
-            $error_message['tel']  = '電話番号を入力してください';
-            $has_error = true;
-        }
-
-        if ($has_error) {
-            $request->session()->put('error_message', $error_message);
-            $request->session()->put('data', $data);
-
-            return redirect('/register');
-        }
+        $validator = Validator::make($data, $rules, $messages);
+        $validator->validate();
 
         // 将输入的数据存入数据库
         $user = new User();
@@ -219,19 +152,20 @@ class TopController extends Controller
 
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 // ログイン成功
-                return redirect('/');
+                return redirect(route('top'));
             } else {
                 // ログイン失敗
                 $request->session()->put('login_failed', true);
 
-                return redirect('/login');
+                //return redirect(route('get_login'));
+                return redirect()->route('get_login');
             }
 
             /**
             $user = User::where('email', $email)->first();
             if ($password == $user->password) {
                 // ログイン成功
-                return redirect('/');
+                return redirect(route('top'));
             } else {
                 // ログイン失敗
                 $request->session()->put('login_failed', true);

@@ -11,82 +11,82 @@
                 <tr>
                     <td>メールアドレス</td>
                     <td>
-                        <input type="text" name="email" value="@if($data != null){{ $data['email'] }}@endif" />
-                        @if(isset($error_message) && $error_message['email'] != null)
-                            <span class="error-message">{{ $error_message['email'] }}</span>
-                        @endif
+                        <input type="text" name="email" value="{{ old('email') }}" />
+                        @error('email')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>パスワード</td>
                     <td>
-                        <input type="password" name="password" value="{{ $data['password'] }}" />
-                        @if(isset($error_message) && $error_message['password'] != null)
-                            <span class="error-message">{{ $error_message['password'] }}</span>
-                        @endif
+                        <input type="password" name="password" value="{{ old('password') }}" />
+                        @error('password')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>パスワード確認</td>
                     <td>
-                        <input type="password" name="password_confirm" value="{{ $data['password_confirm'] }}" />
-                        @if(isset($error_message) && $error_message['password_confirm'] != null)
-                            <span class="error-message">{{ $error_message['password_confirm'] }}</span>
-                        @endif
+                        <input type="password" name="password_confirm" value="{{ old('password_confirm') }}" />
+                        @error('password_confirm')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>名前</td>
                     <td>
-                        <input type="text" name="name" value="{{ $data['name'] }}" />
-                        @if(isset($error_message) && $error_message['name'] != null)
-                            <span class="error-message">{{ $error_message['name'] }}</span>
-                        @endif
+                        <input type="text" name="name" value="{{ old('name') }}" />
+                        @error('name')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>郵便番号</td>
                     <td>
-                        <input type="text" name="postcode" value="{{ $data['postcode'] }}" />
-                        @if(isset($error_message) && $error_message['postcode'] != null)
-                            <span class="error-message">{{ $error_message['postcode'] }}</span>
-                        @endif
+                        <input type="text" name="postcode" value="{{ old('postcode') }}" />
+                        @error('postcode')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>都道府県</td>
                     <td>
-                        <input type="text" name="prefecture" value="{{ $data['prefecture'] }}" />
-                        @if(isset($error_message) && $error_message['prefecture'] != null)
-                            <span class="error-message">{{ $error_message['prefecture'] }}</span>
-                        @endif
+                        <input type="text" name="prefecture" value="{{ old('prefecture') }}" />
+                        @error('prefecture')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>市区町村</td>
                     <td>
-                        <input type="text" name="city" value="{{ $data['city'] }}" />
-                        @if(isset($error_message) && $error_message['city'] != null)
-                            <span class="error-message">{{ $error_message['city'] }}</span>
-                        @endif
+                        <input type="text" name="city" value="{{ old('city') }}" />
+                        @error('city')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>住所</td>
                     <td>
-                        <input type="text" name="address" value="{{ $data['address'] }}" />
-                        @if(isset($error_message) && $error_message['address'] != null)
-                            <span class="error-message">{{ $error_message['address'] }}</span>
-                        @endif
+                        <input type="text" name="address" value="{{ old('address') }}" />
+                        @error('address')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>
                     <td>電話番号</td>
                     <td>
-                        <input type="text" name="tel" value="{{ $data['tel'] }}" />
-                        @if(isset($error_message) && $error_message['tel'] != null)
-                            <span class="error-message">{{ $error_message['tel'] }}</span>
-                        @endif
+                        <input type="text" name="tel" value="{{ old('tel') }}" />
+                        @error('tel')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
                     </td>
                 </tr>
                 <tr>

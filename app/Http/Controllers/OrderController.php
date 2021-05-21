@@ -237,7 +237,7 @@ class OrderController extends Controller
 
         $request->session()->flash('add_cart_bento', $bento_id);
 
-        return redirect('/');
+        return redirect(route('top'));
     }
 
     public function cartChangeQuantity(Request $request)
