@@ -213,6 +213,108 @@ nav ul li a {
     width: 500px;
 }
 
+#cart table{
+    width:80%;
+    position:relative;
+    margin:30px auto;
+    border-collapse: collapse;
+    border:1px solid gray;
+}
+#cart th{
+    background: cornflowerblue;
+    height:2.5em;
+}
+#cart .tdone{
+    width:10%;
+}
+#cart .tdtwo{
+    width:20%;
+}
+#cart .tdthree{
+    width:20%;
+}
+#cart .tdfour{
+    width:20%;
+}
+#cart .tdfive{
+    width:20%;
+}
+#cart .tdsix{
+    width:10%;
+}
+#cart td{
+    height:6em;
+    text-align: center;
+    border:1px solid #ccc;
+}
+#cart .num{
+    display:inline-block;
+    width:3em;
+}
+#cart input{
+    height:2em;
+}
+#cart .talast{
+    text-align: left;
+}
+
+#order-history {
+    text-align: center;
+    width: 100%;
+}
+
+.history-container {
+    padding: 20px 290px;
+}
+
+.order-container {
+    border: #9c9c9c solid 1px;
+    margin: 20px 0;
+}
+
+.order-info {
+    display: flex;
+    border-bottom: #9c9c9c solid 1px;
+}
+
+.order-time {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.order-total {
+    color: #ff0000;
+    font-weight: 600;
+    padding-right: 20px;
+}
+
+.order-bento {
+    display: flex;
+    border-bottom: #9c9c9c solid 1px;
+}
+
+.order-bento:last-child {
+    border: none;
+}
+
+.bento-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bento-img-container img {
+    width: auto;
+    height: 100px;
+}
+
+.bento-info-container {
+    text-align: center;
+    flex-grow: 1;
+}
+
+
 .profile img {
     width: 50px;
     height: auto;
@@ -295,7 +397,7 @@ label, legend {
 }
 
 .a-button-primary .a-button-inner {
-    box-shadow: 0 1px 0 rgb(255 255 255 / 40%) inset;
+    box-shadow: 0 1px 0 rgba(255 255 255 0.4) inset;  /*box-shadow阴影,rgba：颜色+0.4透明度*/
 }
 
 .a-button-primary .a-button-inner {
@@ -313,7 +415,7 @@ label, legend {
     position: relative;
     overflow: hidden;
     height: 29px;
-    box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset;
+    box-shadow: 0 1px 0 rgba(255 255 255 0.4) inset;
     border-radius: 2px;
     text-decoration: none;
 }

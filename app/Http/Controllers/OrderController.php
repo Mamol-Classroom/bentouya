@@ -275,10 +275,11 @@ class OrderController extends Controller
         }
         elseif($click === 'cancel'){
             $bento_cart->delete();
-
             return response()->json(['result' => 'delete']);
         }
 
-
+            return response()->json();  //避免没有点击事件发生时报错
     }
+
+
 }
