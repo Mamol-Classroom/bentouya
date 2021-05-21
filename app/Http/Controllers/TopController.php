@@ -75,7 +75,7 @@ class TopController extends Controller
             ];
         }
 
-        return view('register', [
+        return view(route('get_register'), [
             'error_message' => $error_message,
             'data' => $data
         ]);
@@ -169,7 +169,7 @@ class TopController extends Controller
             $request->session()->put('error_message', $error_message);
             $request->session()->put('data', $data);
 
-            return redirect('/register');
+            return redirect(route('get_register'));
         }
 
         // 将输入的数据存入数据库

@@ -72,7 +72,7 @@ svg:not(:root).svg-inline--fa {
   margin: auto;
   position: absolute;
   right: 0;
-  top: 0; }
+  : 0; }
 
 .fa-layers {
   display: inline-block;

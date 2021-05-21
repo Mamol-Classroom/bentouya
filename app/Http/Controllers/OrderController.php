@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Bento;
 use App\Models\Cart;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class OrderController extends Controller
 {
@@ -267,5 +268,19 @@ class OrderController extends Controller
         $payment_failed = $request->session()->has('payment.error_message');
 
         return view('order.payment',['payment_failed' => $payment_failed]);
+    }
+
+    public function complete(Request $request)
+    {
+        return view('order.complete');
+    }
+
+    public function history(Request $request)
+    {
+        $orders = Order::where('user_id',Auth::id())->orderBy('created_at','desc')->get();
+        //orderBy中的排序，倒序desc，正序asc
+        return view('order.history',[
+            'orders' => $orders
+        ]);
     }
 }

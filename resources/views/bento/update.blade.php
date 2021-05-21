@@ -6,12 +6,14 @@
     <main class="center">
         <h1>弁当修正</h1>
 
+        {{--
         <div>
             <img src="{{ $date['bento_img_url'] }}" width="500px" height="500px">
         </div>
+        --}}
 
         <div>
-            <form method="post" action="/bento/update?bento_id={{ $bento_id ?? '' }}">
+            <form method="post" action="/bento/update?bento_id={{ $bento_id}}">
                 <table class="register-table">
                     <tr>
                         <td>弁当名</td>

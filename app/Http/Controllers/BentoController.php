@@ -234,7 +234,7 @@ class BentoController extends Controller
         $bento_id = $request->query('bento_id');
         $bento = Bento::find($bento_id);
 
-        $bento_image_url = $bento->get_bento_image_url();
+        //$bento_image_url = $bento->get_bento_image_url();
 
 
         if ($bento == null || $bento->user_id != Auth::id()) {

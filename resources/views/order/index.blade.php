@@ -41,7 +41,7 @@
                     <tr>
                         <td>市区町村</td>
                         <td>
-                            <input type="text" name="ctiy" value="{{ $data['city'] }}"/>
+                            <input type="text" name="city" value="{{ $data['city'] }}"/>
                             @if(isset($error_message) && $error_message['city'] != null)
                                 <span class="error_message">{{ $error_message['city'] }}</span>
                             @endif
