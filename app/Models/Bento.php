@@ -14,6 +14,11 @@ class Bento extends Model
 
     protected $table = 'bentos';
 
+    public function bento_images()
+    {
+        return $this->hasMany(BentosImage::class, 'bento_id', 'id');
+    }
+
     public function is_favourite($user_id)
     {
         $bento_id = $this->id;
@@ -26,8 +31,7 @@ class Bento extends Model
 
     public function get_bento_image_url()
     {
-        $bento_id = $this->id;
-        $bento_image = BentosImage::where('bento_id', $bento_id)->first();
+        $bento_image = $this->bento_images()->first();
         if ($bento_image == null) {
             return '/img/default-bento.jpg';
         }
