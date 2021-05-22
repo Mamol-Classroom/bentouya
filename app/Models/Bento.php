@@ -17,6 +17,11 @@ class Bento extends Model
 
     //关于model的处理可以直接写在对应的model里；
     //这里是要关联top页面以及mypage中的注目リスト，使收藏内容同步，并可以在注目リスト中取消收藏
+    public function bento_images()
+    {
+        return $this->hasMany(BentoImage::class,'bento_id','id');  //一对多中一的model里写：hasMany
+    }
+
     public function is_favourite($user_id)  //在top.blade中添加一个ajax来完成同步
     {
         $bento_id = $this->id;
@@ -29,8 +34,7 @@ class Bento extends Model
 
     public function get_bento_image_url()  //在BentoController里做测试看是否能接收到
     {
-        $bento_id = $this->id;  //当前用户上传的bento信息this
-        $bento_image = BentoImage::where('bento_id',$bento_id)->first();
+        $bento_image = $this->bento_images()->first();  //当前用户上传的bento信息this
 
         if($bento_image == ''){
             return '/img/default-bento.jpg';  //访问public/img文件夹下的bento默认图片(绝对路径)，避免top.blade报错
