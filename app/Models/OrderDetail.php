@@ -11,6 +11,16 @@ class OrderDetail extends Model
     use HasFactory;
     protected $table = 'order_details';
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class,'order_id');
+    }
+
+    public function get_order()
+    {
+        return $this->order;
+    }
+
     public function get_bento_img()
     {
         $bento_id = $this->bento_id;

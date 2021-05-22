@@ -10,6 +10,11 @@ class Order extends Model
     use HasFactory;
     protected $table = 'orders';
 
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class,'order_id','id');
+    }
+
     public function get_total_price()
     {
         $order_details = $this->get_order_details();
