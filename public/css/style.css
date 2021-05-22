@@ -4,6 +4,7 @@
 
 .register-table {
     width: 100%;
+    border: none;
 }
 
 .register-table td {

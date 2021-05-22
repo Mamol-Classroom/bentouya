@@ -178,7 +178,7 @@ class OrderController extends Controller
 
         }
 
-        $payment_failed = $request->session()->has('payment.error_message');  //has:判定支付是否成功即可，不需要get保留私密数据
+        $payment_failed = $request->session()->has('payment.error_message');  //has接收上一个支付失败flash:判定支付是否成功即可，不需要get保留私密数据
 
         return view('order.payment',['payment_failed' => $payment_failed]);
     }
@@ -279,6 +279,15 @@ class OrderController extends Controller
         }
 
             return response()->json();  //避免没有点击事件发生时报错
+    }
+
+    public function history(Request $request)
+    {
+        $orders = Order::where('user_id',Auth::id())->orderBy('created_at','desc')->get();  //orderBy:排序->按照创建日期的desc倒叙
+
+        return view('order.history',[
+            'orders' => $orders
+        ]);
     }
 
 
