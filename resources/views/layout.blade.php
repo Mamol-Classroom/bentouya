@@ -18,10 +18,10 @@
             <p>ようこそ、<img src="{{ auth()->user()->get_user_headPortrait_url() }}"> {{ auth()->user()->name }} 様</p>
                         <!--layout是top、mypage、bento页面共通的部分，如果需要后台引用，则需要在三个后台定义变量；
                         避免重复代码，可以直接从前台获取数据：auth()->user()->-->
-            <a href="/logout">ログアウト</a>
+            <a href="{{ route('get_logout') }}">ログアウト</a>
         @else
             <p>ようこそ、<img src="/img/default_profile_img.jpg" width="60px" heigth="auto"> ゲスト 様</p>
-            <a href="/login">ログイン</a>
+            <a href="{{ route('get_login') }}">ログイン</a>
         @endif
     </div>
 </header>

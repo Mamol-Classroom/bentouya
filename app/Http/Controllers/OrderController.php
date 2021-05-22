@@ -235,7 +235,7 @@ class OrderController extends Controller
         $request->session()->flash('add_cart_bento',$bento_id);  //TopController内接收
         $request->session()->flash('add_cart_quantity',$quantity);  //TopController内接收
 
-        return redirect()->route('get_top');   //重定向到首页
+        return redirect(route('get_top'));   //重定向到首页
     }
     public function cartChangeQuantity(Request $request)
     {

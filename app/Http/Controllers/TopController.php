@@ -3,6 +3,7 @@
 //post传值使用{{}},get则使用session
 namespace App\Http\Controllers;  //命名区域
 
+use App\Rules\EqualWithValue;  //自建rule：验证注册时两次密码输入是否一致
 use Illuminate\Http\Request;  //request路径
 
 use App\Models\User;  //模型路径
@@ -11,7 +12,11 @@ use App\Models\BentoImage;
 
 use Illuminate\Support\Facades\Auth;  //确定auth使用路径，认证登录
 use Illuminate\Support\Facades\Hash;  //hash路径，密码加密
-use Illuminate\Support\Facades\Storage;  //图片存储路径
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Validator;  //错误信息认证->rule的使用
+
+//图片存储路径
 
 
 
@@ -87,46 +92,12 @@ class TopController extends Controller
 
     public function register(Request $request)    //注册页面
     {
+
         if(Auth::check()){             //如果已登录则会先退出登录再进入注册页面(自己添加内容)
             return redirect('/logout');
         }
 
-        $error_message = $request->session()->get('error_message');
-        $data = $request->session()->get('data');
-
-        if ($error_message == null) {
-            $error_message = [
-                'email' => null,
-                'password' => null,
-                'password_confirm' => null,
-                'postcode' => null,
-                'prefecture' => null,
-                'city' => null,
-                'address' => null,
-                'tel' => null,
-                'name' => null,
-            ];
-        }
-
-        if ($data == null) {
-            $data = [
-                'email' => '',
-                'password' => '',
-                'password_confirm' => '',
-                'postcode' => '',
-                'prefecture' => '',
-                'city' => '',
-                'address' => '',
-                'tel' => '',
-                'name' => '',
-                'headPortrait_url' => '',
-            ];
-        }
-
-        return view('register', [
-            'error_message' => $error_message,
-            'data' => $data
-        ]);
+        return view('register');
     }
 
     public function registerUser(Request $request)
@@ -157,73 +128,36 @@ class TopController extends Controller
             'headPortrait_url' => $headPortrait,
         ];
 
-        $has_error = false;
-
-        $error_message = [
-            'email' => null,
-            'password' => null,
-            'password_confirm' => null,
-            'postcode' => null,
-            'prefecture' => null,
-            'city' => null,
-            'address' => null,
-            'tel' => null,
-            'name' => null,
+        $rules = [
+            'email' => ['required','email'],
+            'password' => 'required',
+            'password_confirm' => [new EqualWithValue($data['password'])],  //新建rule：验证两次密码输入是否一致的实例
+            'postcode' => 'required',
+            'prefecture' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'tel' => 'required',
+            'name' => 'required',
         ];
 
-        if ($email == "") {
-            $error_message['email']  = '请输入邮箱';
-            $has_error = true;
-        }
+        $messages = [
+            'email.required' => 'メールアドレスを入力してください',  //'key.过滤条件'=>'反馈信息'
+            'email.email' => 'メールアドレスの形式がまちがいました',
+            'password.required' => 'パスワードを入力してください',  //密码认证部分写在了自建的rule里，命令语句为：php artisan make:rule EqualWithValue(名称)
+            'postcode.required' => '郵便番号を入力してください',
+            'prefecture.required' => '都道府県を入力してください',
+            'city.required' => '市区町村を入力してください',
+            'address.required' => '住所を入力してください',
+            'tel.required' => '電話番号を入力してください',
+            'name.required' => '名前を入力してください',
+        ];
 
-        if ($password == "") {
-            $error_message['password']  = '请输入密码';
-            $has_error = true;
-        }
-
-        if ($password != $password_confirm) {
-            $error_message['password_confirm']  = '两次输入的密码不一致';
-            $has_error = true;
-        }
-
-        if ($name == "") {
-            $error_message['name']  = '请输入姓名';
-            $has_error = true;
-        }
-
-        if ($postcode == "" || strlen($postcode) != 8) {
-            $error_message['postcode']  = '请输入邮编';
-            $has_error = true;
-        }
-
-        if ($prefecture == "") {
-            $error_message['prefecture']  = '都道府県を入力してください';
-            $has_error = true;
-        }
-
-        if ($city == "") {
-            $error_message['city']  = '市区町村を入力してください';
-            $has_error = true;
-        }
-
-        if ($address == "") {
-            $error_message['address']  = '住所を入力してください';
-            $has_error = true;
-        }
-
-        if ($tel == "" || strlen($tel) != 11) {
+        $validator = Validator::make($data,$rules,$messages);
+        $validator->validate();
 
 
-            $error_message['tel']  = '正しい電話番号を入力してください';
-            $has_error = true;
-        }
+        //    return redirect()->route('get_register');  //重定向
 
-        if ($has_error) {
-            $request->session()->put('error_message', $error_message);  //存在(服务器)，REDIS里，携带数据
-            $request->session()->put('data', $data);
-
-            return redirect()->route('get_register');  //重定向
-        }
 
 /**
  public function userList(Request $request){
@@ -283,6 +217,7 @@ class TopController extends Controller
         return redirect()->route('get_register-success');     //重定向
     }
 
+
     public function registerSuccess(Request $request)
     {
         $user = $request->session()->get('registed_user'); //接收上一个flash
@@ -317,14 +252,14 @@ class TopController extends Controller
                 // ログイン失敗
                 $request->session()->put('login_failed', true);
 
-                return redirect('/login');
+                return redirect()->route('get_login');
             }
 
             /**
             $user = User::where('email', $email)->first();
             if ($password == $user->password) {
                 // ログイン成功
-                return redirect('/');
+                return redirect(route('get_top'));
             } else {
                 // ログイン失敗
                 $request->session()->put('login_failed', true);//保存以及修改put('名字‘,值)

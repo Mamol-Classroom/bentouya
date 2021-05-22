@@ -23,10 +23,10 @@ Route::get('/register', [TopController::class, 'register'])->name('get_register'
 Route::post('/register-user', [TopController::class, 'registerUser'])->name('post_register-user');
 Route::get('/register-success', [TopController::class, 'registerSuccess'])->name('get_register-success');
 
-Route::get('/login', [TopController::class, 'login']);
-Route::post('/login', [TopController::class, 'login']);
+Route::get('/login', [TopController::class, 'login'])->name('get_login');
+Route::post('/login', [TopController::class, 'login'])->name('post_login');
 
-Route::get('/logout', [TopController::class, 'logout'])->middleware('auth');
+Route::get('/logout', [TopController::class, 'logout'])->name('get_logout')->middleware('auth');
 //确认是否登录，通过中间件auth进行跳转，默认跳转到login，可在中间件auth文件中设置
 
 // 弁当

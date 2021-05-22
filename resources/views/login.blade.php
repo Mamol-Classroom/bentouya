@@ -14,7 +14,7 @@
                     @if($login_failed)
                         <p class="error-message">メールアドレスまたはパスワードが間違いました</p>
                     @endif
-                    <form method="post" action="/login">
+                    <form method="post" action="{{ route('post_login') }}">
                         <div class="a-row a-spacing-base">
                             <label for="ap_email" class="a-form-label">
                                 メールアドレス
