@@ -19,8 +19,8 @@ use App\Http\Controllers\OrderController;
 Route::get('/', [TopController::class, 'top']);
 
 //ユーザー
-Route::get('/register', [TopController::class, 'register']);
-Route::post('/register-user', [TopController::class, 'registerUser']);
+Route::get('/register', [TopController::class, 'register'])->name('get_register');
+Route::post('/register-user', [TopController::class, 'registerUser'])->name('post_register_user');
 
 Route::get('/register_success', [TopController::class, 'registerSuccess']);
 Route::get('/login', [TopController::class, 'login']);

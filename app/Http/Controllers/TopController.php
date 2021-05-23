@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Rules\EqualWithvalue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,6 +11,8 @@ use App\Models\Bento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 class TopController extends Controller
 {
 
@@ -99,6 +102,8 @@ class TopController extends Controller
 
     public function register(Request $request)
     {
+
+        /*
         $error_message = $request->session()->get('error_message');
         $data = $request->session()->get('data');
 
@@ -134,6 +139,8 @@ class TopController extends Controller
             'error_message' => $error_message,
             'data' => $data
         ]);
+   */
+        return view('register');
     }
 
 
@@ -169,6 +176,43 @@ class TopController extends Controller
 
         ];
 
+        //通过laravel验证表单不能为空
+        $rules = [
+            //事例：验证多个条件email后字符串连接验证条件
+            'email'=>['required','email'],
+            'password'=>'required',
+            //自定义规则写法  php artisan make:rule EqualWithvalue
+            'password_confirm'=>[new EqualWithvalue($data['password'])],
+            'postcode'=>'required',
+            'prefecture'=>'required',
+            'city'=>'required',
+            'address'=>'required',
+            'tel'=>'required',
+            'name'=>'required',
+        ];
+
+        $messages = [
+            'email.required' => 'メールアドレスを入力してください',
+            //根据不同验证条件进行验证
+            'email.email' => 'メールアドレスの形式が正しくありません',
+            'password.required' =>'パスワードを入力してください',
+            'password_confirm.required' =>'',
+            'postcode.required' => '郵便番号を入力してください',
+            'prefecture.required' =>'都道府県を入力してください',
+            'city.required' =>'市区町村を入力してください',
+            'address.required' =>'住所を入力してください',
+            'tel.required' =>'電話番号を入力してください',
+            'name.required' =>'名前を入力してください',
+
+        ];
+
+
+        //生成验证器
+       $validator = Validator::make($data,$rules,$messages);
+       //执行验证
+       $validator->validate();
+
+    /*
         $has_error = false;
         $error_message = [
             'email' => null,
@@ -230,8 +274,11 @@ class TopController extends Controller
             $request->session()->put('error_message', $error_message);
             $request->session()->put('data', $data);
 
-            return redirect('/register');
+            return redirect()->route('get_register');
         }
+
+    */
+
         // 将输入的数据存入数据库
         $user = new User();
         $user->email = $email;

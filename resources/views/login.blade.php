@@ -47,7 +47,7 @@
         </div>
     </main>
     <div class="center">
-        <a href="/register">アカウントをお持ちでない方へ</a>
+        <a href="{{route('get_register')}}">アカウントをお持ちでない方へ</a>
 
     </div>
 @endsection
