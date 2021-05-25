@@ -9,6 +9,7 @@ use App\Models\Bento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\EqualWithValue;
 
 class TopController extends Controller
 {
@@ -169,7 +170,7 @@ class TopController extends Controller
 
 
         $validator = validator::make($data,$rules,$messages);
-        $validator->$validator();
+        $validator->validate();
 
        /** $has_error = false;
         $error_message = [
