@@ -16,9 +16,13 @@ class Bento extends Model
 
     protected $table = 'bentos';
 
-    //数据库里有created at就可以不要//public $timestamps = false;
+    //数据库里有created at 和 updated at 就可以不要//public $timestamps = false;
 
 
+    //通过laravel的model直接与外键进行相互关联 hasMany一对多关系（相反，多对一关系，隶属关系，参考Model：BentosImage）
+public function bento_images(){
+    return $this->hasMany(BentosImage::class,'bento_id','id');
+}
 
     //关于model的处理可以直接写在对应的model里；
     //这里是要关联top页面以及mypage中的注目リスト，使收藏内容同步，并可以在注目リスト中取消收藏
@@ -36,8 +40,14 @@ class Bento extends Model
 
 
     public function get_bento_image_url(){
-        $bento_id = $this->id;
-        $bento_image = BentosImage::where('bento_id',$bento_id)->first();
+       // $bento_id = $this->id;
+       // $bento_image = BentosImage::where('bento_id',$bento_id)->first();
+
+        //通过laravel的model直接与外键进行相互关联后直接调取bento_image
+       // $bento_images  = $this->bento_images;
+
+        //如果只取其一张图片
+        $bento_image  = $this -> bento_images()->first();
 
         if ($bento_image == null ){
 
